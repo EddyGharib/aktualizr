@@ -6,7 +6,7 @@
 #include <curl/curl.h>
 
 #include "server_credentials.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 class TreehubServer {
  public:

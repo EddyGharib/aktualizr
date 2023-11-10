@@ -9,7 +9,7 @@
 
 #include "libaktualizr/aktualizr.h"
 #include "libaktualizr/config.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "package_manager/ostreemanager.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"

@@ -1,6 +1,6 @@
 #include "authenticate.h"
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "oauth2.h"
 
 using std::string;

@@ -12,7 +12,7 @@
 #include <string>     // for string
 
 #include "libaktualizr/types.h"  // for Hash, KeyType, Hash::Type
-#include "utilities/utils.h"     // for StructGuard
+#include "libaktualizr/utilities/utils.h"     // for StructGuard
 
 #include <openssl/engine.h>
 #include <openssl/err.h>

@@ -9,7 +9,7 @@
 #include <openssl/err.h>
 #include "gtest/gtest_prod.h"
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 class P11ContextWrapper {
  public:

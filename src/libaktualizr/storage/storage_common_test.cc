@@ -9,7 +9,7 @@
 #include "libaktualizr/types.h"
 #include "repo.h"
 #include "storage/sqlstorage.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace fs = boost::filesystem;
 

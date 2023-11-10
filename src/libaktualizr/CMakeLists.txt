@@ -70,6 +70,16 @@ add_library(aktualizr_lib SHARED
     $<TARGET_OBJECTS:uptane>
     $<TARGET_OBJECTS:utilities>)
 
+target_include_directories(aktualizr_lib PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_include_directories(aktualizr_lib PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+    $<INSTALL_INTERFACE:include>
+)
+
 target_link_libraries(aktualizr_lib ${AKTUALIZR_EXTERNAL_LIBS})
 set_target_properties(aktualizr_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr)
 install(TARGETS aktualizr_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)

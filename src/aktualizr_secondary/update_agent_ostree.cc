@@ -2,8 +2,8 @@
 
 #include <boost/algorithm/string/trim.hpp>
 
-#include "logging/logging.h"
-#include "package_manager/ostreemanager.h"
+#include "libaktualizr/logging/logging.h"
+#include "libaktualizr/package_manager/ostreemanager.h"
 
 // TODO: consider moving this and SecondaryProvider::getTreehubCredentials to
 // encapsulate them in one shared place if possible.

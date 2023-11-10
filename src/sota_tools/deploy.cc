@@ -4,12 +4,12 @@
 #include <boost/intrusive_ptr.hpp>
 
 #include "authenticate.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "ostree_object.h"
 #include "rate_controller.h"
 #include "request_pool.h"
 #include "treehub_server.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 bool CheckPoolState(const OSTreeObject::ptr &root_object, const RequestPool &request_pool) {
   switch (request_pool.run_mode()) {

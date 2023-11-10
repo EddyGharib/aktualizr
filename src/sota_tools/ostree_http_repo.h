@@ -3,11 +3,11 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "ostree_ref.h"
 #include "ostree_repo.h"
 #include "treehub_server.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 class OSTreeHttpRepo : public OSTreeRepo {
  public:

@@ -9,7 +9,7 @@
 #include "deploy.h"
 #include "garage_common.h"
 #include "garage_tools_version.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "ostree_http_repo.h"
 
 namespace po = boost::program_options;

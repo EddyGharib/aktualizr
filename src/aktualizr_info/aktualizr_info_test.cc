@@ -5,7 +5,7 @@
 #include "libaktualizr/config.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 constexpr char warning_no_meta_data[] = "Metadata is not available\n";
 

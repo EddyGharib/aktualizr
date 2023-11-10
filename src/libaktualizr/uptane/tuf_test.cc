@@ -5,10 +5,10 @@
 
 #include <json/json.h>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "uptane/exceptions.h"
 #include "uptane/tuf.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 /* Validate Root metadata. */
 TEST(Root, RootValidates) {

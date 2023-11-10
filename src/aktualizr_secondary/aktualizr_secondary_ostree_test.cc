@@ -5,7 +5,7 @@
 #include "boost/algorithm/string/trim.hpp"
 #include "boost/process.hpp"
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "test_utils.h"
 
 #include "aktualizr_secondary_ostree.h"

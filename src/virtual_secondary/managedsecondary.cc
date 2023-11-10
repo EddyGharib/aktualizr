@@ -7,13 +7,13 @@
 #include <boost/filesystem.hpp>
 
 #include "crypto/crypto.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
 #include "uptane/directorrepository.h"
-#include "uptane/imagerepository.h"
+#include "libaktualizr/uptane/imagerepository.h"
 #include "uptane/manifest.h"
-#include "uptane/tuf.h"
-#include "utilities/utils.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace Primary {
 

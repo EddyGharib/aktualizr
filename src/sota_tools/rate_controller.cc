@@ -3,7 +3,7 @@
 #include <algorithm>  // min
 #include <cassert>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 const RateController::clock::duration RateController::kMaxSleepTime = std::chrono::seconds(30);
 

@@ -16,14 +16,14 @@
 
 #include "http/httpclient.h"
 #include "httpfake.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "primary/provisioner.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"
 #include "test_utils.h"
 #include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 Config conf("tests/config/basic.toml");
 std::string port;

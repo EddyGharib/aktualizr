@@ -1,8 +1,8 @@
-#include "imagerepository.h"
+#include "libaktualizr/uptane/imagerepository.h"
 
 #include "crypto/crypto.h"
-#include "fetcher.h"
-#include "logging/logging.h"
+#include "libaktualizr/uptane/fetcher.h"
+#include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
 #include "uptane/exceptions.h"
 

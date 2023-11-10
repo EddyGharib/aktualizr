@@ -7,7 +7,7 @@
 #include "package_manager/ostreemanager.h"
 #include "storage/invstorage.h"
 #include "uptane_test_common.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 boost::filesystem::path test_sysroot;
 

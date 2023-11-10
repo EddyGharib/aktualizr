@@ -15,7 +15,7 @@
 #include "package_manager/packagemanagerfake.h"
 #include "storage/invstorage.h"
 #include "uptane/fetcher.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 // Test creating, appending and reading binary targets.
 TEST(PackageManagerFake, Binary) {

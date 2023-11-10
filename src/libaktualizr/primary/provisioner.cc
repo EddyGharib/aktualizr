@@ -7,8 +7,8 @@
 
 #include "bootstrap/bootstrap.h"
 #include "crypto/crypto.h"
-#include "crypto/keymanager.h"
-#include "logging/logging.h"
+#include "libaktualizr/crypto/keymanager.h"
+#include "libaktualizr/logging/logging.h"
 
 using std::map;
 using std::move;

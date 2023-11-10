@@ -14,13 +14,13 @@ set(SOURCES
 set(HEADERS
     directorrepository.h
     exceptions.h
-    fetcher.h
-    imagerepository.h
+    ../../../include/libaktualizr/uptane/fetcher.h
+    ../../../include/libaktualizr/uptane/imagerepository.h
     iterator.h
     manifest.h
     secondary_metadata.h
-    tuf.h
-    uptanerepository.h)
+    ../../../include/libaktualizr/uptane/tuf.h
+    ../../../include/libaktualizr/uptane/uptanerepository.h)
 
 
 add_library(uptane OBJECT ${SOURCES})

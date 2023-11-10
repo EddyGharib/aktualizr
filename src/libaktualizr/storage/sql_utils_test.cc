@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "storage/sql_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 TEST(sql_utils, PrepareRvalue) {
   TemporaryDirectory temp_dir;

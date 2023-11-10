@@ -4,8 +4,8 @@
 #include <sstream>
 
 #include "crypto/crypto.h"
-#include "logging/logging.h"
-#include "utilities/utils.h"
+#include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/utils.h"
 
 Bootstrap::Bootstrap(const boost::filesystem::path& provision_path, const std::string& provision_password) {
   if (provision_path.empty()) {
