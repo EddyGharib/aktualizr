@@ -6,7 +6,7 @@
 #include "libaktualizr/config.h"
 #include "utilities/config_utils.h"
 #include "utilities/exceptions.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 std::ostream& operator<<(std::ostream& os, ProvisionMode mode) {
   std::string mode_s;

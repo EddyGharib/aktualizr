@@ -8,7 +8,7 @@
 
 #include "libaktualizr/config.h"  // for KeyManagerConfig
 #include "libaktualizr/types.h"   // for KeyType, PublicKey
-#include "utilities/utils.h"      // for TemporaryFile
+#include "libaktualizr/utilities/utils.h"      // for TemporaryFile
 
 class HttpInterface;
 class INvStorage;

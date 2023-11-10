@@ -10,9 +10,9 @@
 #include "asn1/asn1_message.h"
 #include "der_encoder.h"
 #include "libaktualizr/secondary_provider.h"
-#include "logging/logging.h"
-#include "uptane/tuf.h"
-#include "utilities/utils.h"
+#include "libaktualizr/logging/logging.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace Uptane {
 

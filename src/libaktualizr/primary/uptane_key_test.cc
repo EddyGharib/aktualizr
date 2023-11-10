@@ -9,7 +9,7 @@
 #include <boost/polymorphic_pointer_cast.hpp>
 
 #include "httpfake.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "managedsecondary.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"

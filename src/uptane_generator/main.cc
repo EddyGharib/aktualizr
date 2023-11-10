@@ -6,10 +6,10 @@
 #include <ostream>
 #include <string>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "uptane_repo.h"
 #include "utilities/aktualizr_version.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace po = boost::program_options;
 

@@ -11,7 +11,7 @@
 #include "crypto/crypto.h"
 #include "libaktualizr/config.h"
 #include "test_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace bpo = boost::program_options;
 boost::filesystem::path build_dir;

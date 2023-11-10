@@ -7,7 +7,7 @@
 
 #include "crypto/crypto.h"
 #include "libaktualizr/config.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "test_utils.h"
 #include "uptane/exceptions.h"
 #include "uptane_repo.h"

@@ -1,6 +1,6 @@
 #include "msg_handler.h"
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 void MsgDispatcher::clearHandlers() { handler_map_.clear(); }
 

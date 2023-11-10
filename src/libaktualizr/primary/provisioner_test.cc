@@ -9,7 +9,7 @@
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 using std::string;
 using Uptane::EcuSerial;

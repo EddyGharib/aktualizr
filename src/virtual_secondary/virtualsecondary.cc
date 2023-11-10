@@ -5,7 +5,7 @@
 
 #include "crypto/crypto.h"
 #include "utilities/fault_injection.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 #include "virtualsecondary.h"
 
 namespace Primary {

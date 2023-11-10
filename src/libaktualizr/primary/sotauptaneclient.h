@@ -26,12 +26,12 @@
 #include "reportqueue.h"
 #include "uptane/directorrepository.h"
 #include "uptane/exceptions.h"
-#include "uptane/fetcher.h"
-#include "uptane/imagerepository.h"
+#include "libaktualizr/uptane/fetcher.h"
+#include "libaktualizr/uptane/imagerepository.h"
 #include "uptane/iterator.h"
 #include "uptane/manifest.h"
-#include "uptane/tuf.h"
-#include "utilities/apiqueue.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/utilities/apiqueue.h"
 
 class SotaUptaneClient {
  public:

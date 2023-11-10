@@ -11,7 +11,7 @@
 #include "http/httpclient.h"
 #include "libaktualizr/types.h"
 #include "test_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 static std::string server = "http://127.0.0.1:";
 

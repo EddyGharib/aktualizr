@@ -12,7 +12,7 @@
 
 #include <sqlite3.h>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 // Unique ownership SQLite3 statement creation
 

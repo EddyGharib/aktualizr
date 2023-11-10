@@ -3,12 +3,12 @@
 #include <boost/filesystem.hpp>
 #include <boost/tokenizer.hpp>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "storage/sql_utils.h"
 #include "storage/sqlstorage.h"
 #include "uptane/directorrepository.h"
 #include "uptane/imagerepository.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 boost::filesystem::path test_data_dir;
 

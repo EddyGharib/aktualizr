@@ -1,6 +1,6 @@
 #include "ostree_repo.h"
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 // NOLINTNEXTLINE(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays, hicpp-avoid-c-arrays)
 OSTreeObject::ptr OSTreeRepo::GetObject(const uint8_t sha256[32], const OstreeObjectType type) const {

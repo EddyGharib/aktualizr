@@ -8,7 +8,7 @@
 #include "libaktualizr/packagemanagerfactory.h"
 
 #include "aktualizr_info_config.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
 #include "storage/sql_utils.h"
 #include "utilities/aktualizr_version.h"

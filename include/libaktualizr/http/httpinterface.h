@@ -9,8 +9,8 @@
 #include "json/json.h"
 
 #include "libaktualizr/types.h"
-#include "logging/logging.h"
-#include "utilities/utils.h"
+#include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/utils.h"
 
 using CurlHandler = std::shared_ptr<CURL>;
 

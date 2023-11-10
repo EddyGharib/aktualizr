@@ -7,9 +7,9 @@
 #include <string>
 #include <utility>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "sql_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 // Find metadata with version set to -1 (e.g. after migration) and assign proper version to it.
 void SQLStorage::cleanMetaVersion(Uptane::RepositoryType repo, const Uptane::Role& role) {

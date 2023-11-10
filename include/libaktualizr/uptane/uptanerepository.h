@@ -4,7 +4,7 @@
 #include <cstdint>               // for int64_t
 #include <string>                // for string
 #include "libaktualizr/types.h"  // for TimeStamp
-#include "uptane/tuf.h"          // for Root, RepositoryType
+#include "libaktualizr/uptane/tuf.h"          // for Root, RepositoryType
 
 class INvStorage;
 

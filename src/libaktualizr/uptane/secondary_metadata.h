@@ -1,8 +1,8 @@
 #ifndef AKTUALIZR_SECONDARY_METADATA_H_
 #define AKTUALIZR_SECONDARY_METADATA_H_
 
-#include "uptane/fetcher.h"
-#include "uptane/tuf.h"
+#include "libaktualizr/uptane/fetcher.h"
+#include "libaktualizr/uptane/tuf.h"
 
 namespace Uptane {
 

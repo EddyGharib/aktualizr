@@ -7,10 +7,10 @@
 #include "aktualizr_secondary.h"
 #include "aktualizr_secondary_config.h"
 #include "utilities/aktualizr_version.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 #include "aktualizr_secondary_file.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "secondary_tcp_server.h"
 #ifdef BUILD_OSTREE
 #include "aktualizr_secondary_ostree.h"

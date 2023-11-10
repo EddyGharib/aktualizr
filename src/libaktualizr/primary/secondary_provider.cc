@@ -2,10 +2,10 @@
 
 #include <fstream>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
-#include "uptane/tuf.h"
-#include "utilities/utils.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/utilities/utils.h"
 
 bool SecondaryProvider::getMetadata(Uptane::MetaBundle* meta_bundle, const Uptane::Target& target) const {
   if (!getDirectorMetadata(meta_bundle)) {

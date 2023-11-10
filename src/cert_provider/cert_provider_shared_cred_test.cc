@@ -5,7 +5,7 @@
 
 #include "cert_provider_test.h"
 #include "libaktualizr/config.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 static boost::filesystem::path CERT_PROVIDER_PATH;
 static boost::filesystem::path CREDENTIALS_PATH;

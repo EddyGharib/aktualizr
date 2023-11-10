@@ -6,12 +6,12 @@
 #include <utility>
 
 #include "crypto/crypto.h"
-#include "crypto/keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/campaign.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "provisioner.h"
 #include "uptane/exceptions.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 static void report_progress_cb(event::Channel *channel, const Uptane::Target &target, const std::string &description,
                                unsigned int progress) {

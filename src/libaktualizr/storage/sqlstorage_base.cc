@@ -5,7 +5,7 @@
 #include <boost/filesystem.hpp>
 #include <fstream>
 
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 boost::filesystem::path SQLStorageBase::dbPath() const { return sqldb_path_; }
 

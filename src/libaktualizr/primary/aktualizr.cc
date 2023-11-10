@@ -6,7 +6,7 @@
 #include "libaktualizr/aktualizr.h"
 #include "libaktualizr/events.h"
 #include "primary/sotauptaneclient.h"
-#include "utilities/apiqueue.h"
+#include "libaktualizr/utilities/apiqueue.h"
 #include "utilities/timer.h"
 
 using std::make_shared;

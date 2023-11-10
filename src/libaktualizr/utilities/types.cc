@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "libaktualizr/types.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 std::ostream &operator<<(std::ostream &os, const StorageType stype) {
   std::string stype_str;

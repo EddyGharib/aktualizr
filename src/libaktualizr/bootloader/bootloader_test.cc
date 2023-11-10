@@ -5,7 +5,7 @@
 #include <boost/filesystem.hpp>
 
 #include "storage/invstorage.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 /* Check that the reboot detection feature works */
 TEST(bootloader, detectReboot) {

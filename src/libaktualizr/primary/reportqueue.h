@@ -10,7 +10,7 @@
 #include <utility>  // for move
 
 #include "libaktualizr/types.h"  // for EcuSerial (ptr only), TimeStamp
-#include "utilities/utils.h"     // for Utils
+#include "libaktualizr/utilities/utils.h"     // for Utils
 
 class Config;
 class HttpInterface;

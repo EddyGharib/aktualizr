@@ -1,4 +1,4 @@
-#include "keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 
 #include <stdexcept>
 #include <utility>
@@ -8,7 +8,7 @@
 
 #include "crypto/crypto.h"
 #include "crypto/openssl_compat.h"
-#include "http/httpinterface.h"
+#include "libaktualizr/http/httpinterface.h"
 #include "libaktualizr/types.h"
 #include "p11engine.h"
 #include "storage/invstorage.h"

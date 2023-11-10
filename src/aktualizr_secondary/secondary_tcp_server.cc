@@ -5,7 +5,7 @@
 #include "AKInstallationResultCode.h"
 #include "AKIpUptaneMes.h"
 #include "asn1/asn1_message.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "msg_handler.h"
 #include "utilities/dequeue_buffer.h"
 

@@ -5,9 +5,9 @@
 
 #include <json/json.h>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "secondary_config.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace Primary {
 

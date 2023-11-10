@@ -1,5 +1,5 @@
-#include "apiqueue.h"
-#include "logging/logging.h"
+#include "libaktualizr/utilities/apiqueue.h"
+#include "libaktualizr/logging/logging.h"
 
 namespace api {
 

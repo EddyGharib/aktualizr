@@ -11,14 +11,14 @@
 #include "libaktualizr/packagemanagerinterface.h"
 
 #include "http/httpclient.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 #include "package_manager/ostreemanager.h"
 #include "primary/reportqueue.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"
 #include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 boost::filesystem::path credentials;
 boost::filesystem::path sysroot;

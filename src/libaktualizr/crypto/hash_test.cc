@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "crypto.h"
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 TEST(Hash, EncodeDecode) {
   std::vector<Hash> hashes = {{Hash::Type::kSha256, "abcd"}, {Hash::Type::kSha512, "defg"}};

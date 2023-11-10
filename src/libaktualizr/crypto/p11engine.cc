@@ -13,7 +13,7 @@
 
 #include "crypto/crypto.h"
 #include "utilities/config_utils.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 P11Engine* P11EngineGuard::instance = nullptr;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 int P11EngineGuard::ref_counter = 0;            // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)

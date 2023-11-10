@@ -2,7 +2,7 @@ set(SOURCES crypto.cc
             keymanager.cc)
 
 set(HEADERS crypto.h
-            keymanager.h
+            ../../../include/libaktualizr/crypto/keymanager.h
             openssl_compat.h)
 
 set_source_files_properties(p11engine.cc PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)

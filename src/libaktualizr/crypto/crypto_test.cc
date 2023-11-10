@@ -11,7 +11,7 @@
 
 #include "crypto/crypto.h"
 #include "crypto/p11engine.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 #ifdef BUILD_P11
 #ifndef TEST_PKCS11_MODULE_PATH
