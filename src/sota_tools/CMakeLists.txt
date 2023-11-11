@@ -36,7 +36,7 @@ if (BUILD_SOTA_TOOLS)
             LibArchive::LibArchive
             CURL::libcurl
             OpenSSL::SSL
-            sodium::sodium
+            sodium
             ${GLIB2_LIBRARIES}
             ostree::ostree)
 

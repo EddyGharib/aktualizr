@@ -38,6 +38,8 @@ set(LIBOSTREE_LIBRARIES ${LIBOSTREE_LIBRARY} ${OSTREE_GLIB_LIBRARIES})
 if(NOT TARGET ostree)
     add_library(ostree SHARED IMPORTED)
 endif()
+
+set_target_properties(ostree PROPERTIES IMPORTED_GLOBAL TRUE)
 add_library(ostree::ostree ALIAS ostree)
 
 message(STATUS "ostree::ostree::INTERFACE_INCLUDE_DIRECTORIES ${LIBOSTREE_INCLUDE_DIRS}")

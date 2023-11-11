@@ -39,7 +39,7 @@ MARK_AS_ADVANCED(SQLITE3_INCLUDE_DIRS SQLITE3_LIBRARIES)
 if(NOT TARGET sqlite3)
     add_library(sqlite3 SHARED IMPORTED)
 endif()
-add_library(sqlite3::sqlite3 ALIAS sqlite3)
+# add_library(sqlite3::sqlite3 ALIAS sqlite3)
 
 message(STATUS "sqlite3::sqlite3::INTERFACE_INCLUDE_DIRECTORIES ${SQLITE3_INCLUDE_DIRS}")
 message(STATUS "sqlite3::sqlite3::IMPORTED_LOCATION ${SQLITE3_LIBRARY}")

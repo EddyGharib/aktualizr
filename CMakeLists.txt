@@ -83,6 +83,15 @@ find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
 
+message(STATUS "LibArchive_LIBRARIES ${LibArchive_LIBRARIES}")
+message(STATUS "LibArchive_INCLUDE_DIRS ${LibArchive_INCLUDE_DIRS}")
+add_library(LibArchive SHARED IMPORTED)
+set_target_properties(LibArchive PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${LibArchive_INCLUDE_DIRS}")
+set_target_properties(LibArchive PROPERTIES IMPORTED_LOCATION "${LibArchive_LIBRARY}")
+set_target_properties(LibArchive PROPERTIES INTERFACE_LINK_LIBRARIES "${LibArchive_LIBRARIES}")
+set_target_properties(LibArchive PROPERTIES IMPORTED_GLOBAL TRUE)
+add_library(LibArchive::LibArchive ALIAS LibArchive)
+
 if(NOT AKTUALIZR_VERSION)
     if (EXISTS ${PROJECT_SOURCE_DIR}/VERSION)
         file(READ ${PROJECT_SOURCE_DIR}/VERSION AKTUALIZR_VERSION)
@@ -353,9 +362,9 @@ set (AKTUALIZR_EXTERNAL_LIBS
     CURL::libcurl
     OpenSSL::SSL
     Threads::Threads
-    sodium::sodium
+    sodium
     ostree::ostree
-    sqlite3::sqlite3
+    sqlite3
     LibArchive::LibArchive
     ${GLIB2_LIBRARIES})
 

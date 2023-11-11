@@ -19,7 +19,7 @@ target_link_libraries(aktualizr-cert-provider
     LibArchive::LibArchive
     CURL::libcurl
     OpenSSL::SSL
-    sodium::sodium
+    sodium
     )
 
 if(BUILD_P11)
