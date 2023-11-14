@@ -351,6 +351,7 @@ include(CPackComponent)
 set (AKTUALIZR_EXTERNAL_LIBS
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
+    jsoncpp_lib
     CURL::libcurl
     OpenSSL::SSL
     Threads::Threads
@@ -381,16 +382,6 @@ include(CTest)
 ENABLE_TESTING()
 # It would be great to use GTEST_OUTPUT directly, but I couldn't get it to work.
 set(GOOGLE_TEST_OUTPUT --gtest_output=xml:${CMAKE_BINARY_DIR}/results/)
-
-# amalgamate jsoncpp source at compile time
-# note: jsoncpp has a CMake support that they intent to deprecate and is hard to
-# integrate with.
-execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/amalgamate-jsoncpp.sh ${CMAKE_CURRENT_SOURCE_DIR}/third_party/jsoncpp ${CMAKE_CURRENT_BINARY_DIR}/jsoncpp)
-include_directories(${PROJECT_BINARY_DIR}/jsoncpp)
-# jsoncpp triggers a number of warnings that are turned on by default in our build
-set_source_files_properties(${PROJECT_BINARY_DIR}/jsoncpp/jsoncpp.cc PROPERTIES
-    COMPILE_FLAGS "-Wno-error -Wno-float-equal -Wno-switch-default -Wno-deprecated-declarations")
-add_library(jsoncpp OBJECT ${PROJECT_BINARY_DIR}/jsoncpp/jsoncpp.cc)
 
 add_subdirectory("config")
 add_subdirectory("src")
