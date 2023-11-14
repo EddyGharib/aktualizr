@@ -6,9 +6,9 @@
 #include <json/json.h>
 
 #include "libaktualizr/logging/logging.h"
-#include "uptane/exceptions.h"
-#include "uptane/tuf.h"
+#include "libaktualizr/uptane/exceptions.h"
 #include "libaktualizr/utilities/utils.h"
+#include "uptane/tuf.h"
 
 /* Validate Root metadata. */
 TEST(Root, RootValidates) {

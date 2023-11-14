@@ -3,8 +3,8 @@
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/uptane/exceptions.h"
 #include "libaktualizr/uptane/fetcher.h"
-#include "uptane/exceptions.h"
 
 namespace Uptane {
 

@@ -1,5 +1,5 @@
 #include "libaktualizr/logging/logging.h"
-#include "uptane/exceptions.h"
+#include "libaktualizr/uptane/exceptions.h"
 #include "libaktualizr/uptane/tuf.h"
 
 using Uptane::Root;

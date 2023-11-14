@@ -1,7 +1,7 @@
 #include "iterator.h"
 
 #include "libaktualizr/storage/invstorage.h"
-#include "uptane/exceptions.h"
+#include "libaktualizr/uptane/exceptions.h"
 
 namespace Uptane {
 

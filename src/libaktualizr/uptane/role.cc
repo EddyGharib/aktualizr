@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "uptane/exceptions.h"
+#include "libaktualizr/uptane/exceptions.h"
 
 using Uptane::Role;
 using Uptane::Version;

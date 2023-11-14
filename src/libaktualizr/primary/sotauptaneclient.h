@@ -22,6 +22,7 @@
 #include "libaktualizr/bootloader/bootloader.h"
 #include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/primary/reportqueue.h"
+#include "libaktualizr/uptane/exceptions.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/uptane/imagerepository.h"
 #include "libaktualizr/uptane/tuf.h"
@@ -29,7 +30,6 @@
 #include "primary/secondary_provider_builder.h"
 #include "provisioner.h"
 #include "uptane/directorrepository.h"
-#include "uptane/exceptions.h"
 #include "uptane/iterator.h"
 #include "uptane/manifest.h"
 

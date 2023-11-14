@@ -13,7 +13,7 @@ set(SOURCES
 
 set(HEADERS
     directorrepository.h
-    exceptions.h
+    ../../../include/libaktualizr/uptane/exceptions.h
     ../../../include/libaktualizr/uptane/fetcher.h
     ../../../include/libaktualizr/uptane/imagerepository.h
     iterator.h

@@ -9,9 +9,9 @@
 #include "libaktualizr/http/httpinterface.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/uptane/exceptions.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/utilities/apiqueue.h"
-#include "uptane/exceptions.h"
 
 struct DownloadMetaStruct {
  public:

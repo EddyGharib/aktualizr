@@ -1,6 +1,6 @@
 #include "libaktualizr/uptane/fetcher.h"
 
-#include "uptane/exceptions.h"
+#include "libaktualizr/uptane/exceptions.h"
 
 namespace Uptane {
 

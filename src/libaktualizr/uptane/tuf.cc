@@ -10,7 +10,7 @@
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/types.h"
-#include "uptane/exceptions.h"
+#include "libaktualizr/uptane/exceptions.h"
 
 using Uptane::Target;
 using Uptane::Version;
