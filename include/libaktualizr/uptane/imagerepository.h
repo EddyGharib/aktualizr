@@ -16,7 +16,7 @@ class ImageRepository : public RepositoryCommon {
 
   void resetMeta();
 
-  void verifyTargets(const std::string& targets_raw, bool prefetch);
+  void verifyTargets(const std::string& targets_raw, bool prefetch, bool hash_change_expected);
 
   void verifyTimestamp(const std::string& timestamp_raw);
 
@@ -31,6 +31,7 @@ class ImageRepository : public RepositoryCommon {
   int64_t getRoleSize(const Uptane::Role& role) const;
 
   void checkMetaOffline(INvStorage& storage);
+  void updateRoot(INvStorage& storage, const IMetadataFetcher& fetcher);
   void updateMeta(INvStorage& storage, const IMetadataFetcher& fetcher) override;
 
  private:

@@ -6,6 +6,7 @@
 #include "libaktualizr/config.h"
 #include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
+#include "storage/sql_utils.h"
 
 ReportQueue::ReportQueue(const Config& config_in, std::shared_ptr<HttpInterface> http_client,
                          std::shared_ptr<INvStorage> storage_in, int run_pause_s, int event_number_limit)
@@ -55,7 +56,15 @@ void ReportQueue::enqueue(std::unique_ptr<ReportEvent> event) {
 void ReportQueue::flushQueue() {
   int64_t max_id = 0;
   Json::Value report_array{Json::arrayValue};
-  storage->loadReportEvents(&report_array, &max_id, cur_event_number_limit_);
+  try {
+    storage->loadReportEvents(&report_array, &max_id, cur_event_number_limit_);
+  } catch (const SQLException& exc) {
+    LOG_ERROR << "Failed to read events from DB: " << exc.what();
+    return;
+  } catch (const std::exception& exc) {
+    LOG_ERROR << "Unknown failure while reading events from DB: " << exc.what();
+    return;
+  }
 
   if (config.tls.server.empty()) {
     // Prevent a lot of unnecessary garbage output in uptane vector tests.
@@ -75,11 +84,8 @@ void ReportQueue::flushQueue() {
     } else if (response.http_status_code == 413) {
       if (report_array.size() > 1) {
         // if 413 is received to posting of more than one event then try sending less events next time
-        cur_event_number_limit_ = report_array.size() > 2 ? static_cast<int>(report_array.size() / 2U) : 1;
-        LOG_DEBUG << "Got 413 response to request that contains " << report_array.size() << " events. Will try to send "
-                  << cur_event_number_limit_ << " events.";
+        cur_event_number_limit_ = report_array.size() > 2 ? report_array.size() / 2 : 1;
       } else {
-        // An event is too big to be accepted by the server, let's drop it
         LOG_WARNING << "Dropping a report event " << report_array[0].get("id", "unknown") << " since the server `"
                     << config.tls.server << "` cannot digest it (413).";
         delete_events = true;

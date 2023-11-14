@@ -18,7 +18,8 @@ class SQLStorage : public SQLStorageBase, public INvStorage {
  public:
   friend class SQLTargetWHandle;
   friend class SQLTargetRHandle;
-  explicit SQLStorage(const StorageConfig& config, bool readonly);
+  explicit SQLStorage(const StorageConfig& config, bool readonly,
+                      StorageClient storage_client = StorageClient::kUptane);
   ~SQLStorage() override = default;
   SQLStorage(const SQLStorage&) = delete;
   SQLStorage(SQLStorage&&) = delete;
@@ -96,7 +97,7 @@ class SQLStorage : public SQLStorageBase, public INvStorage {
   void saveEcuReportCounter(const Uptane::EcuSerial& ecu_serial, int64_t counter) override;
   bool loadEcuReportCounter(std::vector<std::pair<Uptane::EcuSerial, int64_t>>* results) const override;
   void saveReportEvent(const Json::Value& json_value) override;
-  bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit) const override;
+  bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit = -1) const override;
   void deleteReportEvents(int64_t id_max) override;
   void clearInstallationResults() override;
 

@@ -28,6 +28,7 @@ struct PKCS11_slot_st;
 struct P11Config {
   boost::filesystem::path module;
   std::string pass;
+  std::string label;
   std::string uptane_key_id;
   std::string tls_cacert_id;
   std::string tls_pkey_id;
@@ -64,7 +65,7 @@ struct ProvisionConfig {
 };
 
 struct UptaneConfig {
-  uint64_t polling_sec{10U};
+  uint64_t polling_sec{300U};
   std::string director_server;
   std::string repo_server;
   CryptoSource key_source{CryptoSource::kFile};
@@ -150,7 +151,7 @@ struct TelemetryConfig {
   void writeToStream(std::ostream& out_stream) const;
 };
 
-enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked };
+enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked, kFioVB };
 std::ostream& operator<<(std::ostream& os, RollbackMode mode);
 
 struct BootloaderConfig {
@@ -195,7 +196,8 @@ class BaseConfig {
 
   static void checkDirs(const std::vector<boost::filesystem::path>& configs);
 
-  std::vector<boost::filesystem::path> config_dirs_ = {"/usr/lib/sota/conf.d", "/etc/sota/conf.d/"};
+  std::vector<boost::filesystem::path> config_dirs_ = {"/usr/lib/sota/conf.d", "/var/sota/sota.toml",
+                                                       "/etc/sota/conf.d/"};
 };
 
 /**

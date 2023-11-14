@@ -46,6 +46,7 @@ void BaseConfig::updateFromDirs(const std::vector<boost::filesystem::path>& conf
 void P11Config::updateFromPropertyTree(const boost::property_tree::ptree& pt) {
   CopyFromConfig(module, "module", pt);
   CopyFromConfig(pass, "pass", pt);
+  CopyFromConfig(label, "label", pt);
   CopyFromConfig(uptane_key_id, "uptane_key_id", pt);
   CopyFromConfig(tls_cacert_id, "tls_cacert_id", pt);
   CopyFromConfig(tls_pkey_id, "tls_pkey_id", pt);
@@ -55,6 +56,7 @@ void P11Config::updateFromPropertyTree(const boost::property_tree::ptree& pt) {
 void P11Config::writeToStream(std::ostream& out_stream) const {
   writeOption(out_stream, module, "module");
   writeOption(out_stream, pass, "pass");
+  writeOption(out_stream, label, "label");
   writeOption(out_stream, uptane_key_id, "uptane_key_id");
   writeOption(out_stream, tls_cacert_id, "tls_ca_id");
   writeOption(out_stream, tls_pkey_id, "tls_pkey_id");
