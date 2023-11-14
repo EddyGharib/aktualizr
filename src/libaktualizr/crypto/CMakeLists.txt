@@ -26,4 +26,4 @@ set_property(SOURCE crypto_test.cc keymanager_test.cc PROPERTY COMPILE_DEFINITIO
 
 set_tests_properties(test_crypto test_hash test_keymanager PROPERTIES LABELS "crypto")
 
-aktualizr_source_file_checks(p11engine.cc p11engine_dummy.cc p11engine.h ${TEST_SOURCES})
+aktualizr_source_file_checks(p11engine.cc p11engine_dummy.cc ../../../include/libaktualizr/crypto/p11engine.h ${TEST_SOURCES})

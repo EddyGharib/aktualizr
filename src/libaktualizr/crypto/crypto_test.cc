@@ -9,8 +9,8 @@
 #include <boost/algorithm/hex.hpp>
 #include <boost/filesystem.hpp>
 
-#include "crypto/p11engine.h"
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/crypto/p11engine.h"
 #include "libaktualizr/utilities/utils.h"
 
 #ifdef BUILD_P11

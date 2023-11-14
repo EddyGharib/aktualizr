@@ -6,10 +6,10 @@
 #include "json/json.h"
 
 #include "crypto/keymanager.h"
-#include "crypto/p11engine.h"
 #include "libaktualizr/config.h"
-#include "storage/sqlstorage.h"
+#include "libaktualizr/crypto/p11engine.h"
 #include "libaktualizr/utilities/utils.h"
+#include "storage/sqlstorage.h"
 
 #ifdef BUILD_P11
 #ifndef TEST_PKCS11_MODULE_PATH

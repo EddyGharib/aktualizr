@@ -1,4 +1,4 @@
-#include "p11engine.h"
+#include "libaktualizr/crypto/p11engine.h"
 
 P11Engine* P11EngineGuard::instance = nullptr;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 int P11EngineGuard::ref_counter = 0;            // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)

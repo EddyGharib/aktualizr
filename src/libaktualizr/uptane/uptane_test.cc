@@ -13,9 +13,9 @@
 #include <boost/filesystem.hpp>
 #include "json/json.h"
 
-#include "crypto/p11engine.h"
 #include "httpfake.h"
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/crypto/p11engine.h"
 #include "libaktualizr/secondaryinterface.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
