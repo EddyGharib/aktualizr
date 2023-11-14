@@ -9,9 +9,9 @@
 #include "crypto/openssl_compat.h"
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/http/httpinterface.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
 #include "p11engine.h"
-#include "storage/invstorage.h"
 
 // by using constexpr the compiler can optimize out method calls when the
 // feature is disabled. We won't then need to link with the actual p11 engine

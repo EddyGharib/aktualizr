@@ -3,7 +3,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 
 #include "get.h"
 #include "libaktualizr/config.h"

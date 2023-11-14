@@ -7,9 +7,9 @@
 #include <boost/filesystem.hpp>
 
 #include "libaktualizr/config.h"
-#include "package_manager/ostreemanager.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
+#include "package_manager/ostreemanager.h"
 
 boost::filesystem::path test_sysroot;
 

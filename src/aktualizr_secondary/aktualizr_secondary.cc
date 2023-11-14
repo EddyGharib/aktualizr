@@ -7,12 +7,12 @@
 #include <boost/optional.hpp>
 
 #include "libaktualizr/crypto/keymanager.h"
-#include "libaktualizr/types.h"
 #include "libaktualizr/logging/logging.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/types.h"
+#include "libaktualizr/utilities/utils.h"
 #include "update_agent.h"
 #include "uptane/manifest.h"
-#include "libaktualizr/utilities/utils.h"
 
 AktualizrSecondary::AktualizrSecondary(AktualizrSecondaryConfig config, std::shared_ptr<INvStorage> storage)
     : config_(std::move(config)),

@@ -9,7 +9,7 @@
 
 #include "aktualizr_info_config.h"
 #include "libaktualizr/logging/logging.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "storage/sql_utils.h"
 #include "utilities/aktualizr_version.h"
 

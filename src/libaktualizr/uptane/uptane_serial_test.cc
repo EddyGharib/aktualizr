@@ -10,14 +10,14 @@
 
 #include "httpfake.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/utilities/utils.h"
 #include "primary/reportqueue.h"
 #include "primary/sotauptaneclient.h"
-#include "storage/invstorage.h"
 #include "test_utils.h"
 #include "uptane/tuf.h"
 #include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
 
 namespace bpo = boost::program_options;
 

@@ -11,7 +11,7 @@ set(HEADERS ../../../include/libaktualizr/utilities/apiqueue.h
             aktualizr_version.h
             config_utils.h
             dequeue_buffer.h
-            exceptions.h
+            ../../../include/libaktualizr/utilities/exceptions.h
             fault_injection.h
             sig_handler.h
             timer.h

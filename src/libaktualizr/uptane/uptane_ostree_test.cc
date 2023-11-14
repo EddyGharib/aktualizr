@@ -4,10 +4,10 @@
 
 #include "httpfake.h"
 #include "libaktualizr/config.h"
-#include "package_manager/ostreemanager.h"
-#include "storage/invstorage.h"
-#include "uptane_test_common.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
+#include "package_manager/ostreemanager.h"
+#include "uptane_test_common.h"
 
 boost::filesystem::path test_sysroot;
 

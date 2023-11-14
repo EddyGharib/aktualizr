@@ -2,7 +2,7 @@
 #define FSSTORAGE_READ_H_
 
 #include <boost/filesystem/path.hpp>
-#include "invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 
 class FSStorageRead {
  public:

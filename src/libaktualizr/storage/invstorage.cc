@@ -1,4 +1,4 @@
-#include "invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 
 #include <unistd.h>
 #include <boost/filesystem.hpp>

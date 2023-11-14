@@ -11,10 +11,10 @@
 #include "httpfake.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
 #include "package_manager/packagemanagerfake.h"
-#include "storage/invstorage.h"
 #include "uptane/fetcher.h"
 
 // Test creating, appending and reading binary targets.

@@ -1,5 +1,5 @@
 #include "sqlstorage_base.h"
-#include "storage_exception.h"
+#include "libaktualizr/storage/storage_exception.h"
 
 #include <sys/stat.h>
 #include <boost/filesystem.hpp>

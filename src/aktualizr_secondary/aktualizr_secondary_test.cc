@@ -6,11 +6,11 @@
 
 #include "aktualizr_secondary_file.h"
 #include "crypto/keymanager.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/utilities/utils.h"
 #include "update_agent_file.h"
 #include "uptane_repo.h"
-#include "libaktualizr/utilities/utils.h"
 
 using ::testing::NiceMock;
 

@@ -10,9 +10,9 @@
 
 #include "httpfake.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "managedsecondary.h"
 #include "primary/sotauptaneclient.h"
-#include "storage/invstorage.h"
 #include "uptane_test_common.h"
 
 void initKeyTests(Config& config, Primary::VirtualSecondaryConfig& ecu_config1,

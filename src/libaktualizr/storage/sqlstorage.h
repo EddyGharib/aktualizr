@@ -5,7 +5,7 @@
 
 #include <sqlite3.h>
 
-#include "invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "sqlstorage_base.h"
 
 extern const std::vector<std::string> libaktualizr_schema_migrations;

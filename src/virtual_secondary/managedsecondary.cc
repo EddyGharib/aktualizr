@@ -8,10 +8,10 @@
 
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/uptane/imagerepository.h"
 #include "libaktualizr/uptane/tuf.h"
 #include "libaktualizr/utilities/utils.h"
-#include "storage/invstorage.h"
 #include "uptane/directorrepository.h"
 #include "uptane/manifest.h"
 

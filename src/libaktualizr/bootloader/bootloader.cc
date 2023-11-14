@@ -7,8 +7,8 @@
 
 #include <boost/filesystem/operations.hpp>
 
-#include "storage/invstorage.h"
-#include "utilities/exceptions.h"
+#include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/utilities/exceptions.h"
 #include "libaktualizr/utilities/utils.h"
 
 Bootloader::Bootloader(BootloaderConfig config, INvStorage& storage) : config_(std::move(config)), storage_(storage) {

@@ -5,11 +5,11 @@
 #include <boost/filesystem.hpp>
 
 #include "httpfake.h"
+#include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/utilities/utils.h"
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
-#include "storage/invstorage.h"
-#include "libaktualizr/utilities/utils.h"
 
 using std::string;
 using Uptane::EcuSerial;

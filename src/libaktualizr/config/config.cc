@@ -4,9 +4,9 @@
 
 #include "bootstrap/bootstrap.h"
 #include "libaktualizr/config.h"
-#include "utilities/config_utils.h"
-#include "utilities/exceptions.h"
+#include "libaktualizr/utilities/exceptions.h"
 #include "libaktualizr/utilities/utils.h"
+#include "utilities/config_utils.h"
 
 std::ostream& operator<<(std::ostream& os, ProvisionMode mode) {
   std::string mode_s;

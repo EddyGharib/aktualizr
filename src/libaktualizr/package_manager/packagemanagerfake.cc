@@ -1,8 +1,8 @@
 #include "libaktualizr/packagemanagerfactory.h"
 
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "packagemanagerfake.h"
-#include "storage/invstorage.h"
 #include "utilities/fault_injection.h"
 
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)

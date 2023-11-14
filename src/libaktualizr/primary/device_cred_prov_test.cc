@@ -9,12 +9,12 @@
 
 #include "httpfake.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/utilities/utils.h"
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
-#include "storage/invstorage.h"
 #include "uptane/uptanerepository.h"
-#include "libaktualizr/utilities/utils.h"
 
 /**
  * Verify that when provisioning with device credentials, aktualizr fails if

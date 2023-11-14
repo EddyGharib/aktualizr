@@ -2,7 +2,7 @@
 #define AKTUALIZR_SECONDARY_OSTREE_H
 
 #include "aktualizr_secondary.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 
 class OstreeUpdateAgent;
 

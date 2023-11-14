@@ -5,10 +5,10 @@
 
 #include "libaktualizr/secondaryinterface.h"
 
+#include "libaktualizr/config.h"
 #include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/http/httpinterface.h"
-#include "libaktualizr/config.h"
-#include "storage/invstorage.h"
+#include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/uptane/tuf.h"
 
 class Provisioner {

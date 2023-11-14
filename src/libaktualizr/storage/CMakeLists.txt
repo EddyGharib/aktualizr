@@ -7,11 +7,11 @@ add_custom_command(OUTPUT sql_schemas.cc sql_schemas_target
 )
 
 set(HEADERS fsstorage_read.h
-            invstorage.h
+            ../../../include/libaktualizr/storage/invstorage.h
             sql_utils.h
             sqlstorage.h
             sqlstorage_base.h
-            storage_exception.h)
+            ../../../include/libaktualizr/storage/storage_exception.h)
 
 set(SOURCES fsstorage_read.cc
             invstorage.cc
