@@ -5,8 +5,8 @@
 #include <boost/filesystem.hpp>
 #include "json/json.h"
 
-#include "crypto/keymanager.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/crypto/p11engine.h"
 #include "libaktualizr/utilities/utils.h"
 #include "storage/sqlstorage.h"

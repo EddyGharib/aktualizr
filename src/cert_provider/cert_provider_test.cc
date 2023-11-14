@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 

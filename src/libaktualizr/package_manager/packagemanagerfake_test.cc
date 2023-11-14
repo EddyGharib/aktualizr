@@ -7,15 +7,15 @@
 
 #include <boost/filesystem.hpp>
 
-#include "crypto/keymanager.h"
 #include "httpfake.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
+#include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/utilities/utils.h"
 #include "package_manager/packagemanagerfake.h"
-#include "uptane/fetcher.h"
 
 // Test creating, appending and reading binary targets.
 TEST(PackageManagerFake, Binary) {

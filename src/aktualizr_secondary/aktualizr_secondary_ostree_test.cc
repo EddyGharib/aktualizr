@@ -2,6 +2,7 @@
 
 #include <ostree.h>
 
+#include "boost/filesystem/fstream.hpp"
 #include "boost/algorithm/string/trim.hpp"
 #include "boost/process.hpp"
 
@@ -154,6 +155,11 @@ class AktualizrSecondaryWrapper {
   std::shared_ptr<AktualizrSecondaryOstree> secondary_;
 };
 
+void load_string_file(const boost::filesystem::path& fpath, std::string& s) {
+  boost::filesystem::ifstream ifs(fpath);
+  ifs >> s;
+}
+
 class UptaneRepoWrapper {
  public:
   UptaneRepoWrapper() { uptane_repo_.generateRepo(KeyType::kED25519); }
@@ -171,21 +177,21 @@ class UptaneRepoWrapper {
     Uptane::MetaBundle meta_bundle;
     std::string metadata;
 
-    boost::filesystem::load_string_file(director_dir_ / "root.json", metadata);
+    load_string_file(director_dir_ / "root.json", metadata);
     meta_bundle.insert({std::make_pair(Uptane::RepositoryType::Director(), Uptane::Role::Root()), std::move(metadata)});
-    boost::filesystem::load_string_file(director_dir_ / "targets.json", metadata);
+    load_string_file(director_dir_ / "targets.json", metadata);
     meta_bundle.insert(
         {std::make_pair(Uptane::RepositoryType::Director(), Uptane::Role::Targets()), std::move(metadata)});
 
-    boost::filesystem::load_string_file(imagerepo_dir_ / "root.json", metadata);
+    load_string_file(imagerepo_dir_ / "root.json", metadata);
     meta_bundle.insert({std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Root()), std::move(metadata)});
-    boost::filesystem::load_string_file(imagerepo_dir_ / "timestamp.json", metadata);
+    load_string_file(imagerepo_dir_ / "timestamp.json", metadata);
     meta_bundle.insert(
         {std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Timestamp()), std::move(metadata)});
-    boost::filesystem::load_string_file(imagerepo_dir_ / "snapshot.json", metadata);
+    load_string_file(imagerepo_dir_ / "snapshot.json", metadata);
     meta_bundle.insert(
         {std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Snapshot()), std::move(metadata)});
-    boost::filesystem::load_string_file(imagerepo_dir_ / "targets.json", metadata);
+    load_string_file(imagerepo_dir_ / "targets.json", metadata);
     meta_bundle.insert({std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Targets()), std::move(metadata)});
 
     return meta_bundle;
@@ -193,7 +199,7 @@ class UptaneRepoWrapper {
 
   std::shared_ptr<std::string> getImageData(const std::string& targetname) const {
     auto image_data = std::make_shared<std::string>();
-    boost::filesystem::load_string_file(root_dir_ / targetname, *image_data);
+    load_string_file(root_dir_ / targetname, *image_data);
     return image_data;
   }
 

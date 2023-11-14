@@ -14,7 +14,7 @@
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
-#include "uptane/uptanerepository.h"
+#include "libaktualizr/uptane/uptanerepository.h"
 
 /**
  * Verify that when provisioning with device credentials, aktualizr fails if

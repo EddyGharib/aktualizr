@@ -7,10 +7,10 @@
 
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
+#include "libaktualizr/logging/logging.h"
 #include "libaktualizr/storage/invstorage.h"
-#include "logging/logging.h"
+#include "libaktualizr/utilities/utils.h"
 #include "primary/sotauptaneclient.h"
-#include "utilities/utils.h"
 
 using std::string;
 

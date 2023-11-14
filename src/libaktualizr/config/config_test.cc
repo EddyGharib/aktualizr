@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #include <boost/algorithm/hex.hpp>

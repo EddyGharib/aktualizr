@@ -3,9 +3,9 @@
 #include <boost/process.hpp>
 
 #include "authenticate.h"
-#include "crypto/crypto.h"
 #include "deploy.h"
 #include "garage_common.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "ostree_dir_repo.h"
 #include "ostree_http_repo.h"
 #include "ostree_ref.h"

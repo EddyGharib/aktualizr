@@ -4,11 +4,11 @@
 #include <boost/tokenizer.hpp>
 
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/uptane/imagerepository.h"
+#include "libaktualizr/utilities/utils.h"
 #include "storage/sql_utils.h"
 #include "storage/sqlstorage.h"
 #include "uptane/directorrepository.h"
-#include "uptane/imagerepository.h"
-#include "libaktualizr/utilities/utils.h"
 
 boost::filesystem::path test_data_dir;
 

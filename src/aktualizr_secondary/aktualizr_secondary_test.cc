@@ -1,11 +1,14 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <fstream>
+
+#include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/optional/optional_io.hpp>
 
 #include "aktualizr_secondary_file.h"
-#include "crypto/keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
@@ -72,6 +75,11 @@ class AktualizrSecondaryWrapper {
   std::shared_ptr<INvStorage> storage_;
 };
 
+void load_string_file(const boost::filesystem::path& fpath, std::string& s) {
+  boost::filesystem::ifstream ifs(fpath);
+  ifs >> s;
+}
+
 class UptaneRepoWrapper {
  public:
   UptaneRepoWrapper() { uptane_repo_.generateRepo(KeyType::kED25519); }
@@ -130,20 +138,20 @@ class UptaneRepoWrapper {
     Uptane::MetaBundle meta_bundle;
     std::string metadata;
 
-    boost::filesystem::load_string_file(director_dir_ / "root.json", metadata);
+    load_string_file(director_dir_ / "root.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Director(), Uptane::Role::Root()), std::move(metadata));
-    boost::filesystem::load_string_file(director_dir_ / "targets.json", metadata);
+    load_string_file(director_dir_ / "targets.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Director(), Uptane::Role::Targets()),
                         std::move(metadata));
 
-    boost::filesystem::load_string_file(imagerepo_dir_ / "root.json", metadata);
+    load_string_file(imagerepo_dir_ / "root.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Root()), std::move(metadata));
-    boost::filesystem::load_string_file(imagerepo_dir_ / "timestamp.json", metadata);
+    load_string_file(imagerepo_dir_ / "timestamp.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Timestamp()),
                         std::move(metadata));
-    boost::filesystem::load_string_file(imagerepo_dir_ / "snapshot.json", metadata);
+    load_string_file(imagerepo_dir_ / "snapshot.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Snapshot()), std::move(metadata));
-    boost::filesystem::load_string_file(imagerepo_dir_ / "targets.json", metadata);
+    load_string_file(imagerepo_dir_ / "targets.json", metadata);
     meta_bundle.emplace(std::make_pair(Uptane::RepositoryType::Image(), Uptane::Role::Targets()), std::move(metadata));
 
     return meta_bundle;

@@ -293,11 +293,6 @@ class SecondaryMock : public MsgDispatcher {
   }
 
   MsgHandler::ReturnCode uploadDataHdlr(Asn1Message& in_msg, Asn1Message& out_msg) {
-    if (in_msg.uploadDataReq()->data.size < 0) {
-      out_msg.present(AKIpUptaneMes_PR_uploadDataResp).uploadDataResp()->result = AKInstallationResult_failure;
-      return ReturnCode::kOk;
-    }
-
     size_t data_size = static_cast<size_t>(in_msg.uploadDataReq()->data.size);
     auto result = receiveImageData(in_msg.uploadDataReq()->data.buf, data_size);
 

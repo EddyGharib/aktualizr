@@ -10,11 +10,11 @@
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
-#include "package_manager/ostreemanager.h"
+#include "libaktualizr/package_manager/ostreemanager.h"
+#include "libaktualizr/uptane/fetcher.h"
+#include "libaktualizr/uptane/imagerepository.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"
-#include "uptane/fetcher.h"
-#include "uptane/imagerepository.h"
 
 class TufRepoMock {
  public:

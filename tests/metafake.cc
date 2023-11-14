@@ -8,7 +8,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "uptane_repo.h"
-#include "utilities/utils.h"
+#include "libaktualizr/utilities/utils.h"
 
 namespace {
 // Extracted out of metafake.h

@@ -18,14 +18,14 @@
 #include "libaktualizr/crypto/p11engine.h"
 #include "libaktualizr/secondaryinterface.h"
 #include "libaktualizr/storage/invstorage.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/uptane/uptanerepository.h"
 #include "libaktualizr/utilities/utils.h"
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/fsstorage_read.h"
 #include "test_utils.h"
-#include "uptane/tuf.h"
-#include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
 
 #ifdef BUILD_P11

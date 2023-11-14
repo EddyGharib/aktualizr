@@ -7,8 +7,8 @@
 
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/uptane/exceptions.h"
+#include "libaktualizr/uptane/tuf.h"
 #include "libaktualizr/utilities/utils.h"
-#include "uptane/tuf.h"
 
 /* Validate Root metadata. */
 TEST(Root, RootValidates) {
