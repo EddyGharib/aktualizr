@@ -3,7 +3,6 @@
 
 #include <future>
 #include <memory>
-#include <set>
 
 #include <curl/curl.h>
 #include "gtest/gtest_prod.h"
@@ -26,8 +25,7 @@ class CurlGlobalInitWrapper {
 
 class HttpClient : public HttpInterface {
  public:
-  explicit HttpClient(const std::vector<std::string> *extra_headers = nullptr,
-                      const std::set<std::string> *response_header_names = nullptr);
+  explicit HttpClient(const std::vector<std::string> *extra_headers = nullptr);
   explicit HttpClient(const std::string &socket);
   HttpClient(const HttpClient &curl_in);  // non-default!
   ~HttpClient() override;
@@ -58,9 +56,6 @@ class HttpClient : public HttpInterface {
   curl_slist *headers;
   HttpResponse perform(CURL *curl_handler, int retry_times, int64_t size_limit);
   static curl_slist *curl_slist_dup(curl_slist *sl);
-  virtual CURL *dupHandle(CURL *const curl_in, const bool using_pkcs11) {
-    return Utils::curlDupHandleWrapper(curl_in, using_pkcs11, nullptr);
-  }
 
   std::unique_ptr<TemporaryFile> tls_ca_file;
   std::unique_ptr<TemporaryFile> tls_cert_file;
@@ -77,29 +72,5 @@ class HttpClient : public HttpInterface {
   }
   bool pkcs11_key{false};
   bool pkcs11_cert{false};
-  std::set<std::string> response_header_names_;
 };
-
-class HttpClientWithShare : public HttpClient {
- public:
-  explicit HttpClientWithShare(const std::vector<std::string> *extra_headers = nullptr,
-                               const std::set<std::string> *response_header_names = nullptr);
-  explicit HttpClientWithShare(const std::string &socket);
-  HttpClientWithShare(const HttpClientWithShare &curl_in);  // non-default!
-  ~HttpClientWithShare() override;
-  HttpClientWithShare(HttpClientWithShare &&) = delete;
-  HttpClientWithShare &operator=(const HttpClientWithShare &) = delete;
-  HttpClientWithShare &operator=(HttpClientWithShare &&) = delete;
-
- protected:
-  CURL *dupHandle(CURL *const curl_in, const bool using_pkcs11) override {
-    return Utils::curlDupHandleWrapper(curl_in, using_pkcs11, share_);
-  }
-  void initCurlShare();
-
- private:
-  CURLSH *share_{nullptr};
-  std::array<std::mutex, CURL_LOCK_DATA_LAST> curl_share_mutexes;
-};
-
 #endif

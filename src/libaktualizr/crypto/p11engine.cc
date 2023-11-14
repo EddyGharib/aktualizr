@@ -60,17 +60,13 @@ P11SlotsWrapper::~P11SlotsWrapper() {
   }
 }
 
-P11Engine::P11Engine(boost::filesystem::path module_path, std::string pass, std::string label)
-    : module_path_(std::move(module_path)),
-      pass_{std::move(pass)},
-      label_{std::move(label)},
-      ctx_(module_path_),
-      wslots_(ctx_.get()) {
+P11Engine::P11Engine(boost::filesystem::path module_path, std::string pass)
+    : module_path_(std::move(module_path)), pass_{std::move(pass)}, ctx_(module_path_), wslots_(ctx_.get()) {
   if (module_path_.empty()) {
     return;
   }
 
-  PKCS11_SLOT* slot = findTokenSlot();
+  PKCS11_SLOT* slot = PKCS11_find_token(ctx_.get(), wslots_.get_slots(), wslots_.get_nslots());
   if ((slot == nullptr) || (slot->token == nullptr)) {
     throw std::runtime_error("Couldn't find pkcs11 token");
   }
@@ -82,7 +78,7 @@ P11Engine::P11Engine(boost::filesystem::path module_path, std::string pass, std:
   LOG_DEBUG << "Slot token model.......: " << slot->token->model;
   LOG_DEBUG << "Slot token serialnr....: " << slot->token->serialnr;
 
-  uri_prefix_ = std::string("pkcs11:serial=") + slot->token->serialnr + ";pin-value=" + pass_ + ";id=%";
+  uri_prefix_ = std::string("pkcs11:serial=") + slot->token->serialnr + ";pin-value=" + pass + ";id=%";
 
   ENGINE_load_builtin_engines();
   ENGINE* engine = ENGINE_by_id("dynamic");
@@ -149,26 +145,9 @@ boost::filesystem::path P11Engine::findPkcsLibrary() {
 }
 
 PKCS11_SLOT* P11Engine::findTokenSlot() const {
-  PKCS11_SLOT* slot{nullptr};
-  PKCS11_TOKEN* tok;
-  const auto nslot{wslots_.get_nslots()};
-
-  if (label_.empty()) {
-    LOG_WARNING << "Token label missing. Using 1st initialized token.";
-    slot = PKCS11_find_token(ctx_.get(), wslots_.get_slots(), wslots_.get_nslots());
-  } else {
-    auto iterslot{wslots_.get_slots()};
-    for (unsigned int i = 0; i < nslot; i++, iterslot++) {
-      if (iterslot != nullptr && (tok = iterslot->token) != nullptr) {
-        if (label_ == tok->label) {
-          slot = iterslot;
-          break;
-        }
-      }
-    }
-  }
+  PKCS11_SLOT* slot = PKCS11_find_token(ctx_.get(), wslots_.get_slots(), wslots_.get_nslots());
   if ((slot == nullptr) || (slot->token == nullptr)) {
-    LOG_ERROR << "Couldn't find a token with label " << label_;
+    LOG_ERROR << "Couldn't find a token";
     return nullptr;
   }
   int rv;

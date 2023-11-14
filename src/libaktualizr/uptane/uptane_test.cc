@@ -1400,7 +1400,6 @@ TEST(Uptane, Pkcs11Provision) {
   config.tls.pkey_source = CryptoSource::kPkcs11;
   config.p11.module = TEST_PKCS11_MODULE_PATH;
   config.p11.pass = "1234";
-  config.p11.label = "Virtual token";
   config.p11.tls_clientcert_id = "01";
   config.p11.tls_pkey_id = "02";
   config.import.base_path = (temp_dir / "import").string();

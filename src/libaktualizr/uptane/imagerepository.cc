@@ -118,7 +118,7 @@ void ImageRepository::fetchTargets(INvStorage& storage, const IMetadataFetcher& 
 
   const int remote_version = extractVersionUntrusted(image_targets);
 
-  verifyTargets(image_targets, false, false);
+  verifyTargets(image_targets, false);
 
   if (local_version > remote_version) {
     throw Uptane::SecurityException(RepositoryType::IMAGE, "Rollback attempt");
@@ -164,7 +164,7 @@ int ImageRepository::getRoleVersion(const Uptane::Role& role) const { return sna
 
 int64_t ImageRepository::getRoleSize(const Uptane::Role& role) const { return snapshot.role_size(role); }
 
-void ImageRepository::verifyTargets(const std::string& targets_raw, bool prefetch, bool hash_change_expected) {
+void ImageRepository::verifyTargets(const std::string& targets_raw, bool prefetch) {
   try {
     verifyRoleHashes(targets_raw, Uptane::Role::Targets(), prefetch);
 
@@ -178,15 +178,12 @@ void ImageRepository::verifyTargets(const std::string& targets_raw, bool prefetc
     if (targets->version() != snapshot.role_version(Uptane::Role::Targets())) {
       throw Uptane::VersionMismatch(RepositoryType::IMAGE, Uptane::Role::TARGETS);
     }
-  } catch (const Uptane::SecurityException& e) {
-    if (hash_change_expected) {
-      LOG_DEBUG << "Signature verification for Image repo Targets metadata failed: " << e.what();
-    } else {
-      LOG_ERROR << "Signature verification for Image repo Targets metadata failed: " << e.what();
-    }
-    throw;
   } catch (const Exception& e) {
-    LOG_ERROR << "Signature verification for Image repo Targets metadata failed: " << e.what();
+    if (!prefetch) {
+      LOG_ERROR << "Verification for Image repo Targets metadata failed";
+    } else {
+      LOG_DEBUG << "Verification for local Image repo Targets metadata failed";
+    }
     throw;
   }
 }
@@ -215,17 +212,10 @@ void ImageRepository::checkTargetsExpired() {
   }
 }
 
-void ImageRepository::updateRoot(INvStorage& storage, const IMetadataFetcher& fetcher) {
-  resetMeta();
-  RepositoryCommon::updateRoot(storage, fetcher, RepositoryType::Image());
-}
-
 void ImageRepository::updateMeta(INvStorage& storage, const IMetadataFetcher& fetcher) {
-  const auto timestamp_stored_signature{timestamp.isInitialized() ? timestamp.signature() : ""};
-  bool snapshot_updated = false;
-  auto prev_timestamp = timestamp;
+  resetMeta();
 
-  updateRoot(storage, fetcher);
+  updateRoot(storage, fetcher, RepositoryType::Image());
 
   // Update Image repo Timestamp metadata
   {
@@ -242,6 +232,7 @@ void ImageRepository::updateMeta(INvStorage& storage, const IMetadataFetcher& fe
       local_version = -1;
     }
 
+    const auto timestamp_stored_signature{timestamp.isInitialized() ? timestamp.signature() : ""};
     verifyTimestamp(image_timestamp);
 
     if (local_version > remote_version) {
@@ -268,14 +259,6 @@ void ImageRepository::updateMeta(INvStorage& storage, const IMetadataFetcher& fe
         verifySnapshot(image_snapshot_stored, true);
         fetch_snapshot = false;
         LOG_DEBUG << "Skipping Image repo Snapshot download; stored version is still current.";
-      } catch (const Uptane::SecurityException& e) {
-        if (!prev_timestamp.isInitialized() || prev_timestamp.snapshot_hashes() != timestamp.snapshot_hashes()) {
-          // There were updates in the snapshot hashes within the timestamp meta, so we expect the current snapshot to
-          // be invalid, and there is no need to report an error
-          LOG_DEBUG << "Image repo Snapshot verification failed: " << e.what();
-        } else {
-          LOG_ERROR << "Image repo Snapshot verification failed: " << e.what();
-        }
       } catch (const Uptane::Exception& e) {
         LOG_INFO << "Downloading new Image repo Snapshot metadata because verification of local copy failed: "
                  << e.what();
@@ -288,7 +271,6 @@ void ImageRepository::updateMeta(INvStorage& storage, const IMetadataFetcher& fe
     // If we don't, attempt to fetch the latest.
     if (fetch_snapshot) {
       fetchSnapshot(storage, fetcher, local_version);
-      snapshot_updated = true;
     }
 
     checkSnapshotExpired();
@@ -303,15 +285,9 @@ void ImageRepository::updateMeta(INvStorage& storage, const IMetadataFetcher& fe
     std::string image_targets_stored;
     if (storage.loadNonRoot(&image_targets_stored, RepositoryType::Image(), Role::Targets())) {
       try {
-        verifyTargets(image_targets_stored, true, snapshot_updated);
+        verifyTargets(image_targets_stored, true);
         fetch_targets = false;
         LOG_DEBUG << "Skipping Image repo Targets download; stored version is still current.";
-      } catch (const Uptane::SecurityException& e) {
-        if (snapshot_updated) {
-          LOG_DEBUG << "Image repo Target verification failed: " << e.what();
-        } else {
-          LOG_ERROR << "Image repo Target verification failed: " << e.what();
-        }
       } catch (const std::exception& e) {
         LOG_INFO << "Downloading new Image repo Targets metadata because verification of local copy failed: "
                  << e.what();
@@ -379,7 +355,7 @@ void ImageRepository::checkMetaOffline(INvStorage& storage) {
       throw Uptane::SecurityException(RepositoryType::IMAGE, "Could not load Image role");
     }
 
-    verifyTargets(image_targets, false, false);
+    verifyTargets(image_targets, false);
 
     checkTargetsExpired();
   }

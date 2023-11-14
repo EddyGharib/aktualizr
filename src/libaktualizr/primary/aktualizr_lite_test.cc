@@ -228,8 +228,6 @@ class AkliteMock {
   std::shared_ptr<PackageManagerInterface> package_manager_;
   std::shared_ptr<Uptane::Fetcher> fetcher_;
   Uptane::ImageRepository image_repo_;
-
-  FRIEND_TEST(AkliteTest, hashMismatchLogsTest);
 };
 
 class AkliteTest : public ::testing::Test {
@@ -260,15 +258,6 @@ class AkliteTest : public ::testing::Test {
   boost::filesystem::path& sysrootPath() { return sysroot_path_; }
   Config& conf() { return conf_; }
 
-  static void corruptStoredMetadata(std::shared_ptr<INvStorage> storage, const Uptane::Role& role) {
-    std::string metadata_stored;
-    EXPECT_TRUE(storage->loadNonRoot(&metadata_stored, Uptane::RepositoryType::Image(), role));
-    logger_set_threshold(boost::log::trivial::error);
-    EXPECT_EQ('{', metadata_stored[0]);
-    metadata_stored[0] = '[';
-    storage->storeNonRoot(metadata_stored, Uptane::RepositoryType::Image(), role);
-  }
-
  private:
   TemporaryDirectory test_dir_;
   TufRepoMock tuf_repo_;
@@ -297,93 +286,6 @@ TEST_F(AkliteTest, ostreeUpdate) {
     AkliteMock aklite{conf()};
     ASSERT_TRUE(aklite.isTargetCurrent(target_to_install));
   }
-}
-
-/*
- * Test that verifies if metadata files are being stored when there are changes and also not being stored
- * when the files have not changed.
- */
-TEST_F(AkliteTest, timestampStoreLogsTest) {
-  AkliteMock aklite{conf()};
-  std::string log_output;
-  tufRepo().add_target("target-01", treehub().getRev(), "primary_hw");
-
-  // On first update, metadata is expected to be stored
-  testing::internal::CaptureStdout();
-  logger_set_threshold(boost::log::trivial::debug);
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_NE(std::string::npos, log_output.find("Storing timestamp for image repo"));
-  EXPECT_NE(std::string::npos, log_output.find("Storing snapshot for image repo"));
-  EXPECT_NE(std::string::npos, log_output.find("Storing targets for image repo"));
-
-  // If there were no changes, no metadata should be stored
-  testing::internal::CaptureStdout();
-  logger_set_threshold(boost::log::trivial::debug);
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(std::string::npos, log_output.find("Storing timestamp for image repo"));
-  EXPECT_EQ(std::string::npos, log_output.find("Storing snapshot for image repo"));
-  EXPECT_EQ(std::string::npos, log_output.find("Storing targets for image repo"));
-}
-
-/*
- * Test that verifies if hash verification failures for targets and snapshot have the expected severity:
- *  - Debug when a hash mismatch is expected, e.g., when snapshot hashes change inside the timestamp metadata;
- *  - Error when the hash mismatch is not expected
- */
-TEST_F(AkliteTest, hashMismatchLogsTest) {
-  AkliteMock aklite{conf()};
-  std::string log_output;
-  tufRepo().add_target("target-01", treehub().getRev(), "primary_hw");
-  aklite.update();
-
-  // First, verify error output
-  logger_set_threshold(boost::log::trivial::error);
-
-  // Corrupt stored targets metadata and verify that the expected errors messages are generated
-  corruptStoredMetadata(aklite.storage_, Uptane::Role::Targets());
-  testing::internal::CaptureStdout();
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
-
-  // Corrupt stored snapshot metadata and verify that the expected error message is generated
-  corruptStoredMetadata(aklite.storage_, Uptane::Role::Snapshot());
-  testing::internal::CaptureStdout();
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_NE(std::string::npos,
-            log_output.find("Image repo Snapshot verification failed: Snapshot metadata hash verification failed"));
-
-  // No metadata corruption: no errors should be generated
-  testing::internal::CaptureStdout();
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_TRUE(log_output.empty());
-
-  // Targets updated, no metadata corruption: no errors should be generated
-  tufRepo().add_target("target-02", treehub().getRev(), "primary_hw");
-  testing::internal::CaptureStdout();
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_TRUE(log_output.empty());
-
-  // Verify debug output
-  logger_set_threshold(boost::log::trivial::debug);
-
-  // Targets updated, no metadata corruption: verify expected debug messages
-  tufRepo().add_target("target-03", treehub().getRev(), "primary_hw");
-  testing::internal::CaptureStdout();
-  aklite.update();
-  log_output = testing::internal::GetCapturedStdout();
-  EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos,
-            log_output.find("Image repo Snapshot verification failed: Snapshot metadata hash verification failed"));
 }
 
 #ifndef __NO_MAIN__

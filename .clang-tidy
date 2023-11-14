@@ -13,7 +13,6 @@ Checks:          >-
   modernize-*,-modernize-avoid-bind,-modernize-loop-convert,-modernize-use-trailing-return-type,
   performance-*,
   readability-*,-readability-else-after-return,-readability-identifier-naming,-readability-magic-numbers,-readability-function-cognitive-complexity,
-  -modernize-use-nodiscard,
 
 WarningsAsErrors: '*'
 AnalyzeTemporaryDtors: false

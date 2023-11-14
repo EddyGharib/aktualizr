@@ -3,9 +3,8 @@
 #include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/storage/invstorage.h"
 
-std::string aktualizrGet(Config &config, const std::string &url, const std::vector<std::string> &headers,
-                         StorageClient storage_client) {
-  auto storage = INvStorage::newStorage(config.storage, false, storage_client);
+std::string aktualizrGet(Config &config, const std::string &url, const std::vector<std::string> &headers) {
+  auto storage = INvStorage::newStorage(config.storage);
   storage->importData(config.import);
 
   auto client = std_::make_unique<HttpClient>(&headers);

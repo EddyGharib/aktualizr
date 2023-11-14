@@ -68,7 +68,6 @@ class P11Engine {
  private:
   const boost::filesystem::path module_path_;
   const std::string pass_;
-  const std::string label_;
   ENGINE *ssl_engine_{nullptr};
   std::string uri_prefix_;
   P11ContextWrapper ctx_;
@@ -77,7 +76,7 @@ class P11Engine {
   static boost::filesystem::path findPkcsLibrary();
   PKCS11_slot_st *findTokenSlot() const;
 
-  explicit P11Engine(boost::filesystem::path module_path, std::string pass, std::string label);
+  explicit P11Engine(boost::filesystem::path module_path, std::string pass);
 
   friend class P11EngineGuard;
   FRIEND_TEST(crypto, findPkcsLibrary);
@@ -85,9 +84,9 @@ class P11Engine {
 
 class P11EngineGuard {
  public:
-  explicit P11EngineGuard(boost::filesystem::path module_path, std::string pass, std::string label) {
+  explicit P11EngineGuard(boost::filesystem::path module_path, std::string pass) {
     if (instance == nullptr) {
-      instance = new P11Engine(std::move(module_path), std::move(pass), std::move(label));
+      instance = new P11Engine(std::move(module_path), std::move(pass));
     }
     ++ref_counter;
   }

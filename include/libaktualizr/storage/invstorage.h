@@ -17,8 +17,6 @@ class INvStorage;
 class FSStorageRead;
 class SQLStorage;
 
-enum class StorageClient { kUptane = 0, kTUF = 1 };
-
 using store_data_t = void (INvStorage::*)(const std::string&);
 using load_data_t = bool (INvStorage::*)(std::string*) const;
 
@@ -44,8 +42,7 @@ enum class InstalledVersionUpdateMode { kNone, kCurrent, kPending };
 // store* functions normally write the complete content. save* functions just add an entry.
 class INvStorage {
  public:
-  explicit INvStorage(StorageConfig config, StorageClient client = StorageClient::kUptane)
-      : config_(std::move(config)), client_(client) {}
+  explicit INvStorage(StorageConfig config) : config_(std::move(config)) {}
   virtual ~INvStorage() = default;
   INvStorage(const INvStorage&) = delete;
   INvStorage(INvStorage&&) = delete;
@@ -137,7 +134,7 @@ class INvStorage {
   virtual bool loadEcuReportCounter(std::vector<std::pair<Uptane::EcuSerial, int64_t>>* results) const = 0;
 
   virtual void saveReportEvent(const Json::Value& json_value) = 0;
-  virtual bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit = -1) const = 0;
+  virtual bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit) const = 0;
   virtual void deleteReportEvents(int64_t id_max) = 0;
 
   virtual void storeDeviceDataHash(const std::string& data_type, const std::string& hash) = 0;
@@ -151,8 +148,7 @@ class INvStorage {
   virtual void deleteTargetInfo(const std::string& targetname) const = 0;
 
   // Special constructors and utilities
-  static std::shared_ptr<INvStorage> newStorage(const StorageConfig& config, bool readonly = false,
-                                                StorageClient client = StorageClient::kUptane);
+  static std::shared_ptr<INvStorage> newStorage(const StorageConfig& config, bool readonly = false);
   static void FSSToSQLS(FSStorageRead& fs_storage, SQLStorage& sql_storage);
   static bool fsReadInstalledVersions(const boost::filesystem::path& filename,
                                       std::vector<Uptane::Target>* installed_versions, size_t* current_version);
@@ -191,9 +187,6 @@ class INvStorage {
 
  protected:
   const StorageConfig config_;
-
- private:
-  StorageClient client_;
 };
 
 #endif  // INVSTORAGE_H_

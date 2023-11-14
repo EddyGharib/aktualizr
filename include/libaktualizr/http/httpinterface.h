@@ -17,18 +17,15 @@ using CurlHandler = std::shared_ptr<CURL>;
 struct HttpResponse {
   HttpResponse() = default;
   HttpResponse(std::string body_in, const long http_status_code_in,  //  NOLINT(google-runtime-int)
-               CURLcode curl_code_in, std::string error_message_in,
-               std::unordered_map<std::string, std::string> &&headers_in = {})
+               CURLcode curl_code_in, std::string error_message_in)
       : body(std::move(body_in)),
         http_status_code(http_status_code_in),
         curl_code(curl_code_in),
-        error_message(std::move(error_message_in)),
-        headers{headers_in} {}
+        error_message(std::move(error_message_in)) {}
   std::string body;
   long http_status_code{0};  // NOLINT(google-runtime-int)
   CURLcode curl_code{CURLE_OK};
   std::string error_message;
-  std::unordered_map<std::string, std::string> headers;
   bool isOk() const { return (curl_code == CURLE_OK && http_status_code >= 200 && http_status_code < 400); }
   bool wasInterrupted() const { return curl_code == CURLE_ABORTED_BY_CALLBACK; };
   std::string getStatusStr() const {

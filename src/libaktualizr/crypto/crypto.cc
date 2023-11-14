@@ -350,22 +350,6 @@ std::string Crypto::extractSubjectCN(const std::string &cert) {
   return std::string(buf.get());
 }
 
-std::string Crypto::extractSubjectBC(const std::string &cert) {
-  StructGuard<BIO> bio(BIO_new_mem_buf(const_cast<char *>(cert.c_str()), static_cast<int>(cert.size())), BIO_vfree);
-  StructGuard<X509> x(PEM_read_bio_X509(bio.get(), nullptr, nullptr, nullptr), X509_free);
-  if (x == nullptr) {
-    throw std::runtime_error("Could not parse certificate");
-  }
-
-  int len = X509_NAME_get_text_by_NID(X509_get_subject_name(x.get()), NID_businessCategory, nullptr, 0);
-  if (len < 0) {
-    return "";
-  }
-  boost::scoped_array<char> buf(new char[len + 1]);
-  X509_NAME_get_text_by_NID(X509_get_subject_name(x.get()), NID_businessCategory, buf.get(), len + 1);
-  return std::string(buf.get());
-}
-
 StructGuard<EVP_PKEY> Crypto::generateRSAKeyPairEVP(KeyType key_type) {
   int bits;
   switch (key_type) {

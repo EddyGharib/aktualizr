@@ -27,7 +27,7 @@ KeyManager::KeyManager(std::shared_ptr<INvStorage> backend, KeyManagerConfig con
     : backend_(std::move(backend)), config_(std::move(config)) {
   if (built_with_p11) {
     if (!p11) {
-      p11_ = std::make_shared<P11EngineGuard>(config_.p11.module, config_.p11.pass, config_.p11.label);
+      p11_ = std::make_shared<P11EngineGuard>(config_.p11.module, config_.p11.pass);
     } else {
       p11_ = p11;
     }
@@ -187,24 +187,6 @@ std::string KeyManager::getCN() const {
   }
 
   return Crypto::extractSubjectCN(cert);
-}
-
-std::string KeyManager::getBC() const {
-  const std::string not_found_cert_message = "Certificate is not found, can't extract device_id";
-  std::string cert;
-  if (config_.tls_cert_source == CryptoSource::kFile) {
-    if (!backend_->loadTlsCert(&cert)) {
-      throw std::runtime_error(not_found_cert_message);
-    }
-  } else {  // CryptoSource::kPkcs11
-    if (!built_with_p11) {
-      throw std::runtime_error("Aktualizr was built without PKCS#11 support, can't extract device_id");
-    }
-    if (!(*p11_)->readTlsCert(config_.p11.tls_clientcert_id, &cert)) {
-      throw std::runtime_error(not_found_cert_message);
-    }
-  }
-  return Crypto::extractSubjectBC(cert);
 }
 
 void KeyManager::getCertInfo(std::string *subject, std::string *issuer, std::string *not_before,

@@ -248,23 +248,17 @@ void OstreeManager::completeInstall() const {
 }
 
 data::InstallationResult OstreeManager::finalizeInstall(const Uptane::Target &target) {
-  const std::string current_hash = getCurrentHash();
-
   if (!bootloader_->rebootDetected()) {
-    // A device can be rebooted in the middle of the "finalization" process, specifically, right after the reboot flag
-    // is cleared and before the pending target is marked as current. So, if a device is in such a state and gets
-    // rebooted, the client will run "finalization" again to apply the pending target. Since the device is already
-    // booted on the pending target, the "finalization" process should return "Ok." Returning "NeedCompletion" in this
-    // case may result in an endless loop of device reboots.
-    return current_hash == target.sha256Hash()
-               ? data::InstallationResult(data::ResultCode::Numeric::kOk, "Already booted on the required version")
-               : data::InstallationResult(data::ResultCode::Numeric::kNeedCompletion,
-                                          "Reboot is required for the pending update application");
+    return data::InstallationResult(data::ResultCode::Numeric::kNeedCompletion,
+                                    "Reboot is required for the pending update application");
   }
+
+  LOG_INFO << "Checking installation of new OSTree sysroot";
+  const std::string current_hash = getCurrentHash();
 
   data::InstallationResult install_result =
       data::InstallationResult(data::ResultCode::Numeric::kOk, "Successfully booted on new version");
-  LOG_INFO << "Checking installation of new OSTree sysroot";
+
   if (current_hash != target.sha256Hash()) {
     LOG_ERROR << "Expected to boot " << target.sha256Hash() << " but found " << current_hash
               << ". The system may have been rolled back.";
@@ -276,7 +270,6 @@ data::InstallationResult OstreeManager::finalizeInstall(const Uptane::Target &ta
 }
 
 void OstreeManager::updateNotify() { bootloader_->updateNotify(); }
-void OstreeManager::installNotify(const Uptane::Target &target) { bootloader_->installNotify(target); }
 
 OstreeManager::OstreeManager(const PackageConfig &pconfig, const BootloaderConfig &bconfig,
                              const std::shared_ptr<INvStorage> &storage, const std::shared_ptr<HttpInterface> &http,
