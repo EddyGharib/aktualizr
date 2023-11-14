@@ -8,7 +8,7 @@ set(SOURCES aktualizr_version.cc
             utils.cc)
 
 set(HEADERS ../../../include/libaktualizr/utilities/apiqueue.h
-            aktualizr_version.h
+            ../../../include/libaktualizr/utilities/aktualizr_version.h
             config_utils.h
             dequeue_buffer.h
             ../../../include/libaktualizr/utilities/exceptions.h

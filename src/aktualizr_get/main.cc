@@ -8,7 +8,7 @@
 #include "get.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/logging/logging.h"
-#include "utilities/aktualizr_version.h"
+#include "libaktualizr/utilities/aktualizr_version.h"
 
 namespace bpo = boost::program_options;
 

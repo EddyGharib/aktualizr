@@ -6,7 +6,7 @@
 
 #include "aktualizr_secondary.h"
 #include "aktualizr_secondary_config.h"
-#include "utilities/aktualizr_version.h"
+#include "libaktualizr/utilities/aktualizr_version.h"
 #include "libaktualizr/utilities/utils.h"
 
 #include "aktualizr_secondary_file.h"

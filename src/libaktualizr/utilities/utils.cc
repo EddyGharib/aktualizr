@@ -31,8 +31,8 @@
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#include "aktualizr_version.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/aktualizr_version.h"
 
 static const std::array<const char *, 132> adverbs = {
     "adorable", "acidic",     "ample",        "aromatic",   "artistic", "attractive", "basic",    "beautiful",

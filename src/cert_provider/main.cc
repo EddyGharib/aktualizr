@@ -13,8 +13,8 @@
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/aktualizr_version.h"
 #include "libaktualizr/utilities/utils.h"
-#include "utilities/aktualizr_version.h"
 
 namespace bpo = boost::program_options;
 
