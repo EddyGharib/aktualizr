@@ -3,7 +3,7 @@
 #include <boost/process.hpp>
 #include "libaktualizr/config.h"
 #include "test_utils.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 std::string serverAddress;                      // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 std::unique_ptr<boost::process::child> server;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)

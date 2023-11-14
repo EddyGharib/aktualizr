@@ -1,7 +1,7 @@
 set(SOURCES httpclient.cc)
 
 set(HEADERS httpclient.h
-            ../../../include/libaktualizr/http/httpinterface.h)
+            httpinterface.h)
 
 add_library(http OBJECT ${SOURCES})
 

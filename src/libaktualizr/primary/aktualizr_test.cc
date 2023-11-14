@@ -18,7 +18,7 @@
 #include "primary/aktualizr_helpers.h"
 #include "primary/sotauptaneclient.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 #include "virtualsecondary.h"
 
 #include "uptane_repo.h"

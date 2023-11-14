@@ -1,6 +1,6 @@
 #include "libaktualizr/packagemanagerfactory.h"
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "packagemanagerfake.h"
 #include "storage/invstorage.h"
 #include "utilities/fault_injection.h"

@@ -9,10 +9,10 @@
 #include <unordered_map>
 
 #include "ipuptanesecondary.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "secondary.h"
 #include "secondary_config.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 namespace Primary {
 

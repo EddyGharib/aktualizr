@@ -8,7 +8,7 @@
 #include "gtest/gtest_prod.h"
 #include "json/json.h"
 
-#include "libaktualizr/http/httpinterface.h"
+#include "httpinterface.h"
 
 /**
  * Helper class to manage curl_global_init/curl_global_cleanup calls

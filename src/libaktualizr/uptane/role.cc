@@ -1,4 +1,4 @@
-#include "libaktualizr/uptane/tuf.h"
+#include "uptane/tuf.h"
 
 #include <sstream>
 

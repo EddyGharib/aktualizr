@@ -3,7 +3,7 @@
 
 #include <stdexcept>
 #include <string>
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 class FatalException : public std::logic_error {
  public:

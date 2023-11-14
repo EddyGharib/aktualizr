@@ -1,4 +1,4 @@
-#include "libaktualizr/package_manager/ostreemanager.h"
+#include "ostreemanager.h"
 
 #include <unistd.h>
 #include <cstdio>
@@ -16,9 +16,9 @@
 #include "libaktualizr/packagemanagerfactory.h"
 
 #include "bootloader/bootloader.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "storage/invstorage.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 AUTO_REGISTER_PACKAGE_MANAGER(PACKAGE_MANAGER_OSTREE, OstreeManager);
@@ -392,8 +392,7 @@ Uptane::Target OstreeManager::getCurrent() const {
     return *current_version;
   }
 
-  std::string storage_version_str = (!!current_version)?(current_version->sha256Hash()):("");
-  LOG_ERROR << "Current versions in storage (" << storage_version_str << ") and reported by OSTree (" << current_hash << ") do not match";
+  LOG_ERROR << "Current versions in storage and reported by OSTree do not match";
 
   // Look into installation log to find a possible candidate. Again, despite the
   // name, this will work for Secondaries as well.
@@ -428,23 +427,10 @@ bool OstreeManager::imageUpdated() {
   GObjectUniquePtr<OstreeSysroot> sysroot_smart = OstreeManager::LoadSysroot(config.sysroot);
 
   // image updated if no pending deployment in the list of deployments
-  LOG_TRACE << "Calling ostree_sysroot_get_deployments";
   GPtrArray *deployments = ostree_sysroot_get_deployments(sysroot_smart.get());
-  LOG_TRACE << "deployments has " << deployments->len << " entries";
-
-  // Check if this is not a booted deployment, because if it wasn't the call to
-  // ostree_sysroot_query_deployments_for will crash since the os_name is not provided
-  // as function input
-  OstreeDeployment *booted_deployment = ostree_sysroot_get_booted_deployment(sysroot_smart.get());
-  std::string os_name;
-  if (!booted_deployment) {
-    LOG_WARNING << "ostree is not in a booted deployment state, calling query_deployments_for(" << config.os << ")";
-    os_name = config.os;
-  }
 
   OstreeDeployment *pending_deployment = nullptr;
-  ostree_sysroot_query_deployments_for(sysroot_smart.get(), (os_name.empty()) ? (NULL) : (os_name.c_str()),
-                                       &pending_deployment, nullptr);
+  ostree_sysroot_query_deployments_for(sysroot_smart.get(), nullptr, &pending_deployment, nullptr);
 
   bool pending_found = false;
   for (guint i = 0; i < deployments->len; i++) {
@@ -491,7 +477,6 @@ GObjectUniquePtr<OstreeSysroot> OstreeManager::LoadSysroot(const boost::filesyst
   GError *error = nullptr;
   if (ostree_sysroot_load(sysroot.get(), nullptr, &error) == 0) {
     const std::string msg = error->message;
-    LOG_ERROR << "Error loading sysroot: " << msg;
     if (error != nullptr) {
       g_error_free(error);
     }

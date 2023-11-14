@@ -3,7 +3,7 @@
 
 #include "gtest/gtest_prod.h"
 
-#include "libaktualizr/uptane/uptanerepository.h"
+#include "uptanerepository.h"
 
 namespace Uptane {
 

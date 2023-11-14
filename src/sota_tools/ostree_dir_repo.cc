@@ -5,7 +5,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 namespace fs = boost::filesystem;
 namespace pt = boost::property_tree;

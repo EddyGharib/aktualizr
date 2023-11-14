@@ -58,7 +58,7 @@ target_link_libraries(testutilities uptane_generator_lib)
 if(BUILD_OSTREE)
     add_library(ostree_mock SHARED ostree_mock.c)
     aktualizr_source_file_checks(ostree_mock.c)
-    target_link_libraries(ostree_mock PUBLIC ostree::ostree)
+    target_include_directories(ostree_mock PUBLIC ${LIBOSTREE_INCLUDE_DIRS})
     add_dependencies(build_tests ostree_mock)
 endif(BUILD_OSTREE)
 

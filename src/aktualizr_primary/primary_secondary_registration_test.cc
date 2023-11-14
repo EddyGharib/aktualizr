@@ -5,7 +5,7 @@
 #include "metafake.h"
 #include "secondary.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 boost::filesystem::path fake_meta_dir;
 

@@ -11,8 +11,8 @@
 
 #include "libaktualizr/packagemanagerinterface.h"
 
-#include "libaktualizr/crypto/keymanager.h"
-#include "libaktualizr/utilities/apiqueue.h"
+#include "crypto/keymanager.h"
+#include "utilities/apiqueue.h"
 
 constexpr const char *remote = "aktualizr-remote";
 

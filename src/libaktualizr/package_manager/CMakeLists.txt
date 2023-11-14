@@ -14,7 +14,7 @@ add_aktualizr_test(NAME packagemanagerfake SOURCES packagemanagerfake_test.cc LI
 # OSTree backend
 if(BUILD_OSTREE)
     target_sources(package_manager PRIVATE ostreemanager.cc)
-    target_link_libraries(package_manager PUBLIC ostree::ostree)
+    target_include_directories(package_manager PUBLIC ${LIBOSTREE_INCLUDE_DIRS})
 
     add_custom_target(make_ostree_sysroot
                       COMMAND ${PROJECT_SOURCE_DIR}/scripts/make_ostree_sysroot.sh
@@ -38,4 +38,4 @@ aktualizr_source_file_checks(fetcher_death_test.cc
                              packagemanagerfactory_test.cc
                              ostreemanager_test.cc
                              ostreemanager.cc
-                             ../../../include/libaktualizr/package_manager/ostreemanager.h)
+                             ostreemanager.h)

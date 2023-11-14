@@ -315,6 +315,13 @@ include_directories(${PROJECT_SOURCE_DIR}/src/libaktualizr)
 include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third_party/googletest/googletest/include)
 include_directories(SYSTEM ${JSONCPP_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
+include_directories(SYSTEM ${LIBOSTREE_INCLUDE_DIRS})
+include_directories(SYSTEM ${SQLITE3_INCLUDE_DIRS})
+include_directories(SYSTEM ${LIBP11_INCLUDE_DIR})
+include_directories(SYSTEM ${sodium_INCLUDE_DIR})
+include_directories(SYSTEM ${OPENSSL_INCLUDE_DIR})
+include_directories(SYSTEM ${CURL_INCLUDE_DIR})
+include_directories(SYSTEM ${LibArchive_INCLUDE_DIR})
 
 # General packaging configuration
 set(CPACK_GENERATOR "DEB")
@@ -350,18 +357,15 @@ include(CPackComponent)
 set (AKTUALIZR_EXTERNAL_LIBS
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
-    CURL::libcurl
-    OpenSSL::SSL
+    ${CURL_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
     Threads::Threads
-    sodium::sodium
-    ostree::ostree
-    sqlite3::sqlite3
-    LibArchive::LibArchive
+    ${sodium_LIBRARY_RELEASE}
+    ${LIBOSTREE_LIBRARIES}
+    ${SQLITE3_LIBRARIES}
+    ${LibArchive_LIBRARIES}
+    ${LIBP11_LIBRARIES}
     ${GLIB2_LIBRARIES})
-
-if(BUILD_P11)
-    list(APPEND AKTUALIZR_EXTERNAL_LIBS libp11::libp11)
-endif(BUILD_P11)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(hasParent)

@@ -9,7 +9,7 @@
 #include "crypto/p11engine.h"
 #include "libaktualizr/config.h"
 #include "storage/sqlstorage.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 #ifdef BUILD_P11
 #ifndef TEST_PKCS11_MODULE_PATH

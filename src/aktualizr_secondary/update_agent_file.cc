@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include "crypto/crypto.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "uptane/manifest.h"
 
 // TODO(OTA-4939): Unify this with the check in

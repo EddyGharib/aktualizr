@@ -1,4 +1,4 @@
-#include "libaktualizr/logging/logging.h"
+#include "logging.h"
 
 #include <boost/log/core/core.hpp>
 #include <boost/log/expressions.hpp>

@@ -1,4 +1,4 @@
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 #include <algorithm>
 #include <array>
@@ -32,7 +32,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 #include "aktualizr_version.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 static const std::array<const char *, 132> adverbs = {
     "adorable", "acidic",     "ample",        "aromatic",   "artistic", "attractive", "basic",    "beautiful",

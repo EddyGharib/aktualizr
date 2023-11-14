@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "libaktualizr/uptane/uptanerepository.h"
+#include "uptanerepository.h"
 
 namespace Uptane {
 

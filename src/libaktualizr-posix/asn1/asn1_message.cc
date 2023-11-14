@@ -4,9 +4,9 @@
 #include <sys/types.h>
 
 #include "asn1_message.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "utilities/dequeue_buffer.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 #ifndef MSG_NOSIGNAL
 #define MSG_NOSIGNAL 0

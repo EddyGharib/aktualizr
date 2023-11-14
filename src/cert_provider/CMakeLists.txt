@@ -16,15 +16,12 @@ target_link_libraries(aktualizr-cert-provider
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
     ${JSONCPP_LIBRARIES}
-    LibArchive::LibArchive
-    CURL::libcurl
-    OpenSSL::SSL
-    sodium::sodium
+    ${LibArchive_LIBRARIES}
+    ${LIBP11_LIBRARIES}
+    ${CURL_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
+    ${sodium_LIBRARY_RELEASE}
     )
-
-if(BUILD_P11)
-    target_link_libraries(aktualizr-cert-provider libp11::libp11)
-endif(BUILD_P11)
 
 add_dependencies(build_tests aktualizr-cert-provider)
 

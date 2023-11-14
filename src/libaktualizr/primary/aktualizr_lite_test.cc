@@ -9,7 +9,7 @@
 #include "http/httpclient.h"
 #include "image_repo.h"
 #include "libaktualizr/config.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "package_manager/ostreemanager.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"

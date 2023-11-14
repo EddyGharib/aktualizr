@@ -2,7 +2,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 void DirectorRepo::addTarget(const std::string &target_name, const Json::Value &target, const std::string &hardware_id,
                              const std::string &ecu_serial, const std::string &url, const std::string &expires) {

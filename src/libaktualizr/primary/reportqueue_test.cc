@@ -12,7 +12,7 @@
 #include "reportqueue.h"
 #include "storage/invstorage.h"
 #include "storage/sqlstorage.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 class HttpFakeRq : public HttpFake {
  public:

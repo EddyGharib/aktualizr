@@ -230,7 +230,6 @@ else()
     set(_LIB_TYPE SHARED)
 endif()
 add_library(sodium ${_LIB_TYPE} IMPORTED)
-add_library(sodium::sodium ALIAS sodium)
 
 set_target_properties(sodium PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${sodium_INCLUDE_DIR}"

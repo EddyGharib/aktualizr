@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "libaktualizr/config.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 TEST(PackageManagerConfig, WriteToStream) {
   PackageConfig config;

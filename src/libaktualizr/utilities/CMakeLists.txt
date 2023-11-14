@@ -7,7 +7,7 @@ set(SOURCES aktualizr_version.cc
             types.cc
             utils.cc)
 
-set(HEADERS ../../../include/libaktualizr/utilities/apiqueue.h
+set(HEADERS apiqueue.h
             aktualizr_version.h
             config_utils.h
             dequeue_buffer.h
@@ -15,7 +15,7 @@ set(HEADERS ../../../include/libaktualizr/utilities/apiqueue.h
             fault_injection.h
             sig_handler.h
             timer.h
-            ../../../include/libaktualizr/utilities/utils.h
+            utils.h
             xml2json.h)
 
 set_property(SOURCE aktualizr_version.cc PROPERTY COMPILE_DEFINITIONS AKTUALIZR_VERSION="${AKTUALIZR_VERSION}")

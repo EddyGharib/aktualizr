@@ -1,4 +1,4 @@
-#include "libaktualizr/uptane/fetcher.h"
+#include "fetcher.h"
 
 #include "uptane/exceptions.h"
 

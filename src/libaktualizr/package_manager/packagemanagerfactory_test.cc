@@ -9,7 +9,7 @@
 #include "libaktualizr/packagemanagerinterface.h"
 #include "package_manager/packagemanagerfake.h"
 #include "storage/invstorage.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 boost::filesystem::path sysroot;
 

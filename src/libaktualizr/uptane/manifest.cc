@@ -2,8 +2,8 @@
 
 #include <boost/algorithm/string/case_conv.hpp>
 
-#include "libaktualizr/crypto/keymanager.h"
-#include "libaktualizr/logging/logging.h"
+#include "crypto/keymanager.h"
+#include "logging/logging.h"
 
 namespace Uptane {
 

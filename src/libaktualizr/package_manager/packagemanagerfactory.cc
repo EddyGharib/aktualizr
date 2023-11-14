@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 static std::map<std::string, PackageManagerBuilder> *registered_pkgms_;

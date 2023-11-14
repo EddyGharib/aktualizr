@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <sstream>
 
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 #include "utilities/xml2json.h"
 
 TEST(xml2json, simple) {

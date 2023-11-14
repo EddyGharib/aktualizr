@@ -1,10 +1,10 @@
 #include "directorrepository.h"
 
-#include "libaktualizr/uptane/fetcher.h"
-#include "libaktualizr/logging/logging.h"
+#include "fetcher.h"
+#include "logging/logging.h"
 #include "storage/invstorage.h"
 #include "uptane/exceptions.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 namespace Uptane {
 

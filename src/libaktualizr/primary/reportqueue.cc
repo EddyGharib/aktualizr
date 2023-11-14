@@ -4,7 +4,7 @@
 
 #include "http/httpclient.h"
 #include "libaktualizr/config.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "storage/invstorage.h"
 
 ReportQueue::ReportQueue(const Config& config_in, std::shared_ptr<HttpInterface> http_client,

@@ -8,10 +8,10 @@
 #include <cstring>
 #include <iostream>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "ostree_repo.h"
 #include "request_pool.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 using std::string;
 

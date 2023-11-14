@@ -2,9 +2,9 @@
 
 #include <boost/filesystem.hpp>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "utilities/config_utils.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 void BaseConfig::checkDirs(const std::vector<boost::filesystem::path>& configs) {
   for (const auto& config : configs) {

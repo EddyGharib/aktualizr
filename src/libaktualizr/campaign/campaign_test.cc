@@ -3,7 +3,7 @@
 
 #include "libaktualizr/campaign.h"
 
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 boost::filesystem::path test_data_dir;
 

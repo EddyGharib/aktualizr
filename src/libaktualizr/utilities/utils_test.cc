@@ -15,7 +15,7 @@
 #include <boost/filesystem.hpp>
 
 #include "libaktualizr/types.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 bool CharOk(char c) {
   if (('a' <= c) && (c <= 'z')) {

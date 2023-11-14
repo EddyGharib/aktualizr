@@ -1,5 +1,5 @@
 #include "aktualizr_secondary_ostree.h"
-#include "libaktualizr/package_manager/ostreemanager.h"
+#include "package_manager/ostreemanager.h"
 #include "update_agent_ostree.h"
 
 AktualizrSecondaryOstree::AktualizrSecondaryOstree(const AktualizrSecondaryConfig& config)

@@ -1,6 +1,6 @@
 #include "libaktualizr/campaign.h"
 #include "http/httpclient.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 namespace campaign {
 

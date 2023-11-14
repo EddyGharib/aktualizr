@@ -1,9 +1,9 @@
 #ifndef UPTANE_FETCHER_H_
 #define UPTANE_FETCHER_H_
 
-#include "libaktualizr/http/httpinterface.h"
+#include "http/httpinterface.h"
 #include "libaktualizr/config.h"
-#include "libaktualizr/uptane/tuf.h"
+#include "tuf.h"
 
 namespace Uptane {
 

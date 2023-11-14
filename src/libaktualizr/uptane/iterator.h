@@ -1,8 +1,8 @@
 #ifndef AKTUALIZR_UPTANE_ITERATOR_H_
 #define AKTUALIZR_UPTANE_ITERATOR_H_
 
-#include "libaktualizr/uptane/fetcher.h"
-#include "libaktualizr/uptane/imagerepository.h"
+#include "fetcher.h"
+#include "imagerepository.h"
 
 namespace Uptane {
 

@@ -11,7 +11,7 @@
 
 #include "libaktualizr/config.h"
 #include "storage_exception.h"
-#include "libaktualizr/uptane/tuf.h"
+#include "uptane/tuf.h"
 
 class INvStorage;
 class FSStorageRead;

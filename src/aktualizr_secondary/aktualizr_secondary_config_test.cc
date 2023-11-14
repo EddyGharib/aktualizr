@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 TEST(aktualizr_secondary_config, config_initialized_values) {
   AktualizrSecondaryConfig conf;

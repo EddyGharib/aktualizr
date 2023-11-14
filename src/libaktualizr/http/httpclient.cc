@@ -3,7 +3,7 @@
 #include <cassert>
 #include <sstream>
 
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 struct WriteStringArg {
   std::string out;

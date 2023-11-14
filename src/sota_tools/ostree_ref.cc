@@ -7,8 +7,8 @@
 #include <iterator>
 #include <utility>
 
-#include "libaktualizr/logging/logging.h"
-#include "libaktualizr/utilities/utils.h"
+#include "logging/logging.h"
+#include "utilities/utils.h"
 
 using std::string;
 

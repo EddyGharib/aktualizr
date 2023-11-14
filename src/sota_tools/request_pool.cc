@@ -5,7 +5,7 @@
 #include <exception>
 #include <thread>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 RequestPool::RequestPool(TreehubServer& server, const int max_curl_requests, const RunMode mode, bool fsck_on_upload)
     : rate_controller_(max_curl_requests),

@@ -8,7 +8,7 @@
 
 #include "json/json.h"
 #include "libaktualizr/types.h"
-#include "libaktualizr/uptane/tuf.h"
+#include "uptane/tuf.h"
 
 struct KeyPair {
   KeyPair() = default;

@@ -1,4 +1,4 @@
-#include "libaktualizr/uptane/tuf.h"
+#include "uptane/tuf.h"
 
 #include <ctime>
 #include <ostream>
@@ -9,7 +9,7 @@
 
 #include "crypto/crypto.h"
 #include "libaktualizr/types.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "uptane/exceptions.h"
 
 using Uptane::Target;

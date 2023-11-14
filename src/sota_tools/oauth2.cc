@@ -5,9 +5,9 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "oauth2.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 using boost::property_tree::ptree;
 using boost::property_tree::json_parser::json_parser_error;

@@ -33,12 +33,12 @@ if (BUILD_SOTA_TOOLS)
             ${Boost_LIBRARIES}
             ${JSONCPP_LIBRARIES}
             Threads::Threads
-            LibArchive::LibArchive
-            CURL::libcurl
-            OpenSSL::SSL
-            sodium::sodium
+            ${LibArchive_LIBRARIES}
+            ${CURL_LIBRARIES}
+            ${OPENSSL_LIBRARIES}
+            ${sodium_LIBRARY_RELEASE}
             ${GLIB2_LIBRARIES}
-            ostree::ostree)
+            ${LIBOSTREE_LIBRARIES})
 
     install(TARGETS sota_tools_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT garage_deploy)
 

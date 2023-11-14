@@ -8,13 +8,13 @@
 #include <boost/smart_ptr/make_shared.hpp>
 
 #include "httpfake.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"
 #include "uptane/uptanerepository.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 /**
  * Verify that when provisioning with device credentials, aktualizr fails if

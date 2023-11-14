@@ -26,7 +26,7 @@
 #include "uptane/tuf.h"
 #include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 #ifdef BUILD_P11
 #ifndef TEST_PKCS11_MODULE_PATH

@@ -1,5 +1,5 @@
 #include "sig_handler.h"
-#include "libaktualizr/logging/logging.h"
+#include "logging/logging.h"
 
 std::atomic_uint SigHandler::signal_marker_;   // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 std::mutex SigHandler::exit_m_;                // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)

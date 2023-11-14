@@ -2,7 +2,7 @@
 
 #include <chrono>
 #include <string>
-#include "libaktualizr/utilities/apiqueue.h"
+#include "utilities/apiqueue.h"
 
 using std::cout;
 using std::future;

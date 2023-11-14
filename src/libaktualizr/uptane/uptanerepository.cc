@@ -1,12 +1,12 @@
-#include "libaktualizr/uptane/uptanerepository.h"
+#include "uptane/uptanerepository.h"
 
 #include <boost/algorithm/string/trim.hpp>
 
-#include "libaktualizr/uptane/fetcher.h"
-#include "libaktualizr/logging/logging.h"
+#include "fetcher.h"
+#include "logging/logging.h"
 #include "storage/invstorage.h"
 #include "uptane/exceptions.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 namespace Uptane {
 
@@ -54,16 +54,13 @@ void RepositoryCommon::updateRoot(INvStorage& storage, const IMetadataFetcher& f
   {
     std::string root_raw;
     if (storage.loadLatestRoot(&root_raw, repo_type)) {
-      LOG_TRACE << "From storage: repo_type: " << repo_type << ", root_raw: " << root_raw;
       initRoot(repo_type, root_raw);
     } else {
       fetcher.fetchRole(&root_raw, kMaxRootSize, repo_type, Role::Root(), Version(1));
       initRoot(repo_type, root_raw);
-      LOG_TRACE << "From fetcher: repo_type: " << repo_type << ", root_raw: " << root_raw;
       storage.storeRoot(root_raw, repo_type, Version(1));
     }
   }
-  LOG_TRACE << "rootVersion(): " << rootVersion();
 
   // 5.4.4.3.2. Update to the latest Root metadata file.
   for (int version = rootVersion() + 1; version < kMaxRotations; ++version) {

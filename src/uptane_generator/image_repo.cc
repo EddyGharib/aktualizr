@@ -3,7 +3,7 @@
 #include <boost/filesystem.hpp>
 
 #include "crypto/crypto.h"
-#include "libaktualizr/utilities/utils.h"
+#include "utilities/utils.h"
 
 void ImageRepo::addImage(const std::string &name, Json::Value &target, const std::string &hardware_id,
                          const Delegation &delegation) {
