@@ -82,6 +82,7 @@ find_package(sodium REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
+find_package(jsoncpp REQUIRED)
 
 if(NOT AKTUALIZR_VERSION)
     if (EXISTS ${PROJECT_SOURCE_DIR}/VERSION)
