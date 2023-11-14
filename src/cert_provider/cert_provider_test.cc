@@ -4,8 +4,8 @@
 #include <boost/format.hpp>
 
 #include "cert_provider_test.h"
-#include "crypto/crypto.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/utilities/utils.h"
 
 static boost::filesystem::path CERT_PROVIDER_PATH;

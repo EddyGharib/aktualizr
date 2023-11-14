@@ -4,9 +4,9 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <string>
 
-#include "crypto/crypto.h"
 #include "httpfake.h"
 #include "libaktualizr/aktualizr.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "test_utils.h"
 #include "uptane_test_common.h"
 

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/utilities/utils.h"
 

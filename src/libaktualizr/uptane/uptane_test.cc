@@ -13,10 +13,11 @@
 #include <boost/filesystem.hpp>
 #include "json/json.h"
 
-#include "crypto/crypto.h"
 #include "crypto/p11engine.h"
 #include "httpfake.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/secondaryinterface.h"
+#include "libaktualizr/utilities/utils.h"
 #include "primary/provisioner.h"
 #include "primary/provisioner_test_utils.h"
 #include "primary/sotauptaneclient.h"
@@ -26,7 +27,6 @@
 #include "uptane/tuf.h"
 #include "uptane/uptanerepository.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
 
 #ifdef BUILD_P11
 #ifndef TEST_PKCS11_MODULE_PATH

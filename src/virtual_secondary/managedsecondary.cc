@@ -6,14 +6,14 @@
 #include <boost/algorithm/hex.hpp>
 #include <boost/filesystem.hpp>
 
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
-#include "storage/invstorage.h"
-#include "uptane/directorrepository.h"
 #include "libaktualizr/uptane/imagerepository.h"
-#include "uptane/manifest.h"
 #include "libaktualizr/uptane/tuf.h"
 #include "libaktualizr/utilities/utils.h"
+#include "storage/invstorage.h"
+#include "uptane/directorrepository.h"
+#include "uptane/manifest.h"
 
 namespace Primary {
 

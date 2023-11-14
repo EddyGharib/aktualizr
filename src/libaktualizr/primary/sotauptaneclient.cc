@@ -5,13 +5,13 @@
 #include <memory>
 #include <utility>
 
-#include "crypto/crypto.h"
-#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/campaign.h"
+#include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/utils.h"
 #include "provisioner.h"
 #include "uptane/exceptions.h"
-#include "libaktualizr/utilities/utils.h"
 
 static void report_progress_cb(event::Channel *channel, const Uptane::Target &target, const std::string &description,
                                unsigned int progress) {

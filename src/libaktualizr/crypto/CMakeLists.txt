@@ -1,7 +1,7 @@
 set(SOURCES crypto.cc
             keymanager.cc)
 
-set(HEADERS crypto.h
+set(HEADERS ../../../include/libaktualizr/crypto/crypto.h
             ../../../include/libaktualizr/crypto/keymanager.h
             openssl_compat.h)
 

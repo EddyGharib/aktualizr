@@ -3,12 +3,12 @@
 #include <unistd.h>
 #include <boost/filesystem.hpp>
 
-#include "crypto/crypto.h"
 #include "fsstorage_read.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/utilities/utils.h"
 #include "sqlstorage.h"
 #include "uptane/exceptions.h"
-#include "libaktualizr/utilities/utils.h"
 
 void INvStorage::importUpdateSimple(const boost::filesystem::path& base_path, store_data_t store_func,
                                     load_data_t load_func, const utils::BasedPath& imported_data_path,

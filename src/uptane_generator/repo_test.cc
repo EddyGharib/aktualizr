@@ -5,8 +5,8 @@
 
 #include <boost/filesystem.hpp>
 
-#include "crypto/crypto.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "test_utils.h"
 #include "uptane/exceptions.h"

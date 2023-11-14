@@ -1,4 +1,4 @@
-#include "crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 
 #include <array>
 #include <iostream>

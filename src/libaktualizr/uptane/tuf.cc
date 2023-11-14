@@ -7,9 +7,9 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <utility>
 
-#include "crypto/crypto.h"
-#include "libaktualizr/types.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/types.h"
 #include "uptane/exceptions.h"
 
 using Uptane::Target;

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 
 TEST(Hash, EncodeDecode) {

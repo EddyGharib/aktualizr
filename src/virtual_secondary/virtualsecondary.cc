@@ -3,9 +3,9 @@
 #include <boost/algorithm/hex.hpp>
 #include <boost/filesystem.hpp>
 
-#include "crypto/crypto.h"
-#include "utilities/fault_injection.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/utilities/utils.h"
+#include "utilities/fault_injection.h"
 #include "virtualsecondary.h"
 
 namespace Primary {

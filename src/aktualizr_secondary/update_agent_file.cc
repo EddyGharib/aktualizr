@@ -3,7 +3,7 @@
 #include <boost/filesystem.hpp>
 
 #include <fstream>
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "uptane/manifest.h"
 

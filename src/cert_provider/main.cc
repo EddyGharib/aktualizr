@@ -9,12 +9,12 @@
 #include "json/json.h"
 
 #include "bootstrap/bootstrap.h"
-#include "crypto/crypto.h"
 #include "http/httpclient.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
-#include "utilities/aktualizr_version.h"
 #include "libaktualizr/utilities/utils.h"
+#include "utilities/aktualizr_version.h"
 
 namespace bpo = boost::program_options;
 

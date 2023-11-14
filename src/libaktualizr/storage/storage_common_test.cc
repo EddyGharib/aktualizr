@@ -5,11 +5,11 @@
 
 #include <boost/filesystem.hpp>
 
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/types.h"
+#include "libaktualizr/utilities/utils.h"
 #include "repo.h"
 #include "storage/sqlstorage.h"
-#include "libaktualizr/utilities/utils.h"
 
 namespace fs = boost::filesystem;
 

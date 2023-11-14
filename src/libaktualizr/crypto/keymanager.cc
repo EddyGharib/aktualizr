@@ -6,8 +6,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/scoped_array.hpp>
 
-#include "crypto/crypto.h"
 #include "crypto/openssl_compat.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/http/httpinterface.h"
 #include "libaktualizr/types.h"
 #include "p11engine.h"

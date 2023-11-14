@@ -4,14 +4,14 @@
 #include <boost/filesystem.hpp>
 #include <chrono>
 
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/http/httpinterface.h"
 #include "libaktualizr/logging/logging.h"
-#include "storage/invstorage.h"
-#include "uptane/exceptions.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/utilities/apiqueue.h"
+#include "storage/invstorage.h"
+#include "uptane/exceptions.h"
 
 struct DownloadMetaStruct {
  public:

@@ -1,7 +1,7 @@
 #ifndef AKTUALIZR_SECONDARY_UPDATE_AGENT_H
 #define AKTUALIZR_SECONDARY_UPDATE_AGENT_H
 
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/uptane/tuf.h"
 
 class UpdateAgent {

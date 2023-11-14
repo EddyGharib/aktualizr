@@ -5,10 +5,10 @@
 #include <ctime>
 #include <regex>
 
-#include "crypto/crypto.h"
 #include "director_repo.h"
 #include "image_repo.h"
 #include "libaktualizr/campaign.h"
+#include "libaktualizr/crypto/crypto.h"
 
 Repo::Repo(Uptane::RepositoryType repo_type, boost::filesystem::path path, const std::string &expires,
            std::string correlation_id)
