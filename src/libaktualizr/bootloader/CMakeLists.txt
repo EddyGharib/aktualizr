@@ -1,4 +1,4 @@
-set(HEADERS bootloader.h)
+set(HEADERS ../../../include/libaktualizr/bootloader/bootloader.h)
 set(SOURCES bootloader.cc)
 
 add_library(bootloader OBJECT ${SOURCES})

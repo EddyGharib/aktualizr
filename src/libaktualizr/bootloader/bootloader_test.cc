@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "bootloader.h"
+#include "libaktualizr/bootloader/bootloader.h"
 
 #include <boost/filesystem.hpp>
 

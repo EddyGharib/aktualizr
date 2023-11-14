@@ -6,7 +6,7 @@
 
 #include "libaktualizr/packagemanagerinterface.h"
 
-#include "bootloader/bootloader.h"
+#include "libaktualizr/bootloader/bootloader.h"
 
 class PackageManagerFake : public PackageManagerInterface {
  public:

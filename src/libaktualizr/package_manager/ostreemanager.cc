@@ -15,10 +15,10 @@
 
 #include "libaktualizr/packagemanagerfactory.h"
 
-#include "bootloader/bootloader.h"
+#include "libaktualizr/bootloader/bootloader.h"
 #include "libaktualizr/logging/logging.h"
-#include "storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
+#include "storage/invstorage.h"
 
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 AUTO_REGISTER_PACKAGE_MANAGER(PACKAGE_MANAGER_OSTREE, OstreeManager);

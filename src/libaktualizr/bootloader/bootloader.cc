@@ -1,4 +1,4 @@
-#include "bootloader.h"
+#include "libaktualizr/bootloader/bootloader.h"
 
 #include <fcntl.h>
 #include <sys/reboot.h>
