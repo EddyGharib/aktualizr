@@ -6,7 +6,6 @@ add_executable(aktualizr-cert-provider ${CERT_PROVIDER_SRC}
     $<TARGET_OBJECTS:config>
     $<TARGET_OBJECTS:crypto>
     $<TARGET_OBJECTS:http>
-    $<TARGET_OBJECTS:jsoncpp>
     $<TARGET_OBJECTS:logging>
     $<TARGET_OBJECTS:primary_config>
     $<TARGET_OBJECTS:utilities>)
@@ -15,12 +14,12 @@ target_link_libraries(aktualizr-cert-provider
     Threads::Threads
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
-    ${JSONCPP_LIBRARIES}
+    jsoncpp_lib
     LibArchive::LibArchive
     CURL::libcurl
     OpenSSL::SSL
     sodium::sodium
-    )
+)
 
 if(BUILD_P11)
     target_link_libraries(aktualizr-cert-provider libp11::libp11)

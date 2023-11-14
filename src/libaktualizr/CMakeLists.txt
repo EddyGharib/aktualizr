@@ -43,7 +43,6 @@ add_library(aktualizr_static_lib STATIC
     $<TARGET_OBJECTS:config>
     $<TARGET_OBJECTS:crypto>
     $<TARGET_OBJECTS:http>
-    $<TARGET_OBJECTS:jsoncpp>
     $<TARGET_OBJECTS:logging>
     $<TARGET_OBJECTS:package_manager>
     $<TARGET_OBJECTS:primary_config>
@@ -61,7 +60,6 @@ add_library(aktualizr_lib SHARED
     $<TARGET_OBJECTS:config>
     $<TARGET_OBJECTS:crypto>
     $<TARGET_OBJECTS:http>
-    $<TARGET_OBJECTS:jsoncpp>
     $<TARGET_OBJECTS:logging>
     $<TARGET_OBJECTS:package_manager>
     $<TARGET_OBJECTS:primary_config>
@@ -84,7 +82,6 @@ target_link_libraries(aktualizr_lib ${AKTUALIZR_EXTERNAL_LIBS})
 set_target_properties(aktualizr_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr)
 install(TARGETS aktualizr_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libaktualizr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../../jsoncpp/json/json.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libaktualizr/json)
 
 configure_file(aktualizr.pc.in aktualizr.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aktualizr.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
