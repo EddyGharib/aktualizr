@@ -9,9 +9,9 @@
 #include "json/json.h"
 
 #include "bootstrap/bootstrap.h"
-#include "http/httpclient.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/utilities/utils.h"
 #include "utilities/aktualizr_version.h"

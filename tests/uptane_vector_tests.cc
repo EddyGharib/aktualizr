@@ -5,8 +5,8 @@
 #include <string>
 #include <utility>
 
-#include "http/httpclient.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/http/httpclient.h"
 #include "logging/logging.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"

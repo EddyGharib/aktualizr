@@ -1,6 +1,6 @@
 #include "get.h"
 #include "libaktualizr/crypto/keymanager.h"
-#include "http/httpclient.h"
+#include "libaktualizr/http/httpclient.h"
 #include "storage/invstorage.h"
 
 std::string aktualizrGet(Config &config, const std::string &url, const std::vector<std::string> &headers,

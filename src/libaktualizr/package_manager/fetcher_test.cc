@@ -10,17 +10,17 @@
 #include <boost/process.hpp>
 
 #include "crypto/keymanager.h"
-#include "http/httpclient.h"
 #include "httpfake.h"
 #include "libaktualizr/config.h"
-#include "libaktualizr/packagemanagerfactory.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/packagemanagerfactory.h"
+#include "libaktualizr/utilities/apiqueue.h"
 #include "package_manager/packagemanagerfake.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"
 #include "uptane/fetcher.h"
 #include "uptane/tuf.h"
-#include "libaktualizr/utilities/apiqueue.h"
 
 static const int pause_after = 50;        // percent
 static const int pause_duration = 1;      // seconds

@@ -6,9 +6,9 @@
 
 #include <boost/process.hpp>
 
-#include "http/httpclient.h"
 #include "image_repo.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
 #include "package_manager/ostreemanager.h"
 #include "storage/sqlstorage.h"

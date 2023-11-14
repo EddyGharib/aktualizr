@@ -8,10 +8,10 @@
 
 #include "json/json.h"
 
-#include "http/httpclient.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/types.h"
-#include "test_utils.h"
 #include "libaktualizr/utilities/utils.h"
+#include "test_utils.h"
 
 static std::string server = "http://127.0.0.1:";
 

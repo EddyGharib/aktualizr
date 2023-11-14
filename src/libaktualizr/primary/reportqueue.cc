@@ -2,8 +2,8 @@
 
 #include <chrono>
 
-#include "http/httpclient.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
 #include "storage/invstorage.h"
 #include "storage/sql_utils.h"

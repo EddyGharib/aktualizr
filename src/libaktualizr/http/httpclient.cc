@@ -1,4 +1,4 @@
-#include "httpclient.h"
+#include "libaktualizr/http/httpclient.h"
 
 #include <cassert>
 #include <sstream>

@@ -19,8 +19,8 @@
 #include "libaktualizr/results.h"
 #include "libaktualizr/secondaryinterface.h"
 
-#include "http/httpclient.h"
 #include "libaktualizr/bootloader/bootloader.h"
+#include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/uptane/imagerepository.h"
 #include "libaktualizr/uptane/tuf.h"
