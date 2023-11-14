@@ -85,3 +85,5 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libaktualizr DESTINATION ${CMAKE
 
 configure_file(aktualizr.pc.in aktualizr.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aktualizr.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+install(TARGETS aktualizr_lib EXPORT aktualizrTargets)

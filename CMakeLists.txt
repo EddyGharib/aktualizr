@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.5)
 # GLOB_RECURSE calls should not follow symlinks by default:
 cmake_policy(SET CMP0009 NEW)
 
-project(aktualizr)
+project(aktualizr VERSION 1.0.0)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -51,6 +51,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # To ensure better support of large files on 32-bit systems.
 # See https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 add_definitions("-D_FILE_OFFSET_BITS=64")
+
+# TODO: Remove when the repo is updated to support Openssl 3.0
+# 'ENGINE_free' is deprecated [-Werror,-Wdeprecated-declarations]
+add_compile_options("-Wno-deprecated-declarations")
 
 if (CCACHE)
     find_program(CCACHE_PROGRAM ccache)
@@ -221,75 +225,9 @@ add_custom_target(build_tests)
 find_program(CLANG_FORMAT NAMES clang-format-11)
 find_program(CLANG_TIDY NAMES clang-tidy-12 clang-tidy-11)
 
-if(CLANG_FORMAT)
-    function(aktualizr_clang_format)
-        file(RELATIVE_PATH SUBDIR ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
-        foreach(FILE ${ARGN})
-            string(REPLACE "/" "_" TARGETNAME "aktualizr_clang_format-${SUBDIR}-${FILE}")
-            add_custom_target(${TARGETNAME}
-                COMMAND ${CLANG_FORMAT} -i -style=file ${FILE}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                VERBATIM)
-            add_dependencies(format ${TARGETNAME})
-
-            # The check for CI that fails if stuff changes
-            string(REPLACE "/" "_" TARGETNAME_CI "aktualizr_ci_clang_format-${SUBDIR}-${FILE}")
-
-            add_custom_target(${TARGETNAME_CI}
-                COMMAND ${CLANG_FORMAT} -style=file ${FILE} | diff -u ${FILE} - || { echo 'Found unformatted code! Run make format'\; false\; }
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-            add_dependencies(check-format ${TARGETNAME_CI})
-        endforeach()
-    endfunction()
-else()
-    message(WARNING "clang-format-11 not found, skipping")
-    function(aktualizr_clang_format)
-    endfunction()
-endif()
-
-if(CLANG_TIDY)
-    add_custom_target(clang-tidy)
-    add_dependencies(qa clang-tidy)
-    function(aktualizr_clang_tidy)
-        file(RELATIVE_PATH SUBDIR ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
-        foreach(FILE ${ARGN})
-            string(REPLACE "/" "_" TARGETNAME "aktualizr_clang_tidy-${SUBDIR}-${FILE}")
-            add_custom_target(${TARGETNAME}
-                COMMAND ${PROJECT_SOURCE_DIR}/scripts/clang-tidy-wrapper.sh ${CLANG_TIDY} ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR} ${FILE}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                VERBATIM)
-            add_dependencies(clang-tidy ${TARGETNAME})
-        endforeach()
-    endfunction()
-else()
-    message(WARNING "Unable to find clang-tidy-12, clang-tidy-11, or clang-tidy-10; skipping")
-    function(aktualizr_clang_tidy)
-    endfunction()
-endif()
-
-function(aktualizr_source_file_checks)
-    list(REMOVE_DUPLICATES ARGN)
-    foreach(FILE ${ARGN})
-        file(RELATIVE_PATH FULL_FN ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${FILE})
-        set(AKTUALIZR_CHECKED_SRCS ${AKTUALIZR_CHECKED_SRCS} ${FULL_FN} CACHE INTERNAL "")
-        if(NOT EXISTS ${CMAKE_SOURCE_DIR}/${FULL_FN})
-            message(FATAL_ERROR "file ${FULL_FN} does not exist")
-        endif()
-    endforeach()
-    aktualizr_clang_format(${ARGN})
-
-    # exclude test files from clang-tidy because false positives in googletest
-    # are hard to remove...
-    file(RELATIVE_PATH SUBDIR ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
-    if(NOT ${SUBDIR} MATCHES "tests.*")
-        foreach(FILE ${ARGN})
-            if(NOT ${FILE} MATCHES ".*_test\\..*$")
-                list(APPEND filtered_files ${FILE})
-            endif()
-        endforeach()
-        aktualizr_clang_tidy(${filtered_files})
-    endif()
-endfunction()
+include(AktualizrClangFormat)
+include(AktualizrClangTidy)
+include(AktualizrSourceFileChecks)
 
 find_program(SHELLCHECK NAMES shellcheck)
 if(SHELLCHECK)
@@ -406,5 +344,15 @@ set_source_files_properties(tags PROPERTIES GENERATED true)
 add_custom_target(tags
     COMMAND ctags -R --c++-kinds=+p --fields=+iaS --extra=+q src
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+# Export help modules to help find ostree and p11
+install(FILES ${CMAKE_SOURCE_DIR}/cmake-modules/FindOSTree.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/FindLibP11.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AddAktualizrTest.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrSourceFileChecks.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangFormat.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangTidy.cmake
+        DESTINATION "lib/cmake/aktualizr"
+)
 
 # vim: set tabstop=4 shiftwidth=4 expandtab:

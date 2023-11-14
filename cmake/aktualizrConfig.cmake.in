@@ -1,0 +1,15 @@
+@PACKAGE_INIT@
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/")
+
+include("${CMAKE_CURRENT_LIST_DIR}/aktualizrTargets.cmake")
+
+include(CMakeFindDependencyMacro)
+
+find_dependency(jsoncpp REQUIRED)
+find_dependency(Boost REQUIRED COMPONENTS system log_setup program_options)
+find_dependency(OSTree REQUIRED)
+find_dependency(CURL REQUIRED)
+find_dependency(OpenSSL 1.0.2 REQUIRED)
+find_dependency(LibP11 REQUIRED)
+find_dependency(LibArchive REQUIRED)

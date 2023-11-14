@@ -14,3 +14,23 @@ add_subdirectory("uptane_generator")
 
 add_subdirectory("cert_provider")
 add_subdirectory("aktualizr_get")
+
+install(EXPORT aktualizrTargets NAMESPACE aktualizr:: DESTINATION lib/cmake/aktualizr)
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+        "${CMAKE_SOURCE_DIR}/cmake/aktualizrConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/aktualizrConfig.cmake"
+        INSTALL_DESTINATION "lib/cmake/aktualizr"
+)
+
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/aktualizrConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
+)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aktualizrConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/aktualizrConfigVersion.cmake
+        DESTINATION "lib/cmake/aktualizr"
+)
