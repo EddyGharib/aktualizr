@@ -91,6 +91,8 @@ class Crypto {
   static bool parseP12(BIO *p12_bio, const std::string &p12_password, std::string *out_pkey, std::string *out_cert,
                        std::string *out_ca);
   static std::string extractSubjectCN(const std::string &cert);
+  /* extract business category */
+  static std::string extractSubjectBC(const std::string &cert);
   static StructGuard<EVP_PKEY> generateRSAKeyPairEVP(KeyType key_type);
   static StructGuard<EVP_PKEY> generateRSAKeyPairEVP(int bits);
   static bool generateRSAKeyPair(KeyType key_type, std::string *public_key, std::string *private_key);

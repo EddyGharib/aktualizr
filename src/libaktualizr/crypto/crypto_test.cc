@@ -53,17 +53,19 @@ TEST(crypto, sign_verify_rsa_file) {
 
 class P11Crypto : public ::testing::Test {
  protected:
-  static void SetUpTestSuite() { p11_ = std::make_shared<P11EngineGuard>(module_path_, pass_); }
+  static void SetUpTestSuite() { p11_ = std::make_shared<P11EngineGuard>(module_path_, pass_, label_); }
 
   static void TearDownTestSuite() { p11_.reset(); }
 
   static boost::filesystem::path module_path_;
   static std::string pass_;
+  static std::string label_;
   static std::shared_ptr<P11EngineGuard> p11_;
 };
 
 boost::filesystem::path P11Crypto::module_path_{TEST_PKCS11_MODULE_PATH};
 std::string P11Crypto::pass_{"1234"};
+std::string P11Crypto::label_{"Virtual token"};
 std::shared_ptr<P11EngineGuard> P11Crypto::p11_{nullptr};
 
 TEST(crypto, findPkcsLibrary) {

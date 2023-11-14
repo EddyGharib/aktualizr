@@ -30,6 +30,7 @@ class KeyManager {
   std::string getCert() const;
   std::string getCa() const;
   std::string getCN() const;
+  std::string getBC() const;
   void getCertInfo(std::string *subject, std::string *issuer, std::string *not_before, std::string *not_after) const;
   bool isOk() const { return (!getPkey().empty() && !getCert().empty() && !getCa().empty()); }
   std::string generateUptaneKeyPair();
