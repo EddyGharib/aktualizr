@@ -10,9 +10,9 @@
 
 #include "httpfake.h"
 #include "libaktualizr/logging/logging.h"
+#include "libaktualizr/primary/reportqueue.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
-#include "primary/reportqueue.h"
 #include "primary/sotauptaneclient.h"
 #include "test_utils.h"
 #include "uptane/tuf.h"

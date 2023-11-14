@@ -7,7 +7,7 @@ set(SOURCES aktualizr.cc
 
 set(HEADERS aktualizr_helpers.h
             provisioner.h
-            reportqueue.h
+            ../../../include/libaktualizr/primary/reportqueue.h
             secondary_config.h
             secondary_provider_builder.h
             sotauptaneclient.h)

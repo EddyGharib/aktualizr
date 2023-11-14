@@ -1,4 +1,4 @@
-#include "reportqueue.h"
+#include "libaktualizr/primary/reportqueue.h"
 
 #include <chrono>
 

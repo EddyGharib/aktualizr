@@ -9,9 +9,9 @@
 
 #include "httpfake.h"
 #include "libaktualizr/config.h"
+#include "libaktualizr/primary/reportqueue.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/utilities/utils.h"
-#include "reportqueue.h"
 #include "storage/sqlstorage.h"
 
 class HttpFakeRq : public HttpFake {
