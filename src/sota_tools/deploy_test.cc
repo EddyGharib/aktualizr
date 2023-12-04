@@ -3,7 +3,7 @@
 #include <boost/process.hpp>
 
 #include "authenticate.h"
-#include "crypto/crypto.h"
+#include "libaktualizr/crypto/crypto.h"
 #include "deploy.h"
 #include "garage_common.h"
 #include "ostree_dir_repo.h"

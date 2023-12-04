@@ -8,7 +8,7 @@
 #include <string>
 #include <thread>
 
-#include "crypto/keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
 #include "libaktualizr/logging/logging.h"

@@ -5,7 +5,7 @@
 #include <boost/optional/optional_io.hpp>
 
 #include "aktualizr_secondary_file.h"
-#include "crypto/keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"

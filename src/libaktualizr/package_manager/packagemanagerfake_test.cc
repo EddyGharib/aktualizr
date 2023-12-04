@@ -7,7 +7,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "crypto/keymanager.h"
+#include "libaktualizr/crypto/keymanager.h"
 #include "httpfake.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/crypto/crypto.h"
