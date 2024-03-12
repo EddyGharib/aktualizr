@@ -5,6 +5,8 @@ set(SOURCES packagemanagerfactory.cc
 set(HEADERS packagemanagerfake.h)
 
 add_library(package_manager OBJECT ${SOURCES})
+target_link_libraries(package_manager PUBLIC config)
+
 aktualizr_source_file_checks(${SOURCES} packagemanagerconfig.cc ${HEADERS})
 
 target_sources(config PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/packagemanagerconfig.cc)

@@ -2,6 +2,7 @@ set(HEADERS ../../../include/libaktualizr/bootloader/bootloader.h)
 set(SOURCES bootloader.cc)
 
 add_library(bootloader OBJECT ${SOURCES})
+target_link_libraries(bootloader PUBLIC config)
 target_include_directories(bootloader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_sources(config PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/bootloader_config.cc)
 

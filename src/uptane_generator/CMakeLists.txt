@@ -4,6 +4,7 @@ set(UPTANE_GENERATOR_HDR repo.h director_repo.h image_repo.h uptane_repo.h)
 
 set(UPTANE_GENERATOR_LIBS aktualizr_lib)
 add_library(uptane_generator_lib ${UPTANE_GENERATOR_SRC})
+target_link_libraries(uptane_generator_lib PUBLIC jsoncpp_lib)
 target_include_directories(uptane_generator_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(uptane-generator main.cc ${UPTANE_GENERATOR_SRC})
 target_link_libraries(uptane-generator ${UPTANE_GENERATOR_LIBS})

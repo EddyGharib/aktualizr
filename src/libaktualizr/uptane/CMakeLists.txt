@@ -24,6 +24,7 @@ set(HEADERS
 
 
 add_library(uptane OBJECT ${SOURCES})
+target_link_libraries(uptane PUBLIC jsoncpp_lib)
 
 add_aktualizr_test(NAME tuf SOURCES tuf_test.cc PROJECT_WORKING_DIRECTORY)
 

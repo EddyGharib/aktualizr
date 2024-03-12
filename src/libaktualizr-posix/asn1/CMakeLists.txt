@@ -7,6 +7,7 @@ set(HEADERS asn1-cer.h
             asn1_message.h)
 
 add_library(asn1 OBJECT ${SOURCES})
+target_link_libraries(asn1 PUBLIC utilities)
 
 
 compile_asn1_lib(SOURCES

@@ -34,5 +34,6 @@ add_test(NAME test_schema_migration
 set_tests_properties(test_schema_migration PROPERTIES LABELS "noptest")
 
 add_library(storage OBJECT ${SOURCES} sql_schemas.cc)
+target_link_libraries(storage PUBLIC config)
 
 aktualizr_source_file_checks(${SOURCES} ${HEADERS} storage_config.cc ${TEST_SOURCES})

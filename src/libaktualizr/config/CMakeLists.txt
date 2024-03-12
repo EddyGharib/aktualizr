@@ -3,6 +3,7 @@ set(SOURCES base_config.cc config.cc)
 target_sources(config PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/base_config.cc)
 
 add_library(primary_config OBJECT config.cc)
+target_link_libraries(primary_config PUBLIC config)
 
 add_aktualizr_test(NAME config SOURCES config_test.cc ARGS ${PROJECT_BINARY_DIR} PROJECT_WORKING_DIRECTORY)
 

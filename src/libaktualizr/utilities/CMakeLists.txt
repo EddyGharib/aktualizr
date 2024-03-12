@@ -21,6 +21,7 @@ set(HEADERS ../../../include/libaktualizr/utilities/apiqueue.h
 set_property(SOURCE aktualizr_version.cc PROPERTY COMPILE_DEFINITIONS AKTUALIZR_VERSION="${AKTUALIZR_VERSION}")
 
 add_library(utilities OBJECT ${SOURCES})
+target_link_libraries(utilities PUBLIC campaign)
 
 add_aktualizr_test(NAME api_queue SOURCES api_queue_test.cc)
 add_aktualizr_test(NAME dequeue_buffer SOURCES dequeue_buffer_test.cc)

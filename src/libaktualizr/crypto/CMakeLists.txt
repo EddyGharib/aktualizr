@@ -8,6 +8,8 @@ set(HEADERS ../../../include/libaktualizr/crypto/crypto.h
 set_source_files_properties(p11engine.cc PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
 
 add_library(crypto OBJECT ${SOURCES})
+target_link_libraries(crypto PUBLIC jsoncpp_lib)
+
 aktualizr_source_file_checks(${SOURCES} ${HEADERS})
 
 if(BUILD_P11)

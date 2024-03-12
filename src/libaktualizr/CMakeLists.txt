@@ -18,6 +18,7 @@ aktualizr_source_file_checks(${LIBAKTUALIZR_PUBLIC_HEADERS})
 # declarations.
 # config has to go first, as other libraries append sources to it
 add_library(config OBJECT)
+target_link_libraries(config PUBLIC jsoncpp_lib)
 
 add_subdirectory("bootloader")
 add_subdirectory("bootstrap")
