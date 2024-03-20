@@ -3,6 +3,7 @@ build/
 install/
 /build-*
 /cmake-build-debug
+bazel-*
 
 # clion
 /.idea

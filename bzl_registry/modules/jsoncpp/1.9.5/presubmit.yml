@@ -1,0 +1,4 @@
+platforms:
+  linux:
+    build_targets:
+    - '...'

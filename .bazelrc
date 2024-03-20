@@ -1,0 +1,6 @@
+# Add registries
+build --registry=file://%workspace%/bzl_registry
+build --registry=https://bcr.bazel.build
+
+# Used to get git describe information
+build --stamp --workspace_status_command=./scripts/get_workspace_status.sh

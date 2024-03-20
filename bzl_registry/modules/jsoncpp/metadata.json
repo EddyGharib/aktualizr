@@ -1,0 +1,13 @@
+{
+    "homepage": "https://github.com/open-source-parsers/jsoncpp/tree/master",
+    "maintainers": [
+        {
+            "email": "eddy.gharib@idealworks.com",
+            "name": "Eddy Gharib"
+        }
+    ],
+    "versions": [
+        "1.9.5"
+    ],
+    "yanked_versions": {}
+}
