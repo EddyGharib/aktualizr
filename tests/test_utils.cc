@@ -17,7 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/process.hpp>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 in_port_t TestUtils::getFreePortAsInt() {
   int s = socket(AF_INET, SOCK_STREAM, 0);

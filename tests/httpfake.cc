@@ -8,7 +8,7 @@
 #include <thread>
 #include <chrono>
 
-#include "logging/logging.h"
+#include "libaktualizr/logging/logging.h"
 
 #include "metafake.h"
 
