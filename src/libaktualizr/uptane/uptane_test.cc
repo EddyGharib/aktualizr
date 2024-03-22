@@ -24,8 +24,8 @@
 #include "primary/sotauptaneclient.h"
 #include "storage/fsstorage_read.h"
 #include "test_utils.h"
-#include "uptane/tuf.h"
-#include "uptane/uptanerepository.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/uptane/uptanerepository.h"
 #include "uptane_test_common.h"
 
 #ifdef BUILD_P11

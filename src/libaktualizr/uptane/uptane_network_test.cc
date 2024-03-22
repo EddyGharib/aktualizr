@@ -22,7 +22,7 @@
 #include "primary/provisioner.h"
 #include "primary/sotauptaneclient.h"
 #include "test_utils.h"
-#include "uptane/uptanerepository.h"
+#include "libaktualizr/uptane/uptanerepository.h"
 #include "uptane_test_common.h"
 
 Config conf("tests/config/basic.toml");
