@@ -1,6 +1,7 @@
 # Add registries
-build --registry=file://%workspace%/bzl_registry
-build --registry=https://bcr.bazel.build
+common --registry=file://%workspace%/bzl_registry
+common --registry=https://raw.githubusercontent.com/EddyGharib/bazel-central-registry/boost
+# common --registry=file://%workspace%/out/bazel-central-registry
 
 # Used to get git describe information
 build --stamp --workspace_status_command=./scripts/get_workspace_status.sh

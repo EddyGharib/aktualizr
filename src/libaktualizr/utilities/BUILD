@@ -21,19 +21,35 @@ cc_library(
     hdrs = glob(["*.h"]) + [
         "autogen_version.hpp",
         ],
-    copts = ["-Isrc/libaktualizr/"],
+    copts = ["-Isrc/libaktualizr",],
     visibility = ["//visibility:public"],
     deps = [
         "@jsoncpp",
         "@boost.filesystem",
         "@boost.log",
         "@boost.thread",
+        "@libcurl",
+        "@libarchive",
+        "//:pub_includes"
         ]
 )
 
 cc_test(
-    name = "api_queue",
+    name = "api_queue_test",
     srcs = ["api_queue_test.cc"],
     visibility = ["//visibility:public"],
-    deps = [":utilities"]
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
+)
+
+cc_test(
+    name = "dequeue_buffer_test",
+    srcs = ["dequeue_buffer_test.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
 )
