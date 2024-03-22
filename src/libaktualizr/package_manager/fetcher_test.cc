@@ -19,8 +19,8 @@
 #include "package_manager/packagemanagerfake.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"
-#include "uptane/fetcher.h"
-#include "uptane/tuf.h"
+#include "libaktualizr/uptane/fetcher.h"
+#include "libaktualizr/uptane/tuf.h"
 
 static const int pause_after = 50;        // percent
 static const int pause_duration = 1;      // seconds

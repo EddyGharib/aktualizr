@@ -15,7 +15,7 @@
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
 #include "package_manager/packagemanagerfake.h"
-#include "uptane/fetcher.h"
+#include "libaktualizr/uptane/fetcher.h"
 
 // Test creating, appending and reading binary targets.
 TEST(PackageManagerFake, Binary) {
