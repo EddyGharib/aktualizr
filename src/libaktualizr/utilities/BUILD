@@ -48,6 +48,51 @@ cc_test(
     name = "dequeue_buffer_test",
     srcs = ["dequeue_buffer_test.cc"],
     visibility = ["//visibility:public"],
+    copts = ["-Isrc/libaktualizr",],
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
+)
+
+cc_test(
+    name = "sighandler_test",
+    srcs = ["sighandler_test.cc"],
+    visibility = ["//visibility:public"],
+    copts = ["-Isrc/libaktualizr",],
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
+)
+
+cc_test(
+    name = "timer_test",
+    srcs = ["timer_test.cc"],
+    visibility = ["//visibility:public"],
+    copts = ["-Isrc/libaktualizr",],
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
+)
+
+cc_test(
+    name = "utils_test",
+    srcs = ["utils_test.cc"],
+    visibility = ["//visibility:public"],
+    copts = ["-Isrc/libaktualizr",],
+    deps = [
+        ":utilities",
+        "@googletest//:gtest_main",
+    ]
+)
+
+cc_test(
+    name = "xml2json_test",
+    srcs = ["xml2json_test.cc"],
+    visibility = ["//visibility:public"],
+    copts = ["-Isrc/libaktualizr",],
     deps = [
         ":utilities",
         "@googletest//:gtest_main",
