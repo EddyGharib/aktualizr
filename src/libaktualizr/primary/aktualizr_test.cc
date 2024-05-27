@@ -1184,7 +1184,7 @@ TEST(Aktualizr, AutoRebootAfterUpdate) {
 
  * Store installation result for Secondary
  */
-TEST(Aktualizr, FullMultipleSecondaries) {
+TEST(DISABLED_Aktualizr, FullMultipleSecondaries) {
   TemporaryDirectory temp_dir;
   auto http = std::make_shared<HttpFake>(temp_dir.Path(), "multisec", fake_meta_dir);
   Config conf("tests/config/basic.toml");

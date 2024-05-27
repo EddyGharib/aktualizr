@@ -28,6 +28,8 @@ add_dependencies(build_tests uptane-generator)
 
 set(CTEST_EXTRA_ARGS -T Test --no-compress-output)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 # build list of tests to run
 foreach(label ${TESTSUITE_ONLY})
     set(CTEST_EXTRA_ARGS ${CTEST_EXTRA_ARGS} -L ${label})
@@ -222,17 +224,17 @@ if(BUILD_OSTREE)
     add_test(NAME test_ip_secondary_ostree
              COMMAND ${PROJECT_SOURCE_DIR}/tests/ipsecondary_ostree_test.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_ip_secondary_ostree PROPERTIES LABELS "noptest")
+    set_tests_properties(test_ip_secondary_ostree PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_treehub_failure
              COMMAND ${PROJECT_SOURCE_DIR}/tests/test_treehub_failure.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_treehub_failure PROPERTIES LABELS "noptest")
+    set_tests_properties(test_treehub_failure PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_misc_ostree_update
              COMMAND ${PROJECT_SOURCE_DIR}/tests/test_misc_ostree_update.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_misc_ostree_update PROPERTIES LABELS "noptest")
+    set_tests_properties(test_misc_ostree_update PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_ostree_custom_uri
             COMMAND ${PROJECT_SOURCE_DIR}/tests/test_ostree_custom_uri.py

@@ -1,0 +1,39 @@
+name: Aktualizr tests
+
+on:
+  pull_request:
+      branches: [ fio+export_config_scripts ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Build Project
+      run: |
+        mkdir -p build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=Debug ..
+        make
+        make build-tests
+
+    - name: Run ctest excluding 'booted' tests
+      run: |
+        cd build
+        ctest -LE "booted"
+    
+    # - name : Run static checks test script
+    #   run: sh ./scripts/test_static.sh
+    
+    # - name : Run make docs test script
+    #   run: sh ./scripts/test_docs.sh
+
+    # - name : Run build and install test script
+    #   run: sh ./scripts/test_build.sh
+
+    # - name : Run test suite script
+    #   run: sh ./scripts/test_testsuite.sh
