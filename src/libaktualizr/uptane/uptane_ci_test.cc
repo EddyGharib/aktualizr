@@ -12,11 +12,11 @@
 
 #include "http/httpclient.h"
 #include "libaktualizr/logging/logging.h"
-#include "package_manager/ostreemanager.h"
+#include "libaktualizr/package_manager/ostreemanager.h"
 #include "primary/reportqueue.h"
 #include "primary/sotauptaneclient.h"
 #include "storage/invstorage.h"
-#include "uptane/uptanerepository.h"
+#include "libaktualizr/uptane/uptanerepository.h"
 #include "uptane_test_common.h"
 #include "libaktualizr/utilities/utils.h"
 

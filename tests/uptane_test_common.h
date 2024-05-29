@@ -9,8 +9,8 @@
 
 #include "libaktualizr/config.h"
 #include "libaktualizr/aktualizr.h"
-#include "uptane/tuf.h"
-#include "utilities/utils.h"
+#include "libaktualizr/uptane/tuf.h"
+#include "libaktualizr/utilities/utils.h"
 #include "virtualsecondary.h"
 #include "primary/sotauptaneclient.h"
 

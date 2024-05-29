@@ -6,8 +6,8 @@
 
 #include "json/json.h"
 
-#include "http/httpinterface.h"
-#include "utilities/utils.h"
+#include "libaktualizr/http/httpinterface.h"
+#include "libaktualizr/utilities/utils.h"
 
 class HttpFake : public HttpInterface {
  public:
