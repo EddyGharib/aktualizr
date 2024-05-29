@@ -2,8 +2,8 @@ name: Aktualizr CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 env:
   CCACHE_DIR: ${{ github.workspace }}/.ccache
 jobs:
