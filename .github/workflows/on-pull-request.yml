@@ -2,7 +2,7 @@ name: Aktualizr tests
 
 on:
   pull_request:
-      branches: [ fio+export_config_scripts ]
+      branches: [ dev ]
 
 jobs:
   run-tests:
