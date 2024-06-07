@@ -27,8 +27,9 @@ jobs:
 
       - name: Build Project
         run: |
-          mkdir -p /ws/build && cd /ws/build
-          cmake -DCMAKE_BUILD_TYPE=Debug ..
+          cd /ws
+          cmake -B build -DCMAKE_BUILD_TYPE=Debug .
+          cd /ws/build
           make
           make build-tests
 
