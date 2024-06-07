@@ -68,5 +68,3 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
 WORKDIR /ostree
 RUN git init && git remote add origin https://github.com/ostreedev/ostree
 RUN git fetch origin v2021.6 && git checkout FETCH_HEAD
-
-WORKDIR /
