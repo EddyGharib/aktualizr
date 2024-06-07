@@ -17,6 +17,7 @@ jobs:
     needs: repo-name
     container:
       image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test
+      options: --pull always
       volumes:
         - ${{ github.workspace }}:/ws
     steps:
