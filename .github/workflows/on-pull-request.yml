@@ -46,7 +46,7 @@ jobs:
       - name: Run ctest excluding 'booted' tests
         run: |
           cd /ws/build
-          ctest -LE "booted"
+          ctest -LE "booted" --output-on-failure
 
     
     # - name : Run static checks test script
