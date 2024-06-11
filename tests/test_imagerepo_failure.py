@@ -2,6 +2,8 @@
 
 import logging
 import argparse
+import sys
+import time
 
 from os import getcwd, chdir
 from test_fixtures import KeyStore, with_uptane_backend, with_path, with_director, with_aktualizr,\
@@ -66,9 +68,11 @@ def test_incorrect_targets_logs(install_mngr, director,
             install_result = install_result and install_mngr.are_images_installed()
             logger.info('Are images installed: {}'.format(install_result))
             output = aktualizr.output()
-            for line in output.split('\n'):
-                if "Snapshot" in line:
-                    logger.info(line)
+            for handler in logger.handlers:
+                handler.flush()
+            sys.stdout.flush()
+            sys.stderr.flush()
+            time.sleep(1) 
             logger.info('Aktualizr output start:\n{}\nAktualizr output end'.format(output))
             if not "Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata" in output:
                 return False
