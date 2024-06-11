@@ -30,8 +30,10 @@ jobs:
       - name: Configure Git Safe Directory
         run: git config --global --add safe.directory /ws
 
-      - name: Set TMPDIR Environment Variable
-        run: echo "TMPDIR=/ws/tmp" >> $GITHUB_ENV
+      - name: Configure TMPDIR
+        run: |
+          mkdir -p /ws/tmp
+          echo "TMPDIR=/ws/tmp" >> $GITHUB_ENV
 
       - name: Build Project
         run: |
