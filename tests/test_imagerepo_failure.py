@@ -69,11 +69,6 @@ def test_incorrect_targets_logs(install_mngr, director,
             logger.info('Are images installed: {}'.format(install_result))
             output = aktualizr.output()
             logger.info('Aktualizr output start:\n{}\nAktualizr output end'.format(output))
-            for handler in logger.handlers:
-                handler.flush()
-            sys.stdout.flush()
-            sys.stderr.flush()
-            time.sleep(1) 
             if not "Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata" in output:
                 return False
             if not "Failed to update Image repo metadata: Snapshot hash mismatch for targets metadata" in output:
