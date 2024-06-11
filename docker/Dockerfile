@@ -68,3 +68,7 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
 WORKDIR /ostree
 RUN git init && git remote add origin https://github.com/ostreedev/ostree
 RUN git fetch origin v2021.6 && git checkout FETCH_HEAD
+RUN NOCONFIGURE=1 ./autogen.sh
+RUN ./configure CFLAGS='-Wno-error=missing-prototypes' --with-libarchive --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --with-builtin-grub2-mkconfig --with-curl --without-soup --prefix=/usr
+RUN make VERBOSE=1 -j4
+RUN make install
