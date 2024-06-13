@@ -46,7 +46,7 @@ jobs:
       - name: Run ctest excluding 'booted' tests
         run: |
           cd /ws/build
-          stdbuf -oL -eL ctest -LE "booted" --output-on-failure
+          ctest -LE "booted" --output-on-failure
 
 
     
