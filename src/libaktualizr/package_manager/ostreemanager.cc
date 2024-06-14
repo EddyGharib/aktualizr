@@ -249,8 +249,10 @@ void OstreeManager::completeInstall() const {
 
 data::InstallationResult OstreeManager::finalizeInstall(const Uptane::Target &target) {
   const std::string current_hash = getCurrentHash();
+  LOG_DEBUG << "Finalizing ostree install, cur_hash: " << current_hash << ", target_hash: " << target.sha256Hash();
 
   if (!bootloader_->rebootDetected()) {
+    LOG_DEBUG << "No bootloader reboot detected, the device was previously rebooted in the middle of a finalization step";
     // A device can be rebooted in the middle of the "finalization" process, specifically, right after the reboot flag
     // is cleared and before the pending target is marked as current. So, if a device is in such a state and gets
     // rebooted, the client will run "finalization" again to apply the pending target. Since the device is already
@@ -399,8 +401,9 @@ Uptane::Target OstreeManager::getCurrent() const {
     return *current_version;
   }
 
-  std::string storage_version_str = (!!current_version)?(current_version->sha256Hash()):("");
-  LOG_ERROR << "Current versions in storage (" << storage_version_str << ") and reported by OSTree (" << current_hash << ") do not match";
+  std::string storage_version_str = (!!current_version) ? (current_version->sha256Hash()) : ("");
+  LOG_ERROR << "Current versions in storage (" << storage_version_str << ") and reported by OSTree (" << current_hash
+            << ") do not match";
 
   // Look into installation log to find a possible candidate. Again, despite the
   // name, this will work for Secondaries as well.
