@@ -32,7 +32,7 @@ class CopyThread(Thread):
         self._dst = dest
 
     def run(self):
-        copyfileobj(self._src, self._dst, 1024)
+        copyfileobj(self._src, self._dst, 1024*1024)
 
 
 class Aktualizr:
