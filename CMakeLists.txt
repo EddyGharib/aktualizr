@@ -207,6 +207,7 @@ endif()
 ################ QA RULES
 add_custom_target(qa)
 add_custom_target(check-format)
+add_custom_target(clang-tidy)
 
 add_custom_target(format)
 add_dependencies(qa format)
