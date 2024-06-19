@@ -270,7 +270,7 @@ class Aktualizr:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._process.terminate()
-        self._process.wait(timeout=60)
+        self._process.wait(timeout=100)
         if not self._output_logs:
             self._stdout_thread.join(30)
         logger.debug("Aktualizr has been stopped")
