@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: repo-name
     container:
-      image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test
+      image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test-1.0.0
       volumes:
         - ${{ github.workspace }}:/ws
 
