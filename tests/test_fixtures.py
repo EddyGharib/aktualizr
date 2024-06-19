@@ -32,7 +32,7 @@ class CopyThread(Thread):
         self._dst = dest
 
     def run(self):
-        copyfileobj(self._src, self._dst, 1024*1024)
+        copyfileobj(self._src, self._dst, 512)
 
 
 class Aktualizr:
@@ -270,9 +270,9 @@ class Aktualizr:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._process.terminate()
-        self._process.wait(timeout=100)
+        self._process.wait(timeout=60)
         if not self._output_logs:
-            self._stdout_thread.join(30)
+            self._stdout_thread.join(10)
         logger.debug("Aktualizr has been stopped")
 
     def terminate(self, sig=signal.SIGTERM):
