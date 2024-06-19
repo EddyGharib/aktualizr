@@ -17,6 +17,8 @@ jobs:
     needs: repo-name
     container:
       image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test
+      volumes:
+        - ${{ github.workspace }}:/
 
     steps:
       - name: Checkout Repository
