@@ -18,7 +18,7 @@ jobs:
     container:
       image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test
       volumes:
-        - ${{ github.workspace }}:/
+        - ${{ github.workspace }}:/ws
 
     steps:
       - name: Checkout Repository
@@ -26,6 +26,14 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true 
+      
+      - name: Configure Git Safe Directory
+        run: git config --global --add safe.directory /ws
+
+      - name: Configure TMPDIR
+        run: |
+          mkdir -p /ws/tmp
+          echo "TMPDIR=/ws/tmp" >> $GITHUB_ENV
 
       - name: Build Project
         run: |
