@@ -272,7 +272,7 @@ class Aktualizr:
         self._process.terminate()
         self._process.wait(timeout=60)
         if not self._output_logs:
-            self._stdout_thread.join(10)
+            self._stdout_thread.join(30)
         logger.debug("Aktualizr has been stopped")
 
     def terminate(self, sig=signal.SIGTERM):
