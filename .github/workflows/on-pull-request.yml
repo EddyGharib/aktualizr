@@ -17,35 +17,24 @@ jobs:
     needs: repo-name
     container:
       image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test
-      options: --pull always
-      volumes:
-        - ${{ github.workspace }}:/ws
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true 
-      
-      - name: Configure Git Safe Directory
-        run: git config --global --add safe.directory /ws
-
-      - name: Configure TMPDIR
-        run: |
-          mkdir -p /ws/tmp
-          echo "TMPDIR=/ws/tmp" >> $GITHUB_ENV
 
       - name: Build Project
         run: |
-          cd /ws
           cmake -B build -DCMAKE_BUILD_TYPE=Debug .
-          cd /ws/build
+          cd build
           make
           make build_tests
 
       - name: Run ctest excluding 'booted' tests
         run: |
-          cd /ws/build
+          cd build
           ctest -LE "booted" --output-on-failure
 
 
