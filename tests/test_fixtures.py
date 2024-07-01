@@ -24,7 +24,6 @@ from random import randint
 
 logger = logging.getLogger(__name__)
 
-
 class CopyThread(Thread):
     def __init__(self, src, dest):
         super().__init__()
@@ -32,6 +31,7 @@ class CopyThread(Thread):
         self._dst = dest
 
     def run(self):
+        # Replaced from 1024 to 512.
         copyfileobj(self._src, self._dst, 512)
 
 
