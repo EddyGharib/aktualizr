@@ -24,6 +24,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true 
+      
       # Needed because we have submodules in the project.
       # fatal: detected dubious ownership in repository at '/__w/aktualizr/aktualizr'
       - name: Configure Git Safe Directory
