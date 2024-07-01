@@ -70,7 +70,7 @@ if(BUILD_OSTREE)
     add_aktualizr_test(NAME aktualizr_secondary_ostree
                        SOURCES aktualizr_secondary_ostree_test.cc PROJECT_WORKING_DIRECTORY
                        ARGS ${PROJECT_BINARY_DIR}/ostree_repo
-                       LIBRARIES aktualizr_secondary_lib uptane_generator_lib $<TARGET_OBJECTS:campaign>)
+                       LIBRARIES aktualizr_secondary_lib uptane_generator_lib $<TARGET_OBJECTS:campaign> LABELS "booted")
 
     set_target_properties(t_aktualizr_secondary_ostree PROPERTIES LINK_FLAGS -Wl,--export-dynamic)
 else(BUILD_OSTREE)

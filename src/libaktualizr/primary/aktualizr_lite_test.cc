@@ -347,8 +347,8 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
+            log_output.find("Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata"));
+  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
 
   // Corrupt stored snapshot metadata and verify that the expected error message is generated
   corruptStoredMetadata(aklite.storage_, Uptane::Role::Snapshot());
@@ -380,8 +380,8 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
+            log_output.find("Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata"));
+  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
             log_output.find("Image repo Snapshot verification failed: Snapshot metadata hash verification failed"));
 }
