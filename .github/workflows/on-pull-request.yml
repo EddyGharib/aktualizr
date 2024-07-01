@@ -28,6 +28,14 @@ jobs:
       # fatal: detected dubious ownership in repository at '/__w/aktualizr/aktualizr'
       - name: Configure Git Safe Directory
         run: git config --global --add safe.directory /__w/aktualizr/aktualizr
+      
+      # Needed because /tmp is used in the process.
+      # Exception: boost::filesystem::copy_file: Invalid cross-device link: 
+      # "/tmp/tmp.PXQbhn2CD7/primary.txt", "/__w/aktualizr/aktualizr/build/uptane_repos/full_no_correlation_id/repo/repo/targets/primary.txt"
+      - name: Configure TMPDIR
+        run: |
+          mkdir -p /__w/aktualizr/aktualizr/tmp
+          echo "TMPDIR=/__w/aktualizr/aktualizr/tmp" >> $GITHUB_ENV
 
       - name: Build Project
         run: |
