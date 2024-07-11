@@ -1,0 +1,21 @@
+if(CPPCHECK)
+    if(NOT TARGET cppcheck)
+    add_custom_target(cppcheck)
+    endif()
+    add_dependencies(qa cppcheck)
+    function(aktualizr_cppcheck)
+        file(RELATIVE_PATH SUBDIR ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+        foreach(FILE ${ARGN})
+            string(REPLACE "/" "_" TARGETNAME "aktualizr_cppcheck-${SUBDIR}-${FILE}")
+            add_custom_target(${TARGETNAME}
+                    COMMAND ${CPPCHECK} --language=c++ --quiet --inline-suppr ${FILE}
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                    VERBATIM)
+            add_dependencies(cppcheck ${TARGETNAME})
+        endforeach()
+    endfunction()
+else()
+    message(WARNING "Unable to find cppcheck; skipping")
+    function(aktualizr_cppcheck)
+    endfunction()
+endif()

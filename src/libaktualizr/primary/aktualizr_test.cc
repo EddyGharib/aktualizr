@@ -407,7 +407,7 @@ class HttpFakeSplit : public HttpFake {
  *
  * This is intended to cover the case where an implementer splits an update with
  * multiple targets and downloads and/or installs them separately. This is
- * supported as long as a check for updates isn't done inbetween. It was briefly
+ * supported as long as a check for updates isn't done in between. It was briefly
  * broken by overzealously dropping Targets metadata and fixed in
  * 99c7f7ef20da76a2d6eefd08be5529c36434b9a6.
  */
@@ -843,7 +843,7 @@ TEST(Aktualizr, FinalizationFailure) {
     EXPECT_TRUE(event_hdlr.checkReceivedEvents(expected_event_order));
     EXPECT_TRUE(aktualizr.uptane_client()->hasPendingUpdates());
     EXPECT_TRUE(http_server_mock->checkReceivedReports(expected_report_order));
-    // Aktualizr reports to a server that installation was successfull for the Secondary
+    // Aktualizr reports to a server that installation was successful for the Secondary
     // checkReceivedReports() verifies whether EcuInstallationApplied was reported for the Primary
     EXPECT_FALSE(http_server_mock->wasInstallSuccessful(primary_ecu_id));
     EXPECT_TRUE(http_server_mock->wasInstallSuccessful(secondary_ecu_id));
@@ -1928,7 +1928,7 @@ TEST(Aktualizr, ReportDownloadProgress) {
   result::UpdateCheck update_result = aktualizr.CheckUpdates().get();
   ASSERT_EQ(update_result.status, result::UpdateStatus::kUpdatesAvailable);
   // The test mocks are tailored to emulate a device with a Primary ECU and one Secondary ECU
-  // for sake of the download progress report testing it's suffice to test it agains just one of the ECUs
+  // for sake of the download progress report testing it's suffice to test it against just one of the ECUs
   update_result.updates.pop_back();
 
   result::Download download_result = aktualizr.Download(update_result.updates).get();
@@ -2132,7 +2132,7 @@ TEST(Aktualizr, CustomInstallationRawReport) {
   EXPECT_EQ(http->last_manifest["signed"]["installation_report"]["report"]["raw_report"], custom_raw_report);
 
   // After sending manifest, an installation report will be removed from the DB,
-  // so Aktualzr::SetInstallationRawReport must return a negative value.
+  // so Aktualizr::SetInstallationRawReport must return a negative value.
   EXPECT_FALSE(aktualizr.SetInstallationRawReport(custom_raw_report));
 }
 
@@ -2317,7 +2317,7 @@ TEST(Aktualizr, PauseResumeQueue) {
 
   aktualizr.CheckUpdates();
 
-  // Theoritically racy, could cause bad implem to succeeed sometimes
+  // Theoretically racy, could cause bad implementation to succeed sometimes
   std::this_thread::sleep_for(std::chrono::seconds(1));
 
   {

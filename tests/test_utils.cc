@@ -103,9 +103,9 @@ Process::Result Process::spawn(const std::string &executable_to_run, const std::
 
     io_service.run();
 
-    bool wait_successfull = child_process.wait_for(std::chrono::seconds(60));
-    if (!wait_successfull) {
-      throw std::runtime_error("Timeout occured while waiting for a child process completion");
+    bool wait_successful = child_process.wait_for(std::chrono::seconds(60));
+    if (!wait_successful) {
+      throw std::runtime_error("Timeout occurred while waiting for a child process completion");
     }
 
     // Issue with getting an exit code if 'on_exit' handler is not specified

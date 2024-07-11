@@ -100,9 +100,9 @@ void RequestPool::LoopListen() {
   fd_set fdwrite;
   fd_set fdexcept;
   int maxfd = 0;
-  FD_ZERO(&fdread);    // NOLINT(readability-isolate-declaration)
-  FD_ZERO(&fdwrite);   // NOLINT(readability-isolate-declaration)
-  FD_ZERO(&fdexcept);  // NOLINT(readability-isolate-declaration)
+  FD_ZERO(&fdread);    // NOLINT(readability-isolate-declaration,cppcoreguidelines-pro-bounds-constant-array-index)
+  FD_ZERO(&fdwrite);   // NOLINT(readability-isolate-declaration,cppcoreguidelines-pro-bounds-constant-array-index)
+  FD_ZERO(&fdexcept);  // NOLINT(readability-isolate-declaration,cppcoreguidelines-pro-bounds-constant-array-index)
   long timeoutms = 0;  // NOLINT(google-runtime-int)
   mc = curl_multi_timeout(multi_, &timeoutms);
   if (mc != CURLM_OK) {

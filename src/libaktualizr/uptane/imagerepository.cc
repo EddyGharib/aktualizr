@@ -82,7 +82,7 @@ void ImageRepository::verifySnapshot(const std::string& snapshot_raw, bool prefe
   }
 
   if (!hash_exists) {
-    LOG_ERROR << "No hash found for shapshot.json";
+    LOG_ERROR << "No hash found for snapshot.json";
     throw Uptane::SecurityException(RepositoryType::IMAGE, "Snapshot metadata hash verification failed");
   }
 

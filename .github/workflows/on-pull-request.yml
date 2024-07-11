@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: repo-name
     container:
-      image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test-1.0.0
+      image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test-1.0.2
   
     steps:
       - name: Checkout Repository
@@ -50,16 +50,11 @@ jobs:
           cd /__w/aktualizr/aktualizr/build
           ctest -LE "booted" --output-on-failure
 
+      - name : Run static checks test script
+        run: sh /__w/aktualizr/aktualizr/scripts/test_static.sh
+      
+      - name : Run make docs test script
+        run: sh /__w/aktualizr/aktualizr/scripts/test_docs.sh
 
-    
-    # - name : Run static checks test script
-    #   run: sh ./scripts/test_static.sh
-    
-    # - name : Run make docs test script
-    #   run: sh ./scripts/test_docs.sh
-
-    # - name : Run build and install test script
-    #   run: sh ./scripts/test_build.sh
-
-    # - name : Run test suite script
-    #   run: sh ./scripts/test_testsuite.sh
+      - name : Run build and install test script
+        run: sh /__w/aktualizr/aktualizr/scripts/test_build.sh

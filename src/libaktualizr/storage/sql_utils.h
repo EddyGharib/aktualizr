@@ -139,7 +139,7 @@ class SQLite3Guard {
       m_->lock();
     }
     if (sqlite3_threadsafe() == 0) {
-      throw SQLInternalException("sqlite3 has been compiled without multitheading support");
+      throw SQLInternalException("sqlite3 has been compiled without multithreading support");
     }
     sqlite3* h;
     if (readonly) {
@@ -187,7 +187,7 @@ class SQLite3Guard {
   // A transactional series of db operations should be realized between calls of
   // `beginTranscation()` and `commitTransaction()`. If no commit is done before
   // the destruction of the `SQLite3Guard` (and thus the SQLite connection) or
-  // if `rollbackTransaction()` is called explicitely, the changes will be
+  // if `rollbackTransaction()` is called explicitly, the changes will be
   // rolled back
 
   void beginTransaction() {

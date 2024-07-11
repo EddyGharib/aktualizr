@@ -1,5 +1,7 @@
 if(CLANG_TIDY)
+    if(NOT TARGET clang-tidy)
     add_custom_target(clang-tidy)
+    endif()
     add_dependencies(qa clang-tidy)
     function(aktualizr_clang_tidy)
         file(RELATIVE_PATH SUBDIR ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
