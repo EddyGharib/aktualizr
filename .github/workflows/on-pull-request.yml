@@ -51,10 +51,10 @@ jobs:
           ctest -LE "booted" --output-on-failure
 
       - name : Run static checks test script
-        run: sh /__w/aktualizr/aktualizr/scripts/test_static.sh
+        run: bash /__w/aktualizr/aktualizr/scripts/test_static.sh
       
       - name : Run make docs test script
-        run: sh /__w/aktualizr/aktualizr/scripts/test_docs.sh
+        run: bash /__w/aktualizr/aktualizr/scripts/test_docs.sh
 
       - name : Run build and install test script
-        run: sh /__w/aktualizr/aktualizr/scripts/test_build.sh
+        run: bash /__w/aktualizr/aktualizr/scripts/test_build.sh
