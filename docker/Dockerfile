@@ -50,7 +50,6 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
   lshw \
   make \
   ninja-build \
-  npm \
   opensc \
   net-tools \
   pkg-config \
