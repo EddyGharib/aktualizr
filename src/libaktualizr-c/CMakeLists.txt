@@ -19,6 +19,7 @@ add_library(aktualizr-c SHARED ${SOURCES}
 
 target_include_directories(aktualizr-c PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(aktualizr-c PRIVATE ${AKTUALIZR_EXTERNAL_LIBS})
+target_link_libraries(aktualizr-c PUBLIC jsoncpp_lib)
 
 aktualizr_source_file_checks(${SOURCES})
 

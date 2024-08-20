@@ -296,7 +296,6 @@ include(CPackComponent)
 set (AKTUALIZR_EXTERNAL_LIBS
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
-    jsoncpp_lib
     CURL::libcurl
     OpenSSL::SSL
     Threads::Threads
@@ -312,6 +311,7 @@ endif(BUILD_P11)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(hasParent)
+    set(jsoncpp_lib PARENT_SCOPE)
     set (AKTUALIZR_EXTERNAL_LIBS ${AKTUALIZR_EXTERNAL_LIBS} PARENT_SCOPE)
 endif()
 

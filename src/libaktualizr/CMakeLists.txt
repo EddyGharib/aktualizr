@@ -79,7 +79,8 @@ target_include_directories(aktualizr_lib PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(aktualizr_lib ${AKTUALIZR_EXTERNAL_LIBS})
+target_link_libraries(aktualizr_lib PRIVATE ${AKTUALIZR_EXTERNAL_LIBS})
+target_link_libraries(aktualizr_lib PUBLIC jsoncpp_lib)
 set_target_properties(aktualizr_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr)
 install(TARGETS aktualizr_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libaktualizr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
