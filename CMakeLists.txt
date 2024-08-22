@@ -294,16 +294,11 @@ include(CPackComponent)
 
 
 set (AKTUALIZR_EXTERNAL_LIBS
-    ${Boost_SYSTEM_LIBRARIES}
-    ${Boost_LIBRARIES}
-    CURL::libcurl
-    OpenSSL::SSL
     Threads::Threads
-    sodium::sodium
-    ostree::ostree
-    sqlite3::sqlite3
     LibArchive::LibArchive
     ${GLIB2_LIBRARIES})
+
+set (AKTUALIZR_PUBLIC_LIBS ${Boost_SYSTEM_LIBRARIES} ${Boost_LIBRARIES} jsoncpp_lib CURL::libcurl OpenSSL::SSL sodium::sodium sqlite3::sqlite3 ostree::ostree)
 
 if(BUILD_P11)
     list(APPEND AKTUALIZR_EXTERNAL_LIBS libp11::libp11)
@@ -311,8 +306,8 @@ endif(BUILD_P11)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(hasParent)
-    set(jsoncpp_lib PARENT_SCOPE)
     set (AKTUALIZR_EXTERNAL_LIBS ${AKTUALIZR_EXTERNAL_LIBS} PARENT_SCOPE)
+    set (AKTUALIZR_PUBLIC_LIBS ${AKTUALIZR_PUBLIC_LIBS} PARENT_SCOPE)
 endif()
 
 include(AddAktualizrTest)

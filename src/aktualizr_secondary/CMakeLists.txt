@@ -25,8 +25,7 @@ add_library(aktualizr_secondary_lib SHARED
     $<TARGET_OBJECTS:uptane>
     $<TARGET_OBJECTS:utilities>)
 set_target_properties(aktualizr_secondary_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr_secondary)
-target_link_libraries(aktualizr_secondary_lib PRIVATE aktualizr-posix ${AKTUALIZR_EXTERNAL_LIBS})
-target_link_libraries(aktualizr_secondary_lib PUBLIC jsoncpp_lib)
+target_link_libraries(aktualizr_secondary_lib PRIVATE ${AKTUALIZR_EXTERNAL_LIBS} PUBLIC aktualizr-posix ${AKTUALIZR_PUBLIC_LIBS})
 
 add_executable(aktualizr-secondary ${AKTUALIZR_SECONDARY_SRC})
 target_link_libraries(aktualizr-secondary aktualizr_secondary_lib)
