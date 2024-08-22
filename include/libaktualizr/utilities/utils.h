@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 #include <netinet/in.h>
 
-#include "json/json.h"
+#include "jsoncpp/json/json.h"
 
 struct Utils {
   static std::string fromBase64(std::string base64_string);
