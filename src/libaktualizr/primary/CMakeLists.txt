@@ -13,7 +13,7 @@ set(HEADERS aktualizr_helpers.h
             sotauptaneclient.h)
 
 add_library(primary OBJECT ${SOURCES})
-target_link_libraries(primary PUBLIC jsoncpp_lib)
+target_link_libraries(primary PUBLIC JsonCpp::JsonCpp)
 
 add_library(provisioner_test_utils STATIC provisioner_test_utils.cc)
 target_link_libraries(provisioner_test_utils PUBLIC primary)

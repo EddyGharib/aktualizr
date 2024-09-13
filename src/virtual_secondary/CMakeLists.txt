@@ -4,7 +4,7 @@ set(HEADERS managedsecondary.h virtualsecondary.h)
 
 add_library(virtual_secondary STATIC ${SOURCES})
 
-target_link_libraries(virtual_secondary PUBLIC jsoncpp_lib)
+target_link_libraries(virtual_secondary PUBLIC JsonCpp::JsonCpp)
 
 target_include_directories(virtual_secondary PUBLIC ${PROJECT_SOURCE_DIR}/src/virtual_secondary)
 

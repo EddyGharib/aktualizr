@@ -6,7 +6,9 @@ include("${CMAKE_CURRENT_LIST_DIR}/aktualizrTargets.cmake")
 
 include(CMakeFindDependencyMacro)
 
-find_dependency(jsoncpp REQUIRED)
+if(NOT TARGET JsonCpp::JsonCpp)
+    find_dependency(jsoncpp REQUIRED)
+endif()
 find_dependency(Boost REQUIRED COMPONENTS system log_setup program_options)
 find_dependency(OSTree REQUIRED)
 find_dependency(CURL REQUIRED)

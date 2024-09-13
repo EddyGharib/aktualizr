@@ -259,7 +259,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src/libaktualizr)
 include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third_party/googletest/googletest/include)
-include_directories(SYSTEM ${JSONCPP_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 
 # General packaging configuration
@@ -298,7 +297,15 @@ set (AKTUALIZR_EXTERNAL_LIBS
     LibArchive::LibArchive
     ${GLIB2_LIBRARIES})
 
-set (AKTUALIZR_PUBLIC_LIBS ${Boost_SYSTEM_LIBRARIES} ${Boost_LIBRARIES} jsoncpp_lib CURL::libcurl OpenSSL::SSL sodium::sodium sqlite3::sqlite3 ostree::ostree)
+set (AKTUALIZR_PUBLIC_LIBS 
+    ${Boost_SYSTEM_LIBRARIES} 
+    ${Boost_LIBRARIES} 
+    JsonCpp::JsonCpp 
+    CURL::libcurl 
+    OpenSSL::SSL 
+    sodium::sodium 
+    sqlite3::sqlite3 
+    ostree::ostree)
 
 if(BUILD_P11)
     list(APPEND AKTUALIZR_EXTERNAL_LIBS libp11::libp11)

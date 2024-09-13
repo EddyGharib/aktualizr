@@ -31,7 +31,7 @@ if (BUILD_SOTA_TOOLS)
             aktualizr_static_lib
             ${Boost_SYSTEM_LIBRARIES}
             ${Boost_LIBRARIES}
-            jsoncpp_lib
+            JsonCpp::JsonCpp
             Threads::Threads
             LibArchive::LibArchive
             CURL::libcurl
