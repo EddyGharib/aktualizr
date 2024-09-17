@@ -214,7 +214,7 @@ TEST(PackageManagerFake, DownloadFailureInjection) {
   fault_injection_disable("fake_package_download");
 
   // fault with custom data (through pid file). Unfortunately no easy way to
-  // test the custom emssage.
+  // test the custom message.
   fault_injection_enable("fake_package_download", 1, "RANDOM_DOWNLOAD_CAUSE", 0);
   EXPECT_FALSE(fakepm.fetchTarget(target, uptane_fetcher, keys, nullptr, nullptr));
   fault_injection_disable("fake_package_download");

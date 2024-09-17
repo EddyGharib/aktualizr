@@ -576,7 +576,7 @@ class SecondaryInterfaceMock : public SecondaryInterface {
   Uptane::Manifest getManifest() const override { return manifest_; }
   bool ping() const override { return true; }
   MOCK_METHOD(bool, putMetadataMock, (const Uptane::MetaBundle &));
-  MOCK_METHOD(int32_t, getRootVersionMock, (bool), (const));
+  MOCK_METHOD(int32_t, getRootVersionMock, (bool), (const override));
 
   data::InstallationResult putMetadata(const Uptane::Target &target) override {
     Uptane::MetaBundle meta_bundle;

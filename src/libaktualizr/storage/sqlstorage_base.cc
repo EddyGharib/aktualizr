@@ -216,7 +216,7 @@ bool SQLStorageBase::dbMigrate() {
   }
 
   if (schema_version == DbVersion::kEmpty) {
-    LOG_INFO << "Bootstraping DB to version " << current_schema_version_;
+    LOG_INFO << "Bootstrapping DB to version " << current_schema_version_;
     SQLite3Guard db = dbConnection();
 
     try {

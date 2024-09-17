@@ -192,7 +192,7 @@ Deserializer& Deserializer::operator>>(const Token& tok) {
             throw deserialization_error();
           }
           if (ret == kAsn1Sequence) {  // TODO: explicit tags (constructed tokens in general)
-            // indefininte length, expect an end of sequence marker
+            // indefinite length, expect an end of sequence marker
             if (decoded_int == -1) {
               ++nestedness;
             }

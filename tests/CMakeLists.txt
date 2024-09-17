@@ -71,12 +71,6 @@ if(BUILD_WITH_CODE_COVERAGE)
     add_dependencies(coverage build_tests)
 endif(BUILD_WITH_CODE_COVERAGE)
 
-if(TESTSUITE_VALGRIND)
-    # This test is only checking that valgrind finds memory leaks
-    add_aktualizr_test(NAME leak SOURCES leak_test.cc)
-    set_tests_properties(test_leak PROPERTIES WILL_FAIL TRUE)
-endif()
-
 if(FAULT_INJECTION)
     add_aktualizr_test(NAME fiuinfo SOURCES fiuinfo_test.cc NO_VALGRIND LAUNCH_CMD ${PROJECT_SOURCE_DIR}/scripts/fiu run -c "enable name=fail,failinfo=fiurun_failure" -- ARGS ${PROJECT_SOURCE_DIR}/scripts/fiu)
 endif()

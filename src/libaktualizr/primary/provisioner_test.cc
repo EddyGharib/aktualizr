@@ -349,7 +349,7 @@ class HttpFakeEcuRegistration : public HttpFake {
 };
 
 /* Detect and recover from failed ECU registration. */
-TEST(Provisioner, EcuRegisteration) {
+TEST(Provisioner, EcuRegistration) {
   TemporaryDirectory temp_dir;
   auto http = std::make_shared<HttpFakeEcuRegistration>(temp_dir.Path());
   Config conf("tests/config/basic.toml");
@@ -369,7 +369,7 @@ TEST(Provisioner, EcuRegisteration) {
                          "ECUs are unexpectedly already registered");
   }
 
-  // Force an arbitary failure from the fake server.
+  // Force an arbitrary failure from the fake server.
   {
     http->retcode = InitRetCode::kServerFailure;
     ExpectProvisionError(Provisioner(conf.provision, storage, http, keys, {}), "Server error");

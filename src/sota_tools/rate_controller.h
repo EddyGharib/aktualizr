@@ -11,7 +11,7 @@
  *    Sleep() - The number of seconds to sleep before sending the next request. 0.0 if MaxConcurrency is > 1
  *    Failed() - A boolean indicating that the server is broken, and to report an error up to the user.
  * The congestion control is loosely based on the original TCP AIMD scheme. Better performance might be available by
- * Stealing ideas from the later TCP conjection control algorithms
+ * Stealing ideas from the later TCP congestion control algorithms
  */
 class RateController {
  public:

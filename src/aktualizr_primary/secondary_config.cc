@@ -84,7 +84,7 @@ SecondaryConfigParser::Configs JsonConfigParser::parse() {
 static std::pair<std::string, uint16_t> getIPAndPort(const std::string& addr) {
   auto del_pos = addr.find_first_of(':');
   if (del_pos == std::string::npos) {
-    throw std::invalid_argument("Incorrect address string, couldn't find port delimeter: " + addr);
+    throw std::invalid_argument("Incorrect address string, couldn't find port delimiter: " + addr);
   }
   std::string ip = addr.substr(0, del_pos);
   uint16_t port = static_cast<uint16_t>(std::stoul(addr.substr(del_pos + 1)));

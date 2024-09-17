@@ -190,10 +190,12 @@ class SotaUptaneClient {
   template <class T, class... Args>
   void sendEvent(Args &&...args) {
     std::shared_ptr<event::BaseEvent> event = std::make_shared<T>(std::forward<Args>(args)...);
-    if (events_channel) {
-      (*events_channel)(std::move(event));
-    } else if (!event->isTypeOf<event::DownloadProgressReport>()) {
-      LOG_INFO << "got " << event->variant << " event";
+    if (event) {
+      if (events_channel) {
+        (*events_channel)(std::move(event));
+      } else if (!event->isTypeOf<event::DownloadProgressReport>()) {
+        LOG_INFO << "got " << event->variant << " event";
+      }
     }
   }
 

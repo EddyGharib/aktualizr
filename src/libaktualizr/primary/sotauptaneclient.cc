@@ -463,7 +463,7 @@ void SotaUptaneClient::computeDeviceInstallationResult(data::InstallationResult 
                                                        std::string *raw_installation_report) {
   data::InstallationResult device_installation_result =
       data::InstallationResult(data::ResultCode::Numeric::kOk, "Device has been successfully installed");
-  std::string raw_ir = "Installation succesful";
+  std::string raw_ir = "Installation successful";
 
   do {
     std::vector<std::pair<Uptane::EcuSerial, data::InstallationResult>> ecu_results;
@@ -1037,7 +1037,7 @@ result::Install SotaUptaneClient::uptaneInstall(const std::vector<Uptane::Target
         // download an OSTree revision just for Primary, Secondary will do it by itself
         // Primary cannot verify downloaded OSTree targets for Secondaries,
         // Downloading of Secondary's OSTree repo revision to the Primary's can fail
-        // if they differ signficantly as OSTree has a certain cap/limit of the diff it pulls
+        // if they differ significantly as OSTree has a certain cap/limit of the diff it pulls
         if (package_manager_->verifyTarget(update) != TargetStatus::kGood) {
           result.dev_report = {false, data::ResultCode::Numeric::kInternalError, ""};
           return std::make_tuple(result, "Downloaded target is invalid");

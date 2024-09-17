@@ -11,7 +11,10 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
   awscli \
   bison \
   ccache \
+  clang-format-11 \
+  clang-tidy-11 \
   cmake \
+  cppcheck \
   curl \
   e2fslibs-dev \
   fiu-utils \
@@ -56,6 +59,7 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
   python3-openssl \
   python3-pip \
   python3-venv \
+  shellcheck \
   softhsm2 \
   sqlite3 \
   strace \
@@ -64,6 +68,10 @@ RUN apt-get update && apt-get -y install --no-install-suggests --no-install-reco
   xsltproc \
   zip \
   unzip
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get install -y nodejs
 
 WORKDIR /ostree
 RUN git init && git remote add origin https://github.com/ostreedev/ostree

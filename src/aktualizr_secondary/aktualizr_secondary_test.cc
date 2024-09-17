@@ -186,7 +186,7 @@ class SecondaryTest : public ::testing::Test {
       : secondary_(verification_type), update_agent_(*(secondary_.update_agent_)) {
     if (default_target) {
       uptane_repo_.addImageFile(default_target_, secondary_->hwID().ToString(), secondary_->serial().ToString(),
-                                target_size, true, true, inavlid_target_size_delta);
+                                target_size, true, true, invalid_target_size_delta);
     }
   }
 
@@ -262,7 +262,7 @@ class SecondaryTest : public ::testing::Test {
   static constexpr const char* const broken_target_{"default-target.broken"};
 
   static const size_t target_size{2049};
-  static const size_t inavlid_target_size_delta{2};
+  static const size_t invalid_target_size_delta{2};
   static const size_t send_buffer_size{1024};
 
   AktualizrSecondaryWrapper secondary_;
@@ -407,7 +407,7 @@ TEST_F(SecondaryTest, IncorrectTargetQuantity) {
 
   {
     // zero targets for the ECU being tested
-    auto metadata = uptane_repo_.addImageFile("mytarget", "non-existig-hwid", serial);
+    auto metadata = uptane_repo_.addImageFile("mytarget", "non-existing-hwid", serial);
     EXPECT_FALSE(secondary_->putMetadata(metadata).isSuccess());
   }
 }
@@ -424,8 +424,8 @@ TEST_F(SecondaryTest, ImageRootVersionIncremented) {
 
 TEST_F(SecondaryTest, SmallerImageFileSize) {
   EXPECT_CALL(update_agent_, receiveData)
-      .Times((target_size - inavlid_target_size_delta) / send_buffer_size +
-             ((target_size - inavlid_target_size_delta) % send_buffer_size ? 1 : 0));
+      .Times((target_size - invalid_target_size_delta) / send_buffer_size +
+             ((target_size - invalid_target_size_delta) % send_buffer_size ? 1 : 0));
   EXPECT_CALL(update_agent_, install).Times(1);
 
   EXPECT_TRUE(secondary_->putMetadata(uptane_repo_.getCurrentMetadata()).isSuccess());
@@ -436,8 +436,8 @@ TEST_F(SecondaryTest, SmallerImageFileSize) {
 
 TEST_F(SecondaryTest, BiggerImageFileSize) {
   EXPECT_CALL(update_agent_, receiveData)
-      .Times((target_size + inavlid_target_size_delta) / send_buffer_size +
-             ((target_size + inavlid_target_size_delta) % send_buffer_size ? 1 : 0));
+      .Times((target_size + invalid_target_size_delta) / send_buffer_size +
+             ((target_size + invalid_target_size_delta) % send_buffer_size ? 1 : 0));
   EXPECT_CALL(update_agent_, install).Times(1);
 
   EXPECT_TRUE(secondary_->putMetadata(uptane_repo_.getCurrentMetadata()).isSuccess());
@@ -494,7 +494,7 @@ TEST_P(SecondaryTestTuf, TufVersions) {
  * Instantiates the parameterized test for each specified value of
  * std::pair<std::vector<std::string>, boost::optional<std::string>>>.
  * The first parameter value is a list of Targets with custom versions and the
- * second paramter is which one should be considered the latest, if any.
+ * second parameter is which one should be considered the latest, if any.
  */
 INSTANTIATE_TEST_SUITE_P(SecondaryTestTufVersions, SecondaryTestTuf,
                          ::testing::Values(std::make_pair(std::vector<std::string>{"1"}, "1"),

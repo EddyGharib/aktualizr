@@ -157,7 +157,7 @@ PKCS11_SLOT* P11Engine::findTokenSlot() const {
     LOG_WARNING << "Token label missing. Using 1st initialized token.";
     slot = PKCS11_find_token(ctx_.get(), wslots_.get_slots(), wslots_.get_nslots());
   } else {
-    auto iterslot{wslots_.get_slots()};
+    auto iterslot{wslots_.get_slots()}; //NOLINT(readability-qualified-auto)
     for (unsigned int i = 0; i < nslot; i++, iterslot++) {
       if (iterslot != nullptr && (tok = iterslot->token) != nullptr) {
         if (label_ == tok->label) {

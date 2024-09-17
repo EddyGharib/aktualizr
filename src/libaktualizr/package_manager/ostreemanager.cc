@@ -447,13 +447,13 @@ bool OstreeManager::imageUpdated() {
   // as function input
   OstreeDeployment *booted_deployment = ostree_sysroot_get_booted_deployment(sysroot_smart.get());
   std::string os_name;
-  if (!booted_deployment) {
+  if (booted_deployment == nullptr) {
     LOG_WARNING << "ostree is not in a booted deployment state, calling query_deployments_for(" << config.os << ")";
     os_name = config.os;
   }
 
   OstreeDeployment *pending_deployment = nullptr;
-  ostree_sysroot_query_deployments_for(sysroot_smart.get(), (os_name.empty()) ? (NULL) : (os_name.c_str()),
+  ostree_sysroot_query_deployments_for(sysroot_smart.get(), (os_name.empty()) ? (nullptr) : (os_name.c_str()),
                                        &pending_deployment, nullptr);
 
   bool pending_found = false;
@@ -480,6 +480,7 @@ GObjectUniquePtr<OstreeDeployment> OstreeManager::getStagedDeployment() const {
   if (deployments->len > 0) {
     // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     auto *d = static_cast<OstreeDeployment *>(deployments->pdata[0]);
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-cstyle-cast)
     auto *d2 = static_cast<OstreeDeployment *>(g_object_ref(d));
     res = d2;
   }

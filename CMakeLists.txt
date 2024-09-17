@@ -208,6 +208,8 @@ endif()
 add_custom_target(qa)
 add_custom_target(check-format)
 add_custom_target(clang-tidy)
+add_custom_target(cppcheck)
+add_custom_target(cspell)
 
 add_custom_target(format)
 add_dependencies(qa format)
@@ -225,15 +227,19 @@ add_custom_target(build_tests)
 
 find_program(CLANG_FORMAT NAMES clang-format-11)
 find_program(CLANG_TIDY NAMES clang-tidy-12 clang-tidy-11)
+find_program(CPPCHECK NAMES cppcheck)
+find_program(CSPELL NAMES cspell)
 
 include(AktualizrClangFormat)
 include(AktualizrClangTidy)
+include(AktualizrCppcheck)
+include(AktualizrCspell)
 include(AktualizrSourceFileChecks)
 
 find_program(SHELLCHECK NAMES shellcheck)
 if(SHELLCHECK)
     add_custom_target(shellcheck
-        COMMAND find docs/ scripts/ src/ tests/ -name "*.sh" | xargs ${SHELLCHECK}
+        COMMAND find docs/ scripts/ src/ tests/ -name "*.sh" | xargs ${SHELLCHECK} -x
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         VERBATIM)
 
@@ -353,6 +359,8 @@ install(FILES ${CMAKE_SOURCE_DIR}/cmake-modules/FindOSTree.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrSourceFileChecks.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangFormat.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangTidy.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrCppcheck.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrCspell.cmake       
         DESTINATION "lib/cmake/aktualizr"
 )
 

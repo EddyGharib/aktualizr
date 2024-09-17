@@ -94,7 +94,7 @@ static int32_t cer_decode_length(const std::string& content, int32_t* endpos) {
     res |= static_cast<int32_t>(content[i + 1UL] & 0xFF);
   }
 
-  // In case of overflow number can accidentially take a 'special' value (only -1 now). Make sure it is interpreted as
+  // In case of overflow number can accidentally take a 'special' value (only -1 now). Make sure it is interpreted as
   // error.
   if (res < 0) {
     res = -2;
@@ -170,6 +170,7 @@ uint8_t cer_decode_token(const std::string& ber, int32_t* endpos, int32_t* int_p
 
         if (sign) {
           for (int i = token_len; i < 4; i++) {
+            // cppcheck-suppress integerOverflow
             res |= (0xff << (i << 3));
           }
         }

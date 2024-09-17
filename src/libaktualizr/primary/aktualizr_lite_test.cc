@@ -19,7 +19,7 @@
 class TufRepoMock {
  public:
   TufRepoMock(const boost::filesystem::path& root_dir, std::string expires = "",
-              std::string correlation_id = "corellatio-id")
+              std::string correlation_id = "corelation-id")
       : repo_{root_dir, expires, correlation_id},
         port_{TestUtils::getFreePort()},
         url_{"http://localhost:" + port_},
@@ -282,7 +282,7 @@ std::string AkliteTest::SysRootSrc;
 /*
  * Test that mimics aktualizr-lite
  *
- * It makes use of libaktualizr's components and makes API calls to them in the way as aktualiz-lite
+ * It makes use of libaktualizr's components and makes API calls to them in the way as aktualizr-lite
  * would do during its regular update cycle.
  */
 TEST_F(AkliteTest, ostreeUpdate) {
@@ -292,7 +292,7 @@ TEST_F(AkliteTest, ostreeUpdate) {
     const auto update_result = aklite.update();
     ASSERT_EQ(update_result.result_code.num_code, data::ResultCode::Numeric::kNeedCompletion);
   }
-  // reboot emulation by destroing and creating of a new AkliteMock instance
+  // reboot emulation by destroying and creating of a new AkliteMock instance
   {
     AkliteMock aklite{conf()};
     ASSERT_TRUE(aklite.isTargetCurrent(target_to_install));

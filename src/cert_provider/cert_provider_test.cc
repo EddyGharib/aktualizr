@@ -78,7 +78,7 @@ class AktualizrCertProviderTest : public ::testing::Test {
  *  - [x] Create device keys
  *  - [x] Set public key for the device certificate
  *  - [x] Sign device certificate with fleet private key
- *  - [x] Serialize device private key to a string (we actually can verify only 'searilized' version of the key )
+ *  - [x] Serialize device private key to a string (we actually can verify only 'serialized' version of the key )
  *  - [x] Serialize device certificate to a string (we actually can verify only 'serialized' version of the certificate)
  *  - [x] Write credentials to a local directory if requested
  *      - [x] Provide device private key

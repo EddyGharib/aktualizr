@@ -1,6 +1,7 @@
 #! /bin/bash
 
-SCRIPT_DIR="$(realpath $(dirname $0))"
+SCRIPT_DIR="$(realpath "$(dirname "$0")")"
+# shellcheck source=scripts/test_setup.sh
 source "$SCRIPT_DIR/test_setup.sh" 
 
 echo ">> Building and installing"

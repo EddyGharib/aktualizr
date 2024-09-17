@@ -111,7 +111,7 @@ class SecondaryMock : public MsgDispatcher {
                     std::bind(&SecondaryMock::putRootHdlr, this, std::placeholders::_1, std::placeholders::_2));
   }
 
-  // Procotol v2 handlers that fail in predictable ways.
+  // Protocol v2 handlers that fail in predictable ways.
   void registerV2FailureHandlers() {
     registerHandler(AKIpUptaneMes_PR_putMetaReq2,
                     std::bind(&SecondaryMock::putMeta2FailureHdlr, this, std::placeholders::_1, std::placeholders::_2));
@@ -166,7 +166,7 @@ class SecondaryMock : public MsgDispatcher {
     return ReturnCode::kOk;
   }
 
-  // This is basically the old implemention from AktualizrSecondary. The v1
+  // This is basically the old implementation from AktualizrSecondary. The v1
   // protocol never had TUF verification so it isn't accounted for here.
   MsgHandler::ReturnCode putMetaHdlr(Asn1Message& in_msg, Asn1Message& out_msg) {
     auto md = in_msg.putMetaReq();
