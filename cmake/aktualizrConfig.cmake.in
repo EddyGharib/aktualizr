@@ -6,6 +6,9 @@ include("${CMAKE_CURRENT_LIST_DIR}/aktualizrTargets.cmake")
 
 include(CMakeFindDependencyMacro)
 
+# Conditional check added to prevent duplicate definition of the JsonCpp::JsonCpp target. 
+# It ensures find_dependency is only called if the target is not already defined, 
+# avoiding errors when the target exists.
 if(NOT TARGET JsonCpp::JsonCpp)
     find_dependency(jsoncpp REQUIRED)
 endif()
