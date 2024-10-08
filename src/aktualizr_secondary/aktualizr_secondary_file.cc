@@ -70,7 +70,7 @@ MsgHandler::ReturnCode AktualizrSecondaryFile::uploadDataHdlr(Asn1Message& in_ms
   }
 
   auto rec_buf_size = in_msg.uploadDataReq()->data.size;
-  if (rec_buf_size < 0) {
+  if (rec_buf_size <= 0) {
     LOG_ERROR << "The received data buffer size is negative: " << rec_buf_size;
     return ReturnCode::kOk;
   }
