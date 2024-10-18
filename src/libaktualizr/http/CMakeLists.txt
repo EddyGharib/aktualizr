@@ -4,7 +4,7 @@ set(HEADERS ../../../include/libaktualizr/http/httpclient.h
             ../../../include/libaktualizr/http/httpinterface.h)
 
 add_library(http OBJECT ${SOURCES})
-target_link_libraries(http PUBLIC JsonCpp::JsonCpp)
+target_link_libraries(http PUBLIC PkgConfig::JsonCpp)
 
 add_aktualizr_test(NAME http_client SOURCES httpclient_test.cc PROJECT_WORKING_DIRECTORY)
 
