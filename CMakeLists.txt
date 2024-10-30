@@ -86,7 +86,9 @@ find_package(sodium REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
-find_package(jsoncpp REQUIRED)
+# find_package(jsoncpp REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JsonCpp REQUIRED IMPORTED_TARGET jsoncpp)
 
 if(NOT AKTUALIZR_VERSION)
     if (EXISTS ${PROJECT_SOURCE_DIR}/VERSION)
@@ -300,7 +302,7 @@ set (AKTUALIZR_EXTERNAL_LIBS
 set (AKTUALIZR_PUBLIC_LIBS 
     ${Boost_SYSTEM_LIBRARIES} 
     ${Boost_LIBRARIES} 
-    JsonCpp::JsonCpp 
+    PkgConfig::JsonCpp 
     CURL::libcurl 
     OpenSSL::SSL 
     sodium::sodium 
