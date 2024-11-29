@@ -6,6 +6,7 @@ install/
 
 # clion
 /.idea
+/.cache
 /cmake-build-*
 
 # Compiled Object files
