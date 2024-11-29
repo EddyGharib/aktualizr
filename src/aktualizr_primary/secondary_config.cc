@@ -18,13 +18,13 @@ SecondaryConfigParser::Configs SecondaryConfigParser::parse_config_file(const bo
     throw std::invalid_argument("Specified config file doesn't exist: " + config_file.string());
   }
 
-  auto cfg_file_ext = boost::filesystem::extension(config_file);
+  auto cfg_file_ext = config_file.extension();
   std::unique_ptr<SecondaryConfigParser> cfg_parser;
 
   if (cfg_file_ext == ".json") {
     cfg_parser = std_::make_unique<JsonConfigParser>(config_file);
   } else {  // add your format of configuration file + implement SecondaryConfigParser specialization
-    throw std::invalid_argument("Unsupported type of config format: " + cfg_file_ext);
+    throw std::invalid_argument("Unsupported type of config format: " + cfg_file_ext.string());
   }
 
   return cfg_parser->parse();
