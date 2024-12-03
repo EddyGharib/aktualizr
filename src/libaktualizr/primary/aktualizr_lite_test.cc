@@ -6,15 +6,15 @@
 
 #include <boost/process.hpp>
 
-#include "image_repo.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
+#include "libaktualizr/image_repo.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/package_manager/ostreemanager.h"
-#include "storage/sqlstorage.h"
-#include "test_utils.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/uptane/imagerepository.h"
+#include "storage/sqlstorage.h"
+#include "test_utils.h"
 
 class TufRepoMock {
  public:
@@ -346,9 +346,10 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   testing::internal::CaptureStdout();
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
+  EXPECT_NE(std::string::npos, log_output.find("Signature verification for Image repo Targets metadata failed: "
+                                               "Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
+            log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
 
   // Corrupt stored snapshot metadata and verify that the expected error message is generated
   corruptStoredMetadata(aklite.storage_, Uptane::Role::Snapshot());
@@ -379,9 +380,10 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   testing::internal::CaptureStdout();
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
+  EXPECT_NE(std::string::npos, log_output.find("Signature verification for Image repo Targets metadata failed: "
+                                               "Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Snapshot hash mismatch for targets metadata"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
+            log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
             log_output.find("Image repo Snapshot verification failed: Snapshot metadata hash verification failed"));
 }

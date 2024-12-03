@@ -1,4 +1,4 @@
-#include "image_repo.h"
+#include "libaktualizr/image_repo.h"
 
 #include <boost/filesystem.hpp>
 

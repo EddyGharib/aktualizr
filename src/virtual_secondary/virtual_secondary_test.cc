@@ -2,9 +2,9 @@
 
 #include "httpfake.h"
 #include "libaktualizr/secondaryinterface.h"
-#include "uptane_repo.h"
-#include "uptane_test_common.h"
+#include "libaktualizr/uptane_repo.h"
 #include "libaktualizr/utilities/utils.h"
+#include "uptane_test_common.h"
 #include "virtualsecondary.h"
 
 class VirtualSecondaryTest : public ::testing::Test {

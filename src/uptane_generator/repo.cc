@@ -1,12 +1,12 @@
-#include "repo.h"
+#include "libaktualizr/repo.h"
 
 #include <array>
 #include <boost/filesystem.hpp>
 #include <ctime>
 #include <regex>
 
-#include "director_repo.h"
-#include "image_repo.h"
+#include "libaktualizr/director_repo.h"
+#include "libaktualizr/image_repo.h"
 #include "libaktualizr/campaign.h"
 #include "libaktualizr/crypto/crypto.h"
 

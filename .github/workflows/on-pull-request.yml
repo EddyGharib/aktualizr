@@ -1,7 +1,7 @@
 name: Aktualizr tests
 on:
   pull_request:
-    branches: [ dev ]
+    branches: [dev]
 
 jobs:
   repo-name:
@@ -17,21 +17,21 @@ jobs:
     needs: repo-name
     container:
       image: ghcr.io/${{needs.repo-name.outputs.output}}/aktualizr-test:dev-image-test-1.0.2
-  
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: true 
-      
+          submodules: true
+
       # Needed because we have submodules in the project.
       # fatal: detected dubious ownership in repository at '/__w/aktualizr/aktualizr'
       - name: Configure Git Safe Directory
         run: git config --global --add safe.directory /__w/aktualizr/aktualizr
-      
+
       # Needed because /tmp is used in the process.
-      # Exception: boost::filesystem::copy_file: Invalid cross-device link: 
+      # Exception: boost::filesystem::copy_file: Invalid cross-device link:
       # "/tmp/tmp.PXQbhn2CD7/primary.txt", "/__w/aktualizr/aktualizr/build/uptane_repos/full_no_correlation_id/repo/repo/targets/primary.txt"
       - name: Configure TMPDIR
         run: |
@@ -43,18 +43,18 @@ jobs:
           cd /__w/aktualizr/aktualizr
           cmake -B build -DCMAKE_BUILD_TYPE=Debug .
           cd /__w/aktualizr/aktualizr/build
-          make
-          make build_tests
+          make -j
+          make build_tests -j
       - name: Run ctest excluding 'booted' tests
         run: |
           cd /__w/aktualizr/aktualizr/build
           ctest -LE "booted" --output-on-failure
 
-      - name : Run static checks test script
+      - name: Run static checks test script
         run: bash /__w/aktualizr/aktualizr/scripts/test_static.sh
-      
-      - name : Run make docs test script
+
+      - name: Run make docs test script
         run: bash /__w/aktualizr/aktualizr/scripts/test_docs.sh
 
-      - name : Run build and install test script
+      - name: Run build and install test script
         run: bash /__w/aktualizr/aktualizr/scripts/test_build.sh

@@ -4,8 +4,8 @@
 
 #include "httpfake.h"
 #include "libaktualizr/aktualizr.h"
+#include "libaktualizr/uptane_repo.h"
 #include "test_utils.h"
-#include "uptane_repo.h"
 #include "uptane_test_common.h"
 
 class HttpFakeMetaCounter : public HttpFake {

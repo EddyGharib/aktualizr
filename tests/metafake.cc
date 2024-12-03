@@ -7,7 +7,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 
-#include "uptane_repo.h"
+#include "libaktualizr/uptane_repo.h"
 #include "libaktualizr/utilities/utils.h"
 
 namespace {
@@ -129,9 +129,7 @@ class MetaFake {
   std::vector<std::string> backup_content;
 };
 
-};
+};  // namespace
 
 // This is the main entry point
-void CreateFakeRepoMetaData(boost::filesystem::path meta_dir) {
-  MetaFake fake(std::move(meta_dir));
-}
+void CreateFakeRepoMetaData(boost::filesystem::path meta_dir) { MetaFake fake(std::move(meta_dir)); }

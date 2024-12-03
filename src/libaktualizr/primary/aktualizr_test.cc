@@ -14,14 +14,14 @@
 #include "libaktualizr/events.h"
 
 #include "httpfake.h"
+#include "libaktualizr/utilities/utils.h"
 #include "metafake.h"
 #include "primary/aktualizr_helpers.h"
 #include "primary/sotauptaneclient.h"
 #include "uptane_test_common.h"
-#include "libaktualizr/utilities/utils.h"
 #include "virtualsecondary.h"
 
-#include "uptane_repo.h"
+#include "libaktualizr/uptane_repo.h"
 #include "utilities/fault_injection.h"
 
 boost::filesystem::path uptane_repos_dir;
