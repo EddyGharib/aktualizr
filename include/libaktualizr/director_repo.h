@@ -1,7 +1,7 @@
 #ifndef DIRECTOR_REPO_H_
 #define DIRECTOR_REPO_H_
 
-#include "repo.h"
+#include "libaktualizr/repo.h"
 
 class DirectorRepo : public Repo {
  public:

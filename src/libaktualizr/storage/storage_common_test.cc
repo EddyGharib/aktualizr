@@ -6,9 +6,9 @@
 #include <boost/filesystem.hpp>
 
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/repo.h"
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
-#include "repo.h"
 #include "storage/sqlstorage.h"
 
 namespace fs = boost::filesystem;

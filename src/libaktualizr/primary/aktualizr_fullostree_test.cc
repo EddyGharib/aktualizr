@@ -11,9 +11,9 @@
 #include "libaktualizr/config.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/package_manager/ostreemanager.h"
+#include "libaktualizr/uptane_repo.h"
 #include "storage/sqlstorage.h"
 #include "test_utils.h"
-#include "uptane_repo.h"
 #include "uptane_test_common.h"
 
 static std::string server = "http://127.0.0.1:";
@@ -74,9 +74,9 @@ TEST(Aktualizr, FullOstreeUpdate) {
 
     result::Install install_result = aktualizr.Install(update_result.updates).get();
     EXPECT_EQ(install_result.ecu_reports.size(), 1);
-    //TODO: Check why this is failing
-    // EXPECT_EQ(install_result.ecu_reports[0].install_res.result_code.num_code,
-    //           data::ResultCode::Numeric::kNeedCompletion);
+    // TODO: Check why this is failing
+    //  EXPECT_EQ(install_result.ecu_reports[0].install_res.result_code.num_code,
+    //            data::ResultCode::Numeric::kNeedCompletion);
   }
 
   // do "reboot" and finalize

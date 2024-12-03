@@ -8,9 +8,9 @@
 #include "libaktualizr/crypto/keymanager.h"
 #include "libaktualizr/storage/invstorage.h"
 #include "libaktualizr/types.h"
+#include "libaktualizr/uptane_repo.h"
 #include "libaktualizr/utilities/utils.h"
 #include "update_agent_file.h"
-#include "uptane_repo.h"
 
 using ::testing::NiceMock;
 
