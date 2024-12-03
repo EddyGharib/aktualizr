@@ -1,11 +1,15 @@
 
 set(UPTANE_GENERATOR_SRC repo.cc director_repo.cc image_repo.cc uptane_repo.cc)
-set(UPTANE_GENERATOR_HDR repo.h director_repo.h image_repo.h uptane_repo.h)
+set(UPTANE_GENERATOR_HDR 
+	../../include/libaktualizr/repo.h
+	../../include/libaktualizr/director_repo.h
+	../../include/libaktualizr/image_repo.h
+	../../include/libaktualizr/uptane_repo.h)
 
 set(UPTANE_GENERATOR_LIBS aktualizr_lib)
 add_library(uptane_generator_lib ${UPTANE_GENERATOR_SRC})
 target_link_libraries(uptane_generator_lib PUBLIC PkgConfig::JsonCpp)
-target_include_directories(uptane_generator_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(uptane_generator_lib PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> $<INSTALL_INTERFACE:include>)
 add_executable(uptane-generator main.cc ${UPTANE_GENERATOR_SRC})
 target_link_libraries(uptane-generator ${UPTANE_GENERATOR_LIBS})
 
@@ -31,4 +35,5 @@ set_tests_properties(uptane-generator-option-version PROPERTIES PASS_REGULAR_EXP
 
 aktualizr_source_file_checks(${TEST_SOURCES} main.cc)
 
-# vim: set tabstop=4 shiftwidth=4 expandtab:
+install(TARGETS uptane_generator_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)
+install(TARGETS uptane_generator_lib EXPORT aktualizrTargets)

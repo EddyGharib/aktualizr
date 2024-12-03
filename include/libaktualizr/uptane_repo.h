@@ -1,8 +1,8 @@
 #ifndef UPTANE_REPO_H_
 #define UPTANE_REPO_H_
 
-#include "director_repo.h"
-#include "image_repo.h"
+#include "libaktualizr/director_repo.h"
+#include "libaktualizr/image_repo.h"
 
 class UptaneRepo {
  public:

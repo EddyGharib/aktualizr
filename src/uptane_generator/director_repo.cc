@@ -1,4 +1,4 @@
-#include "director_repo.h"
+#include "libaktualizr/director_repo.h"
 
 #include <boost/filesystem.hpp>
 
