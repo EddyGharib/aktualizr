@@ -75,6 +75,15 @@ target_include_directories(aktualizr_lib PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
+execute_process(
+    COMMAND git describe --tags
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_TAG
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+target_compile_definitions(aktualizr_lib PUBLIC AKTUALIZR_REVISION=\"${GIT_TAG}\")
+
 target_link_libraries(aktualizr_lib PUBLIC ${AKTUALIZR_PUBLIC_LIBS} PRIVATE ${AKTUALIZR_EXTERNAL_LIBS})
 install(TARGETS aktualizr_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libaktualizr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
