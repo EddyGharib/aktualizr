@@ -151,7 +151,7 @@ struct TelemetryConfig {
   void writeToStream(std::ostream& out_stream) const;
 };
 
-enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked, kFioVB };
+enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked, kFioVB, kFioEFI };
 std::ostream& operator<<(std::ostream& os, RollbackMode mode);
 
 struct BootloaderConfig {
