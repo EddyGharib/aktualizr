@@ -17,6 +17,7 @@ target_link_libraries(primary PUBLIC PkgConfig::JsonCpp)
 
 add_library(provisioner_test_utils STATIC provisioner_test_utils.cc)
 target_link_libraries(provisioner_test_utils PUBLIC primary)
+target_compile_options(provisioner_test_utils PRIVATE "-std=c++17")
 aktualizr_source_file_checks(provisioner_test_utils.cc provisioner_test_utils.h)
 
 
