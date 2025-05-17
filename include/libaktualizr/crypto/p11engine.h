@@ -7,7 +7,6 @@
 
 #include <openssl/engine.h>
 #include <openssl/err.h>
-#include "gtest/gtest_prod.h"
 
 #include "libaktualizr/logging/logging.h"
 
@@ -80,7 +79,7 @@ class P11Engine {
   explicit P11Engine(boost::filesystem::path module_path, std::string pass, std::string label);
 
   friend class P11EngineGuard;
-  FRIEND_TEST(crypto, findPkcsLibrary);
+  // FRIEND_TEST(crypto, findPkcsLibrary);
 };
 
 class P11EngineGuard {

@@ -8,7 +8,6 @@
 #include <vector>
 
 #include <boost/signals2.hpp>
-#include "gtest/gtest_prod.h"
 #include "json/json.h"
 
 #include "libaktualizr/campaign.h"
@@ -92,38 +91,38 @@ class SotaUptaneClient {
   std::ifstream openStoredTarget(const Uptane::Target &target);
 
  private:
-  FRIEND_TEST(Aktualizr, FullNoUpdates);
-  FRIEND_TEST(Aktualizr, DeviceInstallationResult);
-  FRIEND_TEST(Aktualizr, DeviceInstallationResultMetadata);
-  FRIEND_TEST(Aktualizr, FullMultipleSecondaries);
-  FRIEND_TEST(Aktualizr, CheckNoUpdates);
-  FRIEND_TEST(Aktualizr, DownloadWithUpdates);
-  FRIEND_TEST(Aktualizr, FinalizationFailure);
-  FRIEND_TEST(Aktualizr, InstallationFailure);
-  FRIEND_TEST(Aktualizr, AutoRebootAfterUpdate);
-  FRIEND_TEST(Aktualizr, EmptyTargets);
-  FRIEND_TEST(Aktualizr, FullOstreeUpdate);
-  FRIEND_TEST(Aktualizr, DownloadNonOstreeBin);
-  FRIEND_TEST(Uptane, AssembleManifestGood);
-  FRIEND_TEST(Uptane, AssembleManifestBad);
-  FRIEND_TEST(Uptane, InstallFakeGood);
-  FRIEND_TEST(Uptane, restoreVerify);
-  FRIEND_TEST(Uptane, PutManifest);
-  FRIEND_TEST(Uptane, offlineIteration);
-  FRIEND_TEST(Uptane, IgnoreUnknownUpdate);
-  FRIEND_TEST(Uptane, kRejectAllTest);
-  FRIEND_TEST(UptaneCI, ProvisionAndPutManifest);
-  FRIEND_TEST(UptaneCI, CheckKeys);
-  FRIEND_TEST(UptaneKey, Check);  // Note hacky name
-  FRIEND_TEST(UptaneNetwork, DownloadFailure);
-  FRIEND_TEST(UptaneNetwork, LogConnectivityRestored);
-  FRIEND_TEST(UptaneOstree, InitialManifest);
-  FRIEND_TEST(UptaneVector, Test);
-  FRIEND_TEST(aktualizr_secondary_uptane, credentialsPassing);
-  FRIEND_TEST(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeApplication);
-  FRIEND_TEST(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeReboot);
-  FRIEND_TEST(MetadataExpirationTest, MetadataExpirationBeforeInstallation);
-  FRIEND_TEST(Delegation, IterateAll);
+  // FRIEND_TEST(Aktualizr, FullNoUpdates);
+  // FRIEND_TEST(Aktualizr, DeviceInstallationResult);
+  // FRIEND_TEST(Aktualizr, DeviceInstallationResultMetadata);
+  // FRIEND_TEST(Aktualizr, FullMultipleSecondaries);
+  // FRIEND_TEST(Aktualizr, CheckNoUpdates);
+  // FRIEND_TEST(Aktualizr, DownloadWithUpdates);
+  // FRIEND_TEST(Aktualizr, FinalizationFailure);
+  // FRIEND_TEST(Aktualizr, InstallationFailure);
+  // FRIEND_TEST(Aktualizr, AutoRebootAfterUpdate);
+  // FRIEND_TEST(Aktualizr, EmptyTargets);
+  // FRIEND_TEST(Aktualizr, FullOstreeUpdate);
+  // FRIEND_TEST(Aktualizr, DownloadNonOstreeBin);
+  // FRIEND_TEST(Uptane, AssembleManifestGood);
+  // FRIEND_TEST(Uptane, AssembleManifestBad);
+  // FRIEND_TEST(Uptane, InstallFakeGood);
+  // FRIEND_TEST(Uptane, restoreVerify);
+  // FRIEND_TEST(Uptane, PutManifest);
+  // FRIEND_TEST(Uptane, offlineIteration);
+  // FRIEND_TEST(Uptane, IgnoreUnknownUpdate);
+  // FRIEND_TEST(Uptane, kRejectAllTest);
+  // FRIEND_TEST(UptaneCI, ProvisionAndPutManifest);
+  // FRIEND_TEST(UptaneCI, CheckKeys);
+  // FRIEND_TEST(UptaneKey, Check);  // Note hacky name
+  // FRIEND_TEST(UptaneNetwork, DownloadFailure);
+  // FRIEND_TEST(UptaneNetwork, LogConnectivityRestored);
+  // FRIEND_TEST(UptaneOstree, InitialManifest);
+  // FRIEND_TEST(UptaneVector, Test);
+  // FRIEND_TEST(aktualizr_secondary_uptane, credentialsPassing);
+  // FRIEND_TEST(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeApplication);
+  // FRIEND_TEST(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeReboot);
+  // FRIEND_TEST(MetadataExpirationTest, MetadataExpirationBeforeInstallation);
+  // FRIEND_TEST(Delegation, IterateAll);
 
   /**
    * This operation requires that the device is provisioned.

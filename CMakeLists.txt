@@ -86,7 +86,6 @@ find_package(sodium REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
-find_package(GTest REQUIRED)
 # find_package(jsoncpp REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JsonCpp REQUIRED IMPORTED_TARGET jsoncpp)
@@ -334,13 +333,18 @@ set(GOOGLE_TEST_OUTPUT --gtest_output=xml:${CMAKE_BINARY_DIR}/results/)
 
 add_subdirectory("config")
 add_subdirectory("src")
-add_subdirectory("tests" EXCLUDE_FROM_ALL)
 add_subdirectory("docs/doxygen")
+
+if(BUILD_TESTING)
+find_package(GTest REQUIRED)
+add_subdirectory("tests" EXCLUDE_FROM_ALL)
+endif()
 
 # Check if some source files were not added sent to `aktualizr_source_file_checks`
 #
 # Note: does not check `tests` directory which depends too much on conditional
 # compilation
+if(BUILD_TESTING)
 file(GLOB_RECURSE ALL_SOURCE_FILES RELATIVE ${CMAKE_SOURCE_DIR}
     src/*.cc src/*.c src/*.h)
 foreach(FILE ${ALL_SOURCE_FILES})
@@ -349,6 +353,7 @@ foreach(FILE ${ALL_SOURCE_FILES})
         message(FATAL_ERROR "${FILE} not checked")
     endif ()
 endforeach()
+endif(BUILD_TESTING)
 
 # Generate ctags
 set_source_files_properties(tags PROPERTIES GENERATED true)

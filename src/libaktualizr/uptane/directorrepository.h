@@ -1,8 +1,6 @@
 #ifndef DIRECTOR_REPOSITORY_H_
 #define DIRECTOR_REPOSITORY_H_
 
-#include "gtest/gtest_prod.h"
-
 #include "libaktualizr/uptane/uptanerepository.h"
 
 namespace Uptane {
@@ -28,7 +26,7 @@ class DirectorRepository : public RepositoryCommon {
   bool matchTargetsWithImageTargets(const std::shared_ptr<const Uptane::Targets>& image_targets) const;
 
  private:
-  FRIEND_TEST(Director, EmptyTargets);
+  // FRIEND_TEST(Director, EmptyTargets);
 
   void resetMeta();
   void checkTargetsExpired();
