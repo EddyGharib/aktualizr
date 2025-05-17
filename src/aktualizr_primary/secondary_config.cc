@@ -6,8 +6,8 @@
 #include <json/json.h>
 
 #include "libaktualizr/logging/logging.h"
-#include "secondary_config.h"
 #include "libaktualizr/utilities/utils.h"
+#include "secondary_config.h"
 
 namespace Primary {
 
@@ -24,7 +24,7 @@ SecondaryConfigParser::Configs SecondaryConfigParser::parse_config_file(const bo
   if (cfg_file_ext == ".json") {
     cfg_parser = std_::make_unique<JsonConfigParser>(config_file);
   } else {  // add your format of configuration file + implement SecondaryConfigParser specialization
-    throw std::invalid_argument("Unsupported type of config format: " + cfg_file_ext.string());
+    throw std::invalid_argument("Unsupported type of config format: " + cfg_file_ext);
   }
 
   return cfg_parser->parse();
