@@ -86,6 +86,7 @@ find_package(sodium REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
+find_package(GTest REQUIRED)
 # find_package(jsoncpp REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JsonCpp REQUIRED IMPORTED_TARGET jsoncpp)
@@ -260,7 +261,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ############### BUILD RULES
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src/libaktualizr)
-include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third_party/googletest/googletest/include)
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 
 # General packaging configuration

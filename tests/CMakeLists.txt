@@ -1,7 +1,7 @@
 option(INSTALL_GTEST "" OFF)
-if(NOT GTEST_ROOT )
-    set(GTEST_ROOT ${PROJECT_SOURCE_DIR}/third_party/googletest)
-endif()
+# if(NOT GTEST_ROOT )
+#     set(GTEST_ROOT ${PROJECT_SOURCE_DIR}/third_party/googletest)
+# endif()
 
 if(CMAKE_CROSSCOMPILING)
     # we cannot call the tool we build in this context, it has to come from somewhere else
@@ -12,7 +12,7 @@ endif()
 
 # Temporarily remove flags not supported by gtest.
 remove_definitions(-Wswitch-default)
-add_subdirectory(${GTEST_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+# add_subdirectory(${GTEST_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 add_definitions(-Wswitch-default)
 add_subdirectory(uptane_repo_generation)
 
