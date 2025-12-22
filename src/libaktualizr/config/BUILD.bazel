@@ -1,0 +1,36 @@
+filegroup(
+    name = "base_config",
+    srcs = ["base_config.cc"],
+    visibility = ["//visibility:public"],
+)
+
+
+cc_library(
+    name = "primary_config",
+    srcs = [
+        "config.cc",
+    ],
+    deps = [
+        "//:pub_includes",
+        "//src/libaktualizr:config",
+        "//src/libaktualizr/bootstrap:bootstrap",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# cc_test(
+#     name = "config_test",
+#     srcs = ["config_test.cc"],
+#     deps = [
+#         ":config",
+#         ":primary_config",
+#         "@googletest//:gtest_main",
+#         "//:pub_includes",
+#     ],
+# )
+
+# sh_test(
+#     name = "config_import",
+#     srcs = ["tests/run_import_clash_test.sh"],
+#     args = ["config"],
+# )

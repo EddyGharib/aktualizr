@@ -1,0 +1,10 @@
+cc_library(
+    name = "bootstrap",
+    srcs = ["bootstrap.cc"],
+    hdrs = ["bootstrap.h"],
+    deps = [
+        "//src/libaktualizr/crypto:crypto",
+    ],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)

@@ -12,7 +12,7 @@ endif()
 
 # Temporarily remove flags not supported by gtest.
 remove_definitions(-Wswitch-default)
-add_subdirectory(${GTEST_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+# add_subdirectory(${GTEST_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 add_definitions(-Wswitch-default)
 add_subdirectory(uptane_repo_generation)
 

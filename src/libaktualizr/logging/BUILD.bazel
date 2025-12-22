@@ -1,0 +1,9 @@
+cc_library(
+    name = "logging",
+    srcs = ["logging.cc","logging_config.cc","default_log_sink.cc"],
+    deps = [
+        "//:pub_includes",
+        "//src/libaktualizr:config",
+    ],
+    visibility = ["//visibility:public"],
+)

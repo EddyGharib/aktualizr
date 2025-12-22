@@ -1,0 +1,47 @@
+config_setting(
+    name = "with_ostree",
+    define_values = {"BUILD_OSTREE": "1"},
+)
+
+cc_library(
+    name = "uptane",
+    srcs = [
+        "directorrepository.cc",
+        "fetcher.cc",
+        "imagerepository.cc",
+        "iterator.cc",
+        "manifest.cc",
+        "metawithkeys.cc",
+        "role.cc",
+        "root.cc",
+        "secondary_metadata.cc",
+        "tuf.cc",
+        "uptanerepository.cc",
+    ],
+    hdrs = [
+        "directorrepository.h",
+        "iterator.h",
+        "manifest.h",
+        "secondary_metadata.h",
+    ],
+    deps = [
+        "@jsoncpp",
+        "//:pub_includes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+# cc_test(
+#     name = "tuf_test",
+#     srcs = ["tuf_test.cc"],
+#     deps = [
+#         ":uptane",
+#         "@jsoncpp",
+#         "//:pub_includes",
+#         "@boost.log",
+#         "@boost.filesystem",
+#         "@boost.thread",
+#         "@googletest//:gtest_main",
+#     ],
+# )

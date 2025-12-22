@@ -1,6 +1,6 @@
 # Add registries
 common --registry=file://%workspace%/bzl_registry
-common --registry=https://raw.githubusercontent.com/EddyGharib/bazel-central-registry/boost
+common --registry=https://bcr.bazel.build
 # common --registry=file://%workspace%/out/bazel-central-registry
 
 # Used to get git describe information

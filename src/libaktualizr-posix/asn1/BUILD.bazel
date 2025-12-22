@@ -1,0 +1,194 @@
+package(default_visibility = ["//visibility:public"])
+
+ASN1_SOURCES = [
+    "messages/common.asn1",
+    "messages/cryptosource.asn1",
+    "messages/ipuptane_message.asn1",
+    "messages/tlsconfig.asn1",
+]
+
+ASN1_GENERATED_C = [
+    "generated/asn1/AKCryptoSource.c",
+    "generated/asn1/AKDirectorMetaJson.c",
+    "generated/asn1/AKDownloadOstreeRevReqMes.c",
+    "generated/asn1/AKDownloadOstreeRevRespMes.c",
+    "generated/asn1/AKFileName.c",
+    "generated/asn1/AKFilePath.c",
+    "generated/asn1/AKGetInfoReqMes.c",
+    "generated/asn1/AKGetInfoRespMes.c",
+    "generated/asn1/AKIdentifier.c",
+    "generated/asn1/AKImageMetaJson.c",
+    "generated/asn1/AKInstallationResult.c",
+    "generated/asn1/AKInstallationResultCode.c",
+    "generated/asn1/AKInstallReqMes.c",
+    "generated/asn1/AKInstallResp2Mes.c",
+    "generated/asn1/AKInstallRespMes.c",
+    "generated/asn1/AKIpUptaneKeyType.c",
+    "generated/asn1/AKIpUptaneMes.c",
+    "generated/asn1/AKManifestReqMes.c",
+    "generated/asn1/AKManifestRespMes.c",
+    "generated/asn1/AKMetaCollection.c",
+    "generated/asn1/AKMetaJson.c",
+    "generated/asn1/AKPutMetaReq2Mes.c",
+    "generated/asn1/AKPutMetaReqMes.c",
+    "generated/asn1/AKPutMetaResp2Mes.c",
+    "generated/asn1/AKPutMetaRespMes.c",
+    "generated/asn1/AKPutRootReqMes.c",
+    "generated/asn1/AKPutRootRespMes.c",
+    "generated/asn1/AKRepoType.c",
+    "generated/asn1/AKRootVerReqMes.c",
+    "generated/asn1/AKRootVerRespMes.c",
+    "generated/asn1/AKSendFirmwareReqMes.c",
+    "generated/asn1/AKSendFirmwareRespMes.c",
+    "generated/asn1/AKTlsConfig.c",
+    "generated/asn1/AKUploadDataReqMes.c",
+    "generated/asn1/AKUploadDataRespMes.c",
+    "generated/asn1/AKUrl.c",
+    "generated/asn1/AKVersionReqMes.c",
+    "generated/asn1/AKVersionRespMes.c",
+
+    "generated/asn1/asn_codecs_prim.c",
+    "generated/asn1/asn_SEQUENCE_OF.c",
+    "generated/asn1/asn_SET_OF.c",
+    "generated/asn1/ber_decoder.c",
+    "generated/asn1/ber_tlv_length.c",
+    "generated/asn1/ber_tlv_tag.c",
+    "generated/asn1/BIT_STRING.c",
+    "generated/asn1/constraints.c",
+    "generated/asn1/constr_CHOICE.c",
+    "generated/asn1/constr_SEQUENCE.c",
+    "generated/asn1/constr_SEQUENCE_OF.c",
+    "generated/asn1/constr_SET_OF.c",
+    "generated/asn1/constr_TYPE.c",
+    "generated/asn1/der_encoder.c",
+    "generated/asn1/INTEGER.c",
+    "generated/asn1/NativeEnumerated.c",
+    "generated/asn1/NativeInteger.c",
+    "generated/asn1/OCTET_STRING.c",
+    "generated/asn1/per_decoder.c",
+    "generated/asn1/per_encoder.c",
+    "generated/asn1/per_opentype.c",
+    "generated/asn1/per_support.c",
+    "generated/asn1/UTF8String.c",
+    "generated/asn1/VisibleString.c",
+    "generated/asn1/xer_decoder.c",
+    "generated/asn1/xer_encoder.c",
+    "generated/asn1/xer_support.c",
+]
+
+ASN1_GENERATED_H = [
+    "generated/asn1/AKCryptoSource.h",
+    "generated/asn1/AKDirectorMetaJson.h",
+    "generated/asn1/AKDownloadOstreeRevReqMes.h",
+    "generated/asn1/AKDownloadOstreeRevRespMes.h",
+    "generated/asn1/AKFileName.h",
+    "generated/asn1/AKFilePath.h",
+    "generated/asn1/AKGetInfoReqMes.h",
+    "generated/asn1/AKGetInfoRespMes.h",
+    "generated/asn1/AKIdentifier.h",
+    "generated/asn1/AKImageMetaJson.h",
+    "generated/asn1/AKInstallationResultCode.h",
+    "generated/asn1/AKInstallationResult.h",
+    "generated/asn1/AKInstallReqMes.h",
+    "generated/asn1/AKInstallResp2Mes.h",
+    "generated/asn1/AKInstallRespMes.h",
+    "generated/asn1/AKIpUptaneKeyType.h",
+    "generated/asn1/AKIpUptaneMes.h",
+    "generated/asn1/AKManifestReqMes.h",
+    "generated/asn1/AKManifestRespMes.h",
+    "generated/asn1/AKMetaCollection.h",
+    "generated/asn1/AKMetaJson.h",
+    "generated/asn1/AKPutMetaReq2Mes.h",
+    "generated/asn1/AKPutMetaReqMes.h",
+    "generated/asn1/AKPutMetaResp2Mes.h",
+    "generated/asn1/AKPutMetaRespMes.h",
+    "generated/asn1/AKPutRootReqMes.h",
+    "generated/asn1/AKPutRootRespMes.h",
+    "generated/asn1/AKRepoType.h",
+    "generated/asn1/AKRootVerReqMes.h",
+    "generated/asn1/AKRootVerRespMes.h",
+    "generated/asn1/AKSendFirmwareReqMes.h",
+    "generated/asn1/AKSendFirmwareRespMes.h",
+    "generated/asn1/AKTlsConfig.h",
+    "generated/asn1/AKUploadDataReqMes.h",
+    "generated/asn1/AKUploadDataRespMes.h",
+    "generated/asn1/AKUrl.h",
+    "generated/asn1/AKVersionReqMes.h",
+    "generated/asn1/AKVersionRespMes.h",
+
+    "generated/asn1/asn_application.h",
+    "generated/asn1/asn_codecs.h",
+    "generated/asn1/asn_codecs_prim.h",
+    "generated/asn1/asn_internal.h",
+    "generated/asn1/asn_SEQUENCE_OF.h",
+    "generated/asn1/asn_SET_OF.h",
+    "generated/asn1/asn_system.h",
+    "generated/asn1/ber_decoder.h",
+    "generated/asn1/ber_tlv_length.h",
+    "generated/asn1/ber_tlv_tag.h",
+    "generated/asn1/BIT_STRING.h",
+    "generated/asn1/constraints.h",
+    "generated/asn1/constr_CHOICE.h",
+    "generated/asn1/constr_SEQUENCE.h",
+    "generated/asn1/constr_SEQUENCE_OF.h",
+    "generated/asn1/constr_SET_OF.h",
+    "generated/asn1/constr_TYPE.h",
+    "generated/asn1/der_encoder.h",
+    "generated/asn1/INTEGER.h",
+    "generated/asn1/NativeEnumerated.h",
+    "generated/asn1/NativeInteger.h",
+    "generated/asn1/OCTET_STRING.h",
+    "generated/asn1/per_decoder.h",
+    "generated/asn1/per_encoder.h",
+    "generated/asn1/per_opentype.h",
+    "generated/asn1/per_support.h",
+    "generated/asn1/UTF8String.h",
+    "generated/asn1/VisibleString.h",
+    "generated/asn1/xer_decoder.h",
+    "generated/asn1/xer_encoder.h",
+    "generated/asn1/xer_support.h",
+]
+
+genrule(
+    name = "gen_asn1",
+    srcs = ASN1_SOURCES,
+    outs = ASN1_GENERATED_C + ASN1_GENERATED_H,
+   cmd = """
+  set -euo pipefail
+
+  ROOT="$$(pwd)"
+  outdir="$(@D)/generated/asn1"
+  mkdir -p "$$outdir"
+  cd "$$outdir"
+
+  inputs=""
+  for s in $(SRCS); do
+    inputs="$$inputs $$ROOT/$$s"
+  done
+
+  asn1c -fcompound-names $$inputs
+  rm -f converter-example.c converter-sample.c || true
+
+  # Copy generated files from CWD (we are in outdir)
+  for out in $(OUTS); do
+    base="$$(basename "$$out")"
+    mkdir -p "$$(dirname "$$out")"
+    cp -f "$$base" "$$out"
+  done
+"""
+)
+
+
+cc_library(
+    name = "asn1_lib",
+    srcs = ASN1_GENERATED_C,
+    hdrs = ASN1_GENERATED_H,
+    includes = ["generated/asn1"],
+    copts = [
+        "-Wno-error",
+        "-w",
+    ],
+    deps = [
+        "//src/libaktualizr/utilities:utilities",
+    ],
+)

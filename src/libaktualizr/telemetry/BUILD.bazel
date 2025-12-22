@@ -1,0 +1,5 @@
+filegroup(
+    name = "telemetry_config",
+    srcs = ["telemetryconfig.cc"],
+    visibility = ["//src/libaktualizr:__subpackages__"],
+)

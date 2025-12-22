@@ -1,22 +1,112 @@
 #include "libaktualizr/crypto/p11engine.h"
 
 #include <array>
+#include <cstring>
+#include <stdexcept>
+#include <string>
 #include <utility>
 #include <vector>
 
-#include <libp11.h>
+#include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
+#include <openssl/provider.h>
+#include <openssl/store.h>
+
+#include <libp11.h>
+
 #include <boost/algorithm/hex.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/scoped_array.hpp>
 
 #include "libaktualizr/crypto/crypto.h"
-#include "utilities/config_utils.h"
 #include "libaktualizr/utilities/utils.h"
+#include "utilities/config_utils.h"
 
 P11Engine* P11EngineGuard::instance = nullptr;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 int P11EngineGuard::ref_counter = 0;            // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+
+namespace {
+
+std::string opensslErrOnce() {
+  unsigned long e = ERR_get_error();  // NOLINT
+  if (e == 0) return {};
+  char buf[256];
+  ERR_error_string_n(e, buf, sizeof(buf));
+  return std::string(buf);
+}
+
+struct ProviderBundle {
+  OSSL_PROVIDER* deflt{nullptr};
+  OSSL_PROVIDER* legacy{nullptr};
+  OSSL_PROVIDER* pkcs11{nullptr};
+
+  void load() {
+    deflt = OSSL_PROVIDER_load(nullptr, "default");
+    if (!deflt) {
+      throw std::runtime_error("OpenSSL: failed to load default provider: " + opensslErrOnce());
+    }
+    legacy = OSSL_PROVIDER_load(nullptr, "legacy");
+
+    pkcs11 = OSSL_PROVIDER_load(nullptr, "pkcs11");
+    if (!pkcs11) {
+      throw std::runtime_error(
+          "OpenSSL: failed to load pkcs11 provider. Ensure a PKCS#11 provider is installed and discoverable. Error: " +
+          opensslErrOnce());
+    }
+  }
+
+  ~ProviderBundle() {
+    if (pkcs11) OSSL_PROVIDER_unload(pkcs11);
+    if (legacy) OSSL_PROVIDER_unload(legacy);
+    if (deflt) OSSL_PROVIDER_unload(deflt);
+  }
+};
+
+ProviderBundle& providers() {
+  static ProviderBundle bundle;
+  static bool loaded = false;
+  if (!loaded) {
+    bundle.load();
+    loaded = true;
+  }
+  return bundle;
+}
+
+EVP_PKEY* loadPublicKeyFromPkcs11Uri(const std::string& uri) {
+  OSSL_STORE_CTX* store = OSSL_STORE_open(uri.c_str(), nullptr, nullptr, nullptr, nullptr);
+  if (!store) {
+    throw std::runtime_error("OSSL_STORE_open failed for URI: " + uri + " error: " + opensslErrOnce());
+  }
+
+  EVP_PKEY* pkey = nullptr;
+
+  while (!OSSL_STORE_eof(store)) {
+    OSSL_STORE_INFO* info = OSSL_STORE_load(store);
+    if (!info) {
+      const std::string err = opensslErrOnce();
+      OSSL_STORE_close(store);
+      throw std::runtime_error("OSSL_STORE_load failed: " + err);
+    }
+
+    if (OSSL_STORE_INFO_get_type(info) == OSSL_STORE_INFO_PKEY) {
+      pkey = OSSL_STORE_INFO_get1_PKEY(info);  // increments refcount
+      OSSL_STORE_INFO_free(info);
+      break;
+    }
+
+    OSSL_STORE_INFO_free(info);
+  }
+
+  OSSL_STORE_close(store);
+
+  if (!pkey) {
+    throw std::runtime_error("No key found in PKCS#11 URI: " + uri);
+  }
+  return pkey;
+}
+
+}  // namespace
 
 P11ContextWrapper::P11ContextWrapper(const boost::filesystem::path& module) {
   if (module.empty()) {
@@ -84,52 +174,7 @@ P11Engine::P11Engine(boost::filesystem::path module_path, std::string pass, std:
 
   uri_prefix_ = std::string("pkcs11:serial=") + slot->token->serialnr + ";pin-value=" + pass_ + ";id=%";
 
-  ENGINE_load_builtin_engines();
-  ENGINE* engine = ENGINE_by_id("dynamic");
-
-  if (engine == nullptr) {
-    throw std::runtime_error("SSL pkcs11 engine initialization failed");
-  }
-
-  try {
-    const boost::filesystem::path pkcs11Path = findPkcsLibrary();
-    LOG_INFO << "Loading PKCS#11 engine library: " << pkcs11Path.string();
-    if (ENGINE_ctrl_cmd_string(engine, "SO_PATH", pkcs11Path.c_str(), 0) == 0) {
-      throw std::runtime_error(std::string("P11 engine command failed: SO_PATH ") + pkcs11Path.string());
-    }
-
-    if (ENGINE_ctrl_cmd_string(engine, "ID", "pkcs11", 0) == 0) {
-      throw std::runtime_error("P11 engine command failed: ID pksc11");
-    }
-
-    if (ENGINE_ctrl_cmd_string(engine, "LIST_ADD", "1", 0) == 0) {
-      throw std::runtime_error("P11 engine command failed: LIST_ADD 1");
-    }
-
-    if (ENGINE_ctrl_cmd_string(engine, "LOAD", nullptr, 0) == 0) {
-      throw std::runtime_error("P11 engine command failed: LOAD");
-    }
-
-    if (ENGINE_ctrl_cmd_string(engine, "MODULE_PATH", module_path_.c_str(), 0) == 0) {
-      throw std::runtime_error(std::string("P11 engine command failed: MODULE_PATH ") + module_path_.string());
-    }
-
-    if (ENGINE_ctrl_cmd_string(engine, "PIN", pass_.c_str(), 0) == 0) {
-      throw std::runtime_error(std::string("P11 engine command failed: PIN"));
-    }
-
-    if (ENGINE_init(engine) == 0) {
-      throw std::runtime_error("P11 engine initialization failed");
-    }
-  } catch (const std::runtime_error& exc) {
-    // Note: treat these in a special case, as ENGINE_finish cannot be called on
-    // an engine which has not been fully initialized
-    ENGINE_free(engine);
-    ENGINE_cleanup();  // for openssl < 1.1
-    throw;
-  }
-
-  ssl_engine_ = engine;
+  (void)providers();
 }
 
 // Hack for clang-tidy
@@ -139,12 +184,10 @@ P11Engine::P11Engine(boost::filesystem::path module_path, std::string pass, std:
 
 boost::filesystem::path P11Engine::findPkcsLibrary() {
   static const boost::filesystem::path engine_path = PKCS11_ENGINE_PATH;
-
   if (!boost::filesystem::exists(engine_path)) {
     LOG_ERROR << "PKCS11 engine not available (" << engine_path << ")";
     return "";
   }
-
   return engine_path;
 }
 
@@ -191,51 +234,30 @@ bool P11Engine::readUptanePublicKey(const std::string& uptane_key_id, std::strin
     return false;
   }
   if ((uptane_key_id.length() % 2) != 0U) {
-    return false;  // id is a hex string
-  }
-
-  PKCS11_SLOT* slot = findTokenSlot();
-  if (slot == nullptr) {
     return false;
   }
 
-  PKCS11_KEY* keys;
-  unsigned int nkeys;
-  int rc = PKCS11_enumerate_public_keys(slot->token, &keys, &nkeys);
-  if (rc < 0) {
-    LOG_ERROR << "Error enumerating public keys in PKCS11 device: " << ERR_error_string(ERR_get_error(), nullptr);
-    return false;
-  }
-  PKCS11_KEY* key = nullptr;
-  {
-    std::vector<unsigned char> id_hex;
-    boost::algorithm::unhex(uptane_key_id, std::back_inserter(id_hex));
+  const std::string uri = uri_prefix_ + uptane_key_id;
 
-    for (unsigned int i = 0; i < nkeys; i++) {
-      // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-      if ((keys[i].id_len == uptane_key_id.length() / 2) &&
-          // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-          (memcmp(keys[i].id, id_hex.data(), uptane_key_id.length() / 2) == 0)) {
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-        key = &keys[i];
-        break;
-      }
+  try {
+    StructGuard<EVP_PKEY> evp_key(loadPublicKeyFromPkcs11Uri(uri), EVP_PKEY_free);
+
+    StructGuard<BIO> mem(BIO_new(BIO_s_mem()), BIO_vfree);
+    if (!PEM_write_bio_PUBKEY(mem.get(), evp_key.get())) {
+      LOG_ERROR << "PEM_write_bio_PUBKEY failed: " << opensslErrOnce();
+      return false;
     }
-  }
-  if (key == nullptr) {
-    LOG_ERROR << "Requested public key was not found";
+
+    char* pem_key = nullptr;
+    // NOLINTNEXTLINE(google-runtime-int,cppcoreguidelines-pro-type-cstyle-cast)
+    long length = BIO_get_mem_data(mem.get(), &pem_key);
+    key_out->assign(pem_key, static_cast<size_t>(length));
+    return true;
+
+  } catch (const std::exception& e) {
+    LOG_ERROR << "Failed reading PKCS#11 public key via provider: " << e.what();
     return false;
   }
-  StructGuard<EVP_PKEY> evp_key(PKCS11_get_public_key(key), EVP_PKEY_free);
-  StructGuard<BIO> mem(BIO_new(BIO_s_mem()), BIO_vfree);
-  PEM_write_bio_PUBKEY(mem.get(), evp_key.get());
-
-  char* pem_key = nullptr;
-  // NOLINTNEXTLINE(google-runtime-int,cppcoreguidelines-pro-type-cstyle-cast)
-  long length = BIO_get_mem_data(mem.get(), &pem_key);
-  key_out->assign(pem_key, static_cast<size_t>(length));
-
-  return true;
 }
 
 bool P11Engine::generateUptaneKeyPair(const std::string& uptane_key_id) {
@@ -247,11 +269,6 @@ bool P11Engine::generateUptaneKeyPair(const std::string& uptane_key_id) {
   std::vector<unsigned char> id_hex;
   boost::algorithm::unhex(uptane_key_id, std::back_inserter(id_hex));
 
-  // Manually generate a key and store it on the HSM
-  // Note that libp11 has a dedicated function marked as deprecated, it
-  // worked the same way in version <= 0.4.7 but tries to generate the
-  // RSA key directly on the HSM from 0.4.8. As it would not work reliably
-  // with openssl 1.1, we reimplemented it here.
   StructGuard<EVP_PKEY> pkey = Crypto::generateRSAKeyPairEVP(KeyType::kRSA2048);
   if (pkey == nullptr) {
     LOG_ERROR << "Error generating keypair on the device:" << ERR_error_string(ERR_get_error(), nullptr);

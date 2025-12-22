@@ -1,0 +1,27 @@
+filegroup(
+    name = "bootloader_config",
+    srcs = ["bootloader_config.cc"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "bootloader",
+    srcs = ["bootloader.cc"],
+    includes = ["."],
+    deps = [
+        "//src/libaktualizr:config",
+        "//:pub_includes",
+        "@jsoncpp"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# cc_test(
+#     name = "bootloader_test",
+#     srcs = ["bootloader_test.cc"],
+#     deps = [
+#         ":bootloader",
+#         "//:pub_includes",
+#         "@googletest//:gtest_main",
+#     ],
+# )

@@ -41,8 +41,8 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
     message(FATAL_ERROR "Aktualizr does not support building in the source tree. Please remove CMakeCache.txt and the CMakeFiles/ directory, then create a subdirectory to build in: mkdir build; cd build; cmake ..")
 endif()
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake-modules)
-configure_file(CTestCustom.cmake CTestCustom.cmake)
+# set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake-modules)
+# configure_file(CTestCustom.cmake CTestCustom.cmake)
 
 unset(AKTUALIZR_CHECKED_SRCS CACHE)
 
@@ -55,6 +55,8 @@ add_definitions("-D_FILE_OFFSET_BITS=64")
 # TODO: Remove when the repo is updated to support Openssl 3.0
 # 'ENGINE_free' is deprecated [-Werror,-Wdeprecated-declarations]
 add_compile_options("-Wno-deprecated-declarations")
+
+list(PREPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules")
 
 if (CCACHE)
     find_program(CCACHE_PROGRAM ccache)

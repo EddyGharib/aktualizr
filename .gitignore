@@ -54,3 +54,5 @@ CMakeLists.txt.user
 .vscode/launch.json
 
 bazel-*
+
+graphviz/*

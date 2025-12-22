@@ -4,3 +4,11 @@ cc_library(
     includes = ["include"],
     visibility = ["//visibility:public"],
 )
+
+
+filegroup(
+    name = "config_dir",
+    srcs = glob(["config/**"]),
+    visibility = ["//src/libaktualizr:__subpackages__"],
+)
+

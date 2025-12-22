@@ -4,17 +4,36 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
-module(name = "aktualizr", version = "1.0", compatibility_level = 1)
+module(
+    name = "aktualizr",
+    version = "1.0",
+    compatibility_level = 1,
+)
 
-bazel_dep(name = "boost.filesystem", version = "1.83.0.bcr.1")
-bazel_dep(name = "boost.log", version = "1.83.0.bcr.1")
-bazel_dep(name = "boost.thread", version = "1.83.0.bcr.1")
-
+bazel_dep(name = "boost.filesystem", version = "1.87.0")
+bazel_dep(name = "boost.log", version = "1.87.0.bcr.1")
+bazel_dep(name = "boost.thread", version = "1.87.0.bcr.1")
 bazel_dep(name = "jsoncpp", version = "1.9.5")
-bazel_dep(name = "googletest", version = "1.14.0")
+bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
+bazel_dep(name = "libarchive", version = "3.8.1")
+bazel_dep(name = "curl", version = "8.11.0.bcr.2")
+bazel_dep(name = "libsodium", version = "1.0.19")
+bazel_dep(name = "sqlite3", version = "3.50.4")
+bazel_dep(name = "glib", version = "2.82.2.bcr.6")
+bazel_dep(name = "openssl", version = "3.3.1.bcr.9")
+bazel_dep(name = "rules_foreign_cc", version = "0.15.1", repo_name = "rules_foreign_cc")
+bazel_dep(name = "ostree", version = "2024.5")
+local_path_override(
+    module_name = "ostree",
+    path = "/home/user/cpp_libs/ostree",
+)
 
+local_path_override(
+    module_name = "glib",
+    path = "/home/user/cpp_libs/ostree/third_party/glib_2.82.2.bcr.6",
+)
 
-# TODO use this instead of workspace declarations when bazel releases local repo rules in Starlark 
+# TODO use this instead of workspace declarations when bazel releases local repo rules in Starlark
 # https://github.com/bazelbuild/bazel/commit/6f254ce0f95d70e744b513a94d577036712befac
 # non_module_local_deps = use_extension("//third_party:extensions.bzl", "non_module_local_deps")
 # use_repo(non_module_local_deps, "libcurl")

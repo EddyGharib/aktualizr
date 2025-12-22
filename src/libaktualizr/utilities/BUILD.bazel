@@ -7,6 +7,13 @@ genrule(
 )
 
 cc_library(
+    name = "utils_header",
+    hdrs = ["config_utils.h"],
+    includes = [".."],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "utilities",
     srcs = [
         "aktualizr_version.cc",
@@ -16,22 +23,28 @@ cc_library(
         "sig_handler.cc",
         "timer.cc",
         "types.cc",
-        "utils.cc"
+        "utils.cc",
     ],
-    hdrs = glob(["*.h"]) + [
+    hdrs = [
         "autogen_version.hpp",
-        ],
-    copts = ["-Isrc/libaktualizr",],
+        "config_utils.h",
+        "dequeue_buffer.h",
+        "fault_injection.h",
+        "sig_handler.h",
+        "timer.h",
+        "xml2json.h",
+    ],
+    includes = [".."],
     visibility = ["//visibility:public"],
     deps = [
         "@jsoncpp",
         "@boost.filesystem",
         "@boost.log",
         "@boost.thread",
-        "@libcurl",
-        "@libarchive",
-        "//:pub_includes"
-        ]
+        "@curl",
+        "@libarchive//libarchive:archive",
+        "//:pub_includes",
+    ],
 )
 
 cc_test(

@@ -1,0 +1,33 @@
+config_setting(
+    name = "build_ostree",
+    values = {
+        "define": "BUILD_OSTREE=1",
+    },
+)
+
+filegroup(
+    name = "package_manager_config",
+    srcs = ["packagemanagerconfig.cc"],
+    visibility = ["//src/libaktualizr:__subpackages__"],
+)
+
+cc_library(
+    name = "package_manager",
+    srcs = [
+        "packagemanagerfactory.cc",
+        "packagemanagerfake.cc",
+        "packagemanagerinterface.cc",
+    ] + select({
+        ":build_ostree": ["ostreemanager.cc"],
+        "//conditions:default": [],
+    }),
+    hdrs = [
+        "packagemanagerfake.h",
+    ],
+    includes = ["."],
+    deps = select({
+        ":build_ostree": ["@ostree//:ostree"],
+        "//conditions:default": [],
+    }) + ["@jsoncpp","//src/libaktualizr/utilities:utilities"],
+    visibility = ["//visibility:public"],
+)

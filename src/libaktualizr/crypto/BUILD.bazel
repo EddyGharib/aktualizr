@@ -1,0 +1,74 @@
+config_setting(
+    name = "with_p11",
+    define_values = {"BUILD_P11": "1"},
+)
+
+cc_library(
+    name = "crypto",
+    srcs = [
+        "crypto.cc",
+        "keymanager.cc",
+    ] + select({
+        ":with_p11": ["p11engine.cc"],
+        "//conditions:default": ["p11engine_dummy.cc"],
+    }),
+    hdrs = [
+        "openssl_compat.h",
+    ],
+    includes = [".."],
+    copts = select({
+        ":with_p11": [
+            "-Wno-deprecated-declarations",
+            "-DPKCS11_ENGINE_PATH=\\\"/usr/lib/x86_64-linux-gnu/engines-3/libpkcs11.so\\\"",
+        ],
+        "//conditions:default": ["-Wno-deprecated-declarations"],
+    }),
+    deps = [
+        "@jsoncpp",
+    ] + select({
+        ":with_p11": [
+            "//src/libaktualizr/utilities:utils_header",
+            "@openssl",
+        ],
+        "//conditions:default": [],
+    }),
+
+    visibility = ["//visibility:public"],
+)
+
+
+# cc_test(
+#     name = "crypto_test",
+#     srcs = ["crypto_test.cc"],
+#     deps = [
+#         ":crypto",
+#         "@googletest//:gtest_main",
+#     ],
+#     copts = [
+#         '-DTEST_PKCS11_MODULE_PATH="$(TEST_PKCS11_MODULE_PATH)"',
+#     ],
+# )
+
+# cc_test(
+#     name = "hash_test",
+#     srcs = ["hash_test.cc"],
+#     deps = [
+#         ":crypto",
+#         "@googletest//:gtest_main",
+#     ],
+#     copts = [
+#         '-DTEST_PKCS11_MODULE_PATH="$(TEST_PKCS11_MODULE_PATH)"',
+#     ],
+# )
+
+# cc_test(
+#     name = "keymanager_test",
+#     srcs = ["keymanager_test.cc"],
+#     deps = [
+#         ":crypto",
+#         "@googletest//:gtest_main",
+#     ],
+#     copts = [
+#         '-DTEST_PKCS11_MODULE_PATH="$(TEST_PKCS11_MODULE_PATH)"',
+#     ],
+# )

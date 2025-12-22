@@ -288,7 +288,7 @@ Json::Value KeyManager::signTuf(const Json::Value &in_data) const {
     if (!built_with_p11) {
       throw std::runtime_error("Aktualizr was built without PKCS#11");
     }
-    crypto_engine = (*p11_)->getEngine();
+    // crypto_engine = (*p11_)->getEngine();
     private_key = config_.p11.uptane_key_id;
   }
 
