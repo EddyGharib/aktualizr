@@ -45,8 +45,8 @@ TEST(crypto, sign_verify_rsa_file) {
   PublicKey pkey(fs::path("tests/test_data/public.key"));
   std::string private_key = Utils::readFile("tests/test_data/priv.key");
   std::string signature = Utils::toBase64(Crypto::RSAPSSSign(NULL, private_key, text));
-  bool signe_is_ok = pkey.VerifySignature(signature, text);
-  EXPECT_TRUE(signe_is_ok);
+  bool sign_is_ok = pkey.VerifySignature(signature, text);
+  EXPECT_TRUE(sign_is_ok);
 }
 
 #ifdef BUILD_P11
@@ -84,8 +84,8 @@ TEST_F(P11Crypto, sign_verify_rsa_p11) {
   PublicKey pkey(key_content, KeyType::kRSA2048);
   std::string private_key = (*p11_)->getItemFullId(uptane_key_id);
   std::string signature = Utils::toBase64(Crypto::RSAPSSSign((*p11_)->getEngine(), private_key, text));
-  bool signe_is_ok = pkey.VerifySignature(signature, text);
-  EXPECT_TRUE(signe_is_ok);
+  bool sign_is_ok = pkey.VerifySignature(signature, text);
+  EXPECT_TRUE(sign_is_ok);
 }
 
 /* Generate RSA keypairs via PKCS#11. */
@@ -123,16 +123,16 @@ TEST(crypto, sign_bad_key_no_crash) {
 TEST(crypto, verify_bad_key_no_crash) {
   std::string text = "This is text for sign";
   std::string signature = Utils::toBase64(Crypto::RSAPSSSign(NULL, "tests/test_data/priv.key", text));
-  bool signe_is_ok = Crypto::RSAPSSVerify("this is bad key", signature, text);
-  EXPECT_EQ(signe_is_ok, false);
+  bool sign_is_ok = Crypto::RSAPSSVerify("this is bad key", signature, text);
+  EXPECT_EQ(sign_is_ok, false);
 }
 
 /* Reject bad signatures. */
 TEST(crypto, verify_bad_sign_no_crash) {
   PublicKey pkey(fs::path("tests/test_data/public.key"));
   std::string text = "This is text for sign";
-  bool signe_is_ok = pkey.VerifySignature("this is bad signature", text);
-  EXPECT_EQ(signe_is_ok, false);
+  bool sign_is_ok = pkey.VerifySignature("this is bad signature", text);
+  EXPECT_EQ(sign_is_ok, false);
 }
 
 /* Verify an ED25519 signature. */
@@ -142,13 +142,13 @@ TEST(crypto, verify_ed25519) {
   root_stream.close();
   std::string signature = "lS1GII6MS2FAPuSzBPHOZbE0wLIRpFhlbaCSgNOJLT1h+69OjaN/YQq16uzoXX3rev/Dhw0Raa4v9xocE8GmBA==";
   PublicKey pkey("cb07563157805c279ec90ccb057f2c3ea6e89200e1e67f8ae66185987ded9b1c", KeyType::kED25519);
-  bool signe_is_ok = pkey.VerifySignature(signature, Utils::jsonToCanonicalStr(Utils::parseJSON(text)));
-  EXPECT_TRUE(signe_is_ok);
+  bool sign_is_ok = pkey.VerifySignature(signature, Utils::jsonToCanonicalStr(Utils::parseJSON(text)));
+  EXPECT_TRUE(sign_is_ok);
 
   std::string signature_bad =
       "33lS1GII6MS2FAPuSzBPHOZbE0wLIRpFhlbaCSgNOJLT1h+69OjaN/YQq16uzoXX3rev/Dhw0Raa4v9xocE8GmBA==";
-  signe_is_ok = pkey.VerifySignature(signature_bad, Utils::jsonToCanonicalStr(Utils::parseJSON(text)));
-  EXPECT_FALSE(signe_is_ok);
+  sign_is_ok = pkey.VerifySignature(signature_bad, Utils::jsonToCanonicalStr(Utils::parseJSON(text)));
+  EXPECT_FALSE(sign_is_ok);
 }
 
 TEST(crypto, bad_keytype) {

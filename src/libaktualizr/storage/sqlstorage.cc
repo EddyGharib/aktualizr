@@ -1,6 +1,7 @@
 #include "sqlstorage.h"
 
 #include <sys/stat.h>
+#include <cstdint>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -10,6 +11,9 @@
 #include "libaktualizr/logging/logging.h"
 #include "sql_utils.h"
 #include "libaktualizr/utilities/utils.h"
+
+// Max events stored in the database, waiting to be sent
+#define MAX_PENDING_EVENTS 10000
 
 // Find metadata with version set to -1 (e.g. after migration) and assign proper version to it.
 void SQLStorage::cleanMetaVersion(Uptane::RepositoryType repo, const Uptane::Role& role) {
@@ -1117,16 +1121,29 @@ void SQLStorage::saveInstalledVersion(const std::string& ecu_serial, const Uptan
   }
 
   if (!!old_id) {
-    auto statement = db.prepareStatement<std::string, int, int, int64_t>(
-        "UPDATE installed_versions SET correlation_id = ?, is_current = ?, is_pending = ?, was_installed = ? WHERE id "
-        "= ?;",
-        target.correlation_id(), static_cast<int>(update_mode == InstalledVersionUpdateMode::kCurrent),
-        static_cast<int>(update_mode == InstalledVersionUpdateMode::kPending),
-        static_cast<int>(update_mode == InstalledVersionUpdateMode::kCurrent || old_was_installed), old_id.value());
+    if (update_mode == InstalledVersionUpdateMode::kBadTarget) {
+      // unset 'pending' and 'was_installed' for all installations of the target in the current ecu
+      auto statement = db.prepareStatement<std::string, std::string>(
+          "UPDATE installed_versions SET is_pending = 0, was_installed = 0 WHERE ecu_serial = ? AND name = ?",
+          ecu_serial_real, target.filename());
 
-    if (statement.step() != SQLITE_DONE) {
-      LOG_ERROR << "Failed to save installed versions: " << db.errmsg();
-      return;
+      if (statement.step() != SQLITE_DONE) {
+        LOG_ERROR << "Failed to save installed versions: " << db.errmsg();
+        return;
+      }
+    } else {
+      auto statement = db.prepareStatement<std::string, int, int, int64_t>(
+          "UPDATE installed_versions SET correlation_id = ?, is_current = ?, is_pending = ?, was_installed = ? WHERE "
+          "id "
+          "= ?;",
+          target.correlation_id(), static_cast<int>(update_mode == InstalledVersionUpdateMode::kCurrent),
+          static_cast<int>(update_mode == InstalledVersionUpdateMode::kPending),
+          static_cast<int>(update_mode == InstalledVersionUpdateMode::kCurrent || old_was_installed), old_id.value());
+
+      if (statement.step() != SQLITE_DONE) {
+        LOG_ERROR << "Failed to save installed versions: " << db.errmsg();
+        return;
+      }
     }
   } else {
     std::string custom = Utils::jsonToCanonicalStr(target.custom_data());
@@ -1176,7 +1193,7 @@ static void loadEcuMap(SQLite3Guard& db, std::string& ecu_serial, Uptane::EcuMap
 }
 
 bool SQLStorage::loadInstallationLog(const std::string& ecu_serial, std::vector<Uptane::Target>* log,
-                                     bool only_installed) const {
+                                     bool only_installed, bool include_current) const {
   SQLite3Guard db = dbConnection();
 
   std::string ecu_serial_real = ecu_serial;
@@ -1184,12 +1201,13 @@ bool SQLStorage::loadInstallationLog(const std::string& ecu_serial, std::vector<
   loadEcuMap(db, ecu_serial_real, ecu_map);
 
   std::string query =
-      "SELECT id, sha256, name, hashes, length, correlation_id, custom_meta FROM installed_versions WHERE "
-      "ecu_serial = ? ORDER BY id;";
+      std::string(
+          "SELECT id, sha256, name, hashes, length, correlation_id, custom_meta FROM installed_versions WHERE ") +
+      (include_current ? "" : " is_current = 0 AND ") + "ecu_serial = ? ORDER BY id;";
   if (only_installed) {
-    query =
-        "SELECT id, sha256, name, hashes, length, correlation_id, custom_meta FROM installed_versions WHERE "
-        "ecu_serial = ? AND was_installed = 1 ORDER BY id;";
+    query = std::string(
+                "SELECT id, sha256, name, hashes, length, correlation_id, custom_meta FROM installed_versions WHERE ") +
+            (include_current ? "" : " is_current = 0 AND ") + "ecu_serial = ? AND was_installed = 1 ORDER BY id;";
   }
 
   auto statement = db.prepareStatement<std::string>(query, ecu_serial_real);
@@ -1569,6 +1587,24 @@ void SQLStorage::saveReportEvent(const Json::Value& json_value) {
   if (statement.step() != SQLITE_DONE) {
     LOG_ERROR << "Failed to save report event: " << db.errmsg();
     return;
+  }
+
+  statement = db.prepareStatement("SELECT COUNT(*) FROM report_events");
+  if (statement.step() != SQLITE_ROW) {
+    LOG_ERROR << "Failed to count report_events rows: " << db.errmsg();
+    return;
+  }
+
+  auto events_count = statement.get_result_col_int(0);
+  if (events_count > MAX_PENDING_EVENTS) {
+    LOG_WARNING << "There are too many pending events (" << events_count << "). Removing oldest ones";
+    auto del_statement = db.prepareStatement<int>(
+        "DELETE FROM report_events WHERE id NOT IN (SELECT id FROM report_events ORDER BY id DESC LIMIT ?)",
+        MAX_PENDING_EVENTS);
+    if (del_statement.step() != SQLITE_DONE) {
+      LOG_ERROR << "Failed to remove excess report events: " << db.errmsg();
+      return;
+    }
   }
 }
 

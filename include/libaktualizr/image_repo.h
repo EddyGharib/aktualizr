@@ -1,7 +1,7 @@
 #ifndef IMAGE_REPO_H_
 #define IMAGE_REPO_H_
 
-#include "repo.h"
+#include "libaktualizr/repo.h"
 
 class ImageRepo : public Repo {
  public:

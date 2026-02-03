@@ -6,7 +6,8 @@ install(TARGETS aktualizr-get RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPON
 
 add_aktualizr_test(NAME aktualizr_get
                    SOURCES get.cc get_test.cc
-                   PROJECT_WORKING_DIRECTORY)
+                   PROJECT_WORKING_DIRECTORY
+                   LABELS "booted")
 
 # Check the --help option works.
 add_test(NAME aktualizr-get-option-help

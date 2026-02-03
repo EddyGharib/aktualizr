@@ -49,7 +49,7 @@ class DequeueBuffer {
    * buffer_[0..written_bytes_] contains to contents of this dequeue
    */
   size_t written_bytes_{0};
-  std::array<char, 4096> buffer_{};  // Zero initialise as a security pesimisation
+  std::array<char, 4096> buffer_{};  // Zero initialise as a security pessimization
   // NOLINTNEXTLINE (should be just for clang-diagnostic-unused-private-field but it won't work)
   int sentinel_{kSentinel};  // Sentinel to check for writers overflowing buffer_
 };

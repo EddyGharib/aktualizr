@@ -75,7 +75,7 @@ bool OfflineSignRepo(const ServerCredentials &push_credentials, const std::strin
 
   std::string init_cmd("garage-sign init --repo aktualizr --credentials ");
   if (system((init_cmd + push_credentials.GetPathOnDisk().string()).c_str()) != 0) {
-    LOG_ERROR << "Could not initilaize tuf repo for sign";
+    LOG_ERROR << "Could not initialize tuf repo for sign";
     return false;
   }
 

@@ -49,7 +49,7 @@ class Asn1Message {
   static Asn1Message::Ptr Empty() { return new Asn1Message(); }
 
   /**
-   * Destructively copy from a raw msg pointer created by parsing an incomming
+   * Destructively copy from a raw msg pointer created by parsing an incoming
    * message. This takes ownership of the contents of the message, and sets
    * *msg=nullptr to make this fact clear.
    */

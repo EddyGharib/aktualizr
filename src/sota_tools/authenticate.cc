@@ -40,7 +40,7 @@ int authenticate(const string &cacerts, const ServerCredentials &creds, TreehubS
   }
   // Setup ca certificates in all cases. Even with no authentication, curl
   // checks ca certs by default. Furthermore, curl embeds the path to ca certs
-  // that it was built with and this breaks under bitbake when sharing sstate
+  // that it was built with and this breaks under bitbake when sharing state
   // cache between machines.
   treehub.ca_certs(cacerts);
   treehub.root_url(creds.GetOSTreeServer());

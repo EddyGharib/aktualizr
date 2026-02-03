@@ -1,7 +1,7 @@
 function(add_aktualizr_test)
     set(options PROJECT_WORKING_DIRECTORY NO_VALGRIND)
     set(oneValueArgs NAME)
-    set(multiValueArgs SOURCES LIBRARIES ARGS LAUNCH_CMD)
+    set(multiValueArgs SOURCES LIBRARIES ARGS LAUNCH_CMD LABELS)
     cmake_parse_arguments(AKTUALIZR_TEST "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     set(TEST_TARGET t_${AKTUALIZR_TEST_NAME})
 
@@ -26,8 +26,12 @@ function(add_aktualizr_test)
     endif()
 
     add_test(NAME test_${AKTUALIZR_TEST_NAME}
-             COMMAND ${CMD_PREFIX} $<TARGET_FILE:${TEST_TARGET}> ${AKTUALIZR_TEST_ARGS} ${GOOGLE_TEST_OUTPUT} ${WD})
-
+         COMMAND ${CMD_PREFIX} $<TARGET_FILE:${TEST_TARGET}> ${AKTUALIZR_TEST_ARGS} ${GOOGLE_TEST_OUTPUT} ${WD})
+  
+    if(AKTUALIZR_TEST_LABELS)
+         set_tests_properties(test_${AKTUALIZR_TEST_NAME} PROPERTIES LABELS "${AKTUALIZR_TEST_LABELS}")
+     endif()
+     
     add_dependencies(build_tests ${TEST_TARGET})
     set(TEST_SOURCES ${TEST_SOURCES} ${AKTUALIZR_TEST_SOURCES} PARENT_SCOPE)
 endfunction(add_aktualizr_test)

@@ -6,9 +6,9 @@
 #include <boost/filesystem.hpp>
 
 #include "libaktualizr/crypto/crypto.h"
+#include "libaktualizr/repo.h"
 #include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
-#include "repo.h"
 #include "storage/sqlstorage.h"
 
 namespace fs = boost::filesystem;
@@ -636,7 +636,7 @@ TEST(StorageImport, ImportData) {
   EXPECT_TRUE(storage->loadTlsCert(&tls_cert));
   EXPECT_TRUE(storage->loadTlsPkey(&tls_pkey));
 
-  // All TLS objects should be updated exept primary keys.
+  // All TLS objects should be updated except primary keys.
   EXPECT_EQ(primary_private, "uptane_private_1");
   EXPECT_EQ(primary_public, "uptane_public_1");
   EXPECT_EQ(tls_ca, "tls_cacert_2");

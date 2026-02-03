@@ -9,8 +9,8 @@
 #include "test_utils.h"
 
 #include "aktualizr_secondary_ostree.h"
+#include "libaktualizr/uptane_repo.h"
 #include "update_agent_ostree.h"
-#include "uptane_repo.h"
 
 class Treehub {
  public:

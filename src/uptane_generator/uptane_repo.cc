@@ -1,5 +1,4 @@
-
-#include "uptane_repo.h"
+#include "libaktualizr/uptane_repo.h"
 
 UptaneRepo::UptaneRepo(const boost::filesystem::path &path, const std::string &expires,
                        const std::string &correlation_id)

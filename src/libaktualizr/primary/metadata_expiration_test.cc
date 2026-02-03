@@ -160,7 +160,7 @@ TEST_F(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeReboo
                               (std::chrono::system_clock::now() - target_init_time));
   aktualizr_->UptaneCycle();
 
-  // since the installation happenned before the metadata expiration we expect that
+  // since the installation happened before the metadata expiration we expect that
   // the update is still pending and will be applied after a reboot
   ASSERT_TRUE(client_->hasPendingUpdates());
   ASSERT_TRUE(client_->isInstallCompletionRequired());
@@ -211,7 +211,7 @@ TEST_F(MetadataExpirationTest, MetadataExpirationAfterInstallationAndBeforeAppli
   simulateReboot();
   aktualizr_->UptaneCycle();
 
-  // check if the pending target has been applied. it should be applied in even if it's metadta are expired
+  // check if the pending target has been applied. it should be applied in even if it's metadata are expired
   // as long as it was installed at the moment when they were not expired
   auto currently_installed_target = client_->getCurrent();
   EXPECT_EQ(target_image_hash_, currently_installed_target.sha256Hash());

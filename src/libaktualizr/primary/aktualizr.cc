@@ -57,7 +57,7 @@ bool Aktualizr::UptaneCycle() {
   Install(download_result.updates).get();
 
   if (uptane_client_->isInstallCompletionRequired()) {
-    // If there are some pending updates then effectively either reboot (OSTree) or aktualizr restart (fake pack mngr)
+    // If there are some pending updates then effectively either reboot (OSTree) or aktualizr restart (fake pack manager)
     // is required to apply the update(s)
     LOG_INFO << "Exiting aktualizr so that pending updates can be applied after reboot";
     return false;

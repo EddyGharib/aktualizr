@@ -14,7 +14,7 @@ target_link_libraries(aktualizr-cert-provider
     Threads::Threads
     ${Boost_SYSTEM_LIBRARIES}
     ${Boost_LIBRARIES}
-    jsoncpp_lib
+    PkgConfig::JsonCpp
     LibArchive::LibArchive
     CURL::libcurl
     OpenSSL::SSL

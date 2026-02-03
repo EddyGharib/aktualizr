@@ -531,7 +531,7 @@ data::InstallationResult IpUptaneSecondary::uploadFirmwareData(const uint8_t* da
     LOG_ERROR << "Secondary " << getSerial() << " returned an invalid response to a request to receive firmware data.";
     return data::InstallationResult(
         data::ResultCode::Numeric::kInternalError,
-        "Secondary " + getSerial().ToString() + " returned an invalid reponse to a request to receive firmware data.");
+        "Secondary " + getSerial().ToString() + " returned an invalid response to a request to receive firmware data.");
   }
 
   auto r = resp->uploadDataResp();

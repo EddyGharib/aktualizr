@@ -9,8 +9,8 @@
 #include "libaktualizr/crypto/crypto.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/uptane/exceptions.h"
+#include "libaktualizr/uptane_repo.h"
 #include "test_utils.h"
-#include "uptane_repo.h"
 
 KeyType key_type = KeyType::kED25519;
 std::string generate_repo_exec;

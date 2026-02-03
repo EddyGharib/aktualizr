@@ -13,10 +13,12 @@ set(HEADERS aktualizr_helpers.h
             sotauptaneclient.h)
 
 add_library(primary OBJECT ${SOURCES})
-target_link_libraries(primary PUBLIC jsoncpp_lib)
+target_link_libraries(primary PUBLIC PkgConfig::JsonCpp)
 
+if(BUILD_TESTING)
 add_library(provisioner_test_utils STATIC provisioner_test_utils.cc)
 target_link_libraries(provisioner_test_utils PUBLIC primary)
+target_compile_options(provisioner_test_utils PRIVATE "-std=c++17")
 aktualizr_source_file_checks(provisioner_test_utils.cc provisioner_test_utils.h)
 
 
@@ -113,3 +115,4 @@ set_tests_properties(test_uptane_key PROPERTIES LABELS "crypto")
 
 
 aktualizr_source_file_checks(${SOURCES} ${HEADERS} ${TEST_SOURCES})
+endif(BUILD_TESTING)

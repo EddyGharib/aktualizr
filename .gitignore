@@ -8,6 +8,7 @@ out/
 
 # clion
 /.idea
+/.cache
 /cmake-build-*
 
 # Compiled Object files
@@ -54,5 +55,3 @@ CMakeLists.txt.user
 .vscode/launch.json
 
 bazel-*
-
-graphviz/*

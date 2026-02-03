@@ -18,7 +18,7 @@ aktualizr_source_file_checks(${LIBAKTUALIZR_PUBLIC_HEADERS})
 # declarations.
 # config has to go first, as other libraries append sources to it
 add_library(config OBJECT)
-target_link_libraries(config PUBLIC jsoncpp_lib)
+target_link_libraries(config PUBLIC PkgConfig::JsonCpp)
 
 add_subdirectory("bootloader")
 add_subdirectory("bootstrap")
@@ -71,16 +71,20 @@ add_library(aktualizr_lib SHARED
 
 target_include_directories(aktualizr_lib PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>
-)
-
-target_include_directories(aktualizr_lib PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(aktualizr_lib ${AKTUALIZR_EXTERNAL_LIBS})
-set_target_properties(aktualizr_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr)
+execute_process(
+    COMMAND git describe --tags
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_TAG
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+target_compile_definitions(aktualizr_lib PUBLIC AKTUALIZR_REVISION=\"${GIT_TAG}\")
+
+target_link_libraries(aktualizr_lib PUBLIC ${AKTUALIZR_PUBLIC_LIBS} PRIVATE ${AKTUALIZR_EXTERNAL_LIBS})
 install(TARGETS aktualizr_lib LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT aktualizr)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libaktualizr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 

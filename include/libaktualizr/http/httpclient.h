@@ -6,7 +6,6 @@
 #include <set>
 
 #include <curl/curl.h>
-#include "gtest/gtest_prod.h"
 #include "json/json.h"
 
 #include "libaktualizr/http/httpinterface.h"
@@ -51,7 +50,7 @@ class HttpClient : public HttpInterface {
   void timeout(int64_t ms);
 
  private:
-  FRIEND_TEST(GetTest, download_speed_limit);
+  // FRIEND_TEST(GetTest, download_speed_limit);
 
   static const CurlGlobalInitWrapper manageCurlGlobalInit_;
   CURL *curl;

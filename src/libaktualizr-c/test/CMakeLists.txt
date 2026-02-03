@@ -16,7 +16,7 @@ add_dependencies(api-test-resources-generation uptane-generator)
 list(REMOVE_ITEM TEST_LIBS aktualizr_lib testutilities)
 add_aktualizr_test(NAME c_api SOURCES api-test.c PROJECT_WORKING_DIRECTORY
     ARGS ${PROJECT_SOURCE_DIR}/tests/fake_http_server/fake_test_server.py ${REPO_PATH}
-    LIBRARIES api-test-utils aktualizr-c)
+    LIBRARIES api-test-utils aktualizr-c LABELS "booted")
 add_dependencies(t_c_api api-test-resources-generation)
 aktualizr_source_file_checks(api-test.c)
 

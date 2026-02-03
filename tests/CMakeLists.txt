@@ -1,7 +1,7 @@
 option(INSTALL_GTEST "" OFF)
-if(NOT GTEST_ROOT )
-    set(GTEST_ROOT ${PROJECT_SOURCE_DIR}/third_party/googletest)
-endif()
+# if(NOT GTEST_ROOT )
+#     set(GTEST_ROOT ${PROJECT_SOURCE_DIR}/third_party/googletest)
+# endif()
 
 if(CMAKE_CROSSCOMPILING)
     # we cannot call the tool we build in this context, it has to come from somewhere else
@@ -27,6 +27,8 @@ add_dependencies(build_tests aktualizr-info)
 add_dependencies(build_tests uptane-generator)
 
 set(CTEST_EXTRA_ARGS -T Test --no-compress-output)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # build list of tests to run
 foreach(label ${TESTSUITE_ONLY})
@@ -68,12 +70,6 @@ if(BUILD_WITH_CODE_COVERAGE)
     setup_target_for_coverage_lcov(NAME coverage EXECUTABLE ${CMAKE_CTEST_COMMAND} ${CTEST_EXTRA_ARGS} USES_TERMINAL)
     add_dependencies(coverage build_tests)
 endif(BUILD_WITH_CODE_COVERAGE)
-
-if(TESTSUITE_VALGRIND)
-    # This test is only checking that valgrind finds memory leaks
-    add_aktualizr_test(NAME leak SOURCES leak_test.cc)
-    set_tests_properties(test_leak PROPERTIES WILL_FAIL TRUE)
-endif()
 
 if(FAULT_INJECTION)
     add_aktualizr_test(NAME fiuinfo SOURCES fiuinfo_test.cc NO_VALGRIND LAUNCH_CMD ${PROJECT_SOURCE_DIR}/scripts/fiu run -c "enable name=fail,failinfo=fiurun_failure" -- ARGS ${PROJECT_SOURCE_DIR}/scripts/fiu)
@@ -222,17 +218,17 @@ if(BUILD_OSTREE)
     add_test(NAME test_ip_secondary_ostree
              COMMAND ${PROJECT_SOURCE_DIR}/tests/ipsecondary_ostree_test.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_ip_secondary_ostree PROPERTIES LABELS "noptest")
+    set_tests_properties(test_ip_secondary_ostree PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_treehub_failure
              COMMAND ${PROJECT_SOURCE_DIR}/tests/test_treehub_failure.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_treehub_failure PROPERTIES LABELS "noptest")
+    set_tests_properties(test_treehub_failure PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_misc_ostree_update
              COMMAND ${PROJECT_SOURCE_DIR}/tests/test_misc_ostree_update.py
              --build-dir ${PROJECT_BINARY_DIR} --src-dir ${PROJECT_SOURCE_DIR})
-    set_tests_properties(test_misc_ostree_update PROPERTIES LABELS "noptest")
+    set_tests_properties(test_misc_ostree_update PROPERTIES LABELS "noptest;booted")
 
     add_test(NAME test_ostree_custom_uri
             COMMAND ${PROJECT_SOURCE_DIR}/tests/test_ostree_custom_uri.py

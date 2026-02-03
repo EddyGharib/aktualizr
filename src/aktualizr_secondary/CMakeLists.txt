@@ -25,7 +25,7 @@ add_library(aktualizr_secondary_lib SHARED
     $<TARGET_OBJECTS:uptane>
     $<TARGET_OBJECTS:utilities>)
 set_target_properties(aktualizr_secondary_lib PROPERTIES LIBRARY_OUTPUT_NAME aktualizr_secondary)
-target_link_libraries(aktualizr_secondary_lib aktualizr-posix ${AKTUALIZR_EXTERNAL_LIBS})
+target_link_libraries(aktualizr_secondary_lib PRIVATE ${AKTUALIZR_EXTERNAL_LIBS} PUBLIC aktualizr-posix ${AKTUALIZR_PUBLIC_LIBS})
 
 add_executable(aktualizr-secondary ${AKTUALIZR_SECONDARY_SRC})
 target_link_libraries(aktualizr-secondary aktualizr_secondary_lib)
@@ -70,7 +70,7 @@ if(BUILD_OSTREE)
     add_aktualizr_test(NAME aktualizr_secondary_ostree
                        SOURCES aktualizr_secondary_ostree_test.cc PROJECT_WORKING_DIRECTORY
                        ARGS ${PROJECT_BINARY_DIR}/ostree_repo
-                       LIBRARIES aktualizr_secondary_lib uptane_generator_lib $<TARGET_OBJECTS:campaign>)
+                       LIBRARIES aktualizr_secondary_lib uptane_generator_lib $<TARGET_OBJECTS:campaign> LABELS "booted")
 
     set_target_properties(t_aktualizr_secondary_ostree PROPERTIES LINK_FLAGS -Wl,--export-dynamic)
 else(BUILD_OSTREE)

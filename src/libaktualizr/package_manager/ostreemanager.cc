@@ -93,13 +93,12 @@ data::InstallationResult OstreeManager::pull(const boost::filesystem::path &sysr
     return data::InstallationResult(data::ResultCode::Numeric::kInstallFailed, "Could not get OSTree repo");
   }
 
-  GHashTable *ref_list = nullptr;
-  if (ostree_repo_list_commit_objects_starting_with(repo.get(), refhash.c_str(), &ref_list, nullptr, &error) != 0) {
-    guint length = g_hash_table_size(ref_list);
-    g_hash_table_destroy(ref_list);  // OSTree creates the table with destroy notifiers, so no memory leaks expected
-    // should never be greater than 1, but use >= for robustness
-    if (length >= 1) {
-      LOG_DEBUG << "refhash already pulled";
+  OstreeRepoCommitState commit_state;
+  if (ostree_repo_load_commit(repo.get(), refhash.c_str(), nullptr, &commit_state, &error)) {
+    if (commit_state & OSTREE_REPO_COMMIT_STATE_PARTIAL || commit_state & OSTREE_REPO_COMMIT_STATE_FSCK_PARTIAL) {
+      LOG_INFO << "OSTree commit " << refhash << " is partially pulled. Re-pulling it";
+    } else {
+      LOG_DEBUG << "OSTree commit " << refhash << " is fully pulled";
       return data::InstallationResult(true, data::ResultCode::Numeric::kAlreadyProcessed, "Refhash was already pulled");
     }
   }
@@ -249,8 +248,10 @@ void OstreeManager::completeInstall() const {
 
 data::InstallationResult OstreeManager::finalizeInstall(const Uptane::Target &target) {
   const std::string current_hash = getCurrentHash();
+  LOG_DEBUG << "Finalizing ostree install, cur_hash: " << current_hash << ", target_hash: " << target.sha256Hash();
 
   if (!bootloader_->rebootDetected()) {
+    LOG_DEBUG << "No bootloader reboot detected, the device was previously rebooted in the middle of a finalization step";
     // A device can be rebooted in the middle of the "finalization" process, specifically, right after the reboot flag
     // is cleared and before the pending target is marked as current. So, if a device is in such a state and gets
     // rebooted, the client will run "finalization" again to apply the pending target. Since the device is already
@@ -293,6 +294,25 @@ OstreeManager::OstreeManager(const PackageConfig &pconfig, const BootloaderConfi
   if (imageUpdated()) {
     bootloader_->setBootOK();
   }
+
+  if (pconfig.booted == BootedType::kStaged) {
+    auto ostree_hash_file = bconfig.reboot_sentinel_dir / "staged_booted_ostree_hash";
+    bool reboot_needed;
+    storage_->loadNeedReboot(&reboot_needed);
+    bool reboot_pending = reboot_needed && !bootloader_->rebootDetected();
+    if (!reboot_pending) {
+      // If there is no reboot pending, assume the system is running the latest sysroot deployment
+      bootedStagedOstreeHash = getCurrentHash();
+      Utils::writeFile(ostree_hash_file, bootedStagedOstreeHash, false);
+      LOG_DEBUG << "OstreeManager: Saving ostree hash " << bootedStagedOstreeHash;
+    } else {
+      // If there a reboot pending, use the latest hash recorded when there was no reboot pending
+      if (boost::filesystem::exists(ostree_hash_file)) {
+        bootedStagedOstreeHash = Utils::readFile(ostree_hash_file, true);
+        LOG_DEBUG << "OstreeManager: Reading ostree hash " << bootedStagedOstreeHash;
+      }
+    }
+  }
 }
 
 OstreeManager::~OstreeManager() { bootloader_.reset(nullptr); }
@@ -328,21 +348,21 @@ TargetStatus OstreeManager::verifyTargetInternal(const Uptane::Target &target) c
     return TargetStatus::kNotFound;
   }
 
-  GHashTable *ref_list = nullptr;
-  if (ostree_repo_list_commit_objects_starting_with(repo.get(), refhash.c_str(), &ref_list, nullptr, &error) != 0) {
-    guint length = g_hash_table_size(ref_list);
-    g_hash_table_destroy(ref_list);  // OSTree creates the table with destroy notifiers, so no memory leaks expected
-    // should never be greater than 1, but use >= for robustness
-    if (length >= 1) {
+  OstreeRepoCommitState commit_state;
+  if (ostree_repo_load_commit(repo.get(), refhash.c_str(), nullptr, &commit_state, &error)) {
+    if (commit_state & OSTREE_REPO_COMMIT_STATE_PARTIAL || commit_state & OSTREE_REPO_COMMIT_STATE_FSCK_PARTIAL) {
+      LOG_ERROR << "OSTree commit " << refhash << " is incomplete";
+    } else {
       return TargetStatus::kGood;
     }
+  } else {
+    LOG_ERROR << "Could not find OSTree commit " << refhash;
   }
   if (error != nullptr) {
     g_error_free(error);
     error = nullptr;
   }
 
-  LOG_ERROR << "Could not find OSTree commit";
   return TargetStatus::kNotFound;
 }
 
@@ -389,7 +409,13 @@ std::string OstreeManager::getCurrentHash() const {
 }
 
 Uptane::Target OstreeManager::getCurrent() const {
-  const std::string current_hash = getCurrentHash();
+  std::string current_hash;
+  if (config.booted == BootedType::kStaged && !bootedStagedOstreeHash.empty()) {
+    current_hash = bootedStagedOstreeHash;
+  } else {
+    current_hash = getCurrentHash();
+  }
+
   boost::optional<Uptane::Target> current_version;
   // This may appear Primary-specific, but since Secondaries only know about
   // themselves, this actually works just fine for them, too.
@@ -399,8 +425,9 @@ Uptane::Target OstreeManager::getCurrent() const {
     return *current_version;
   }
 
-  std::string storage_version_str = (!!current_version)?(current_version->sha256Hash()):("");
-  LOG_ERROR << "Current versions in storage (" << storage_version_str << ") and reported by OSTree (" << current_hash << ") do not match";
+  std::string storage_version_str = (!!current_version) ? (current_version->sha256Hash()) : ("");
+  LOG_ERROR << "Current versions in storage (" << storage_version_str << ") and reported by OSTree (" << current_hash
+            << ") do not match";
 
   // Look into installation log to find a possible candidate. Again, despite the
   // name, this will work for Secondaries as well.
@@ -444,13 +471,13 @@ bool OstreeManager::imageUpdated() {
   // as function input
   OstreeDeployment *booted_deployment = ostree_sysroot_get_booted_deployment(sysroot_smart.get());
   std::string os_name;
-  if (!booted_deployment) {
+  if (booted_deployment == nullptr) {
     LOG_WARNING << "ostree is not in a booted deployment state, calling query_deployments_for(" << config.os << ")";
     os_name = config.os;
   }
 
   OstreeDeployment *pending_deployment = nullptr;
-  ostree_sysroot_query_deployments_for(sysroot_smart.get(), (os_name.empty()) ? (NULL) : (os_name.c_str()),
+  ostree_sysroot_query_deployments_for(sysroot_smart.get(), (os_name.empty()) ? (nullptr) : (os_name.c_str()),
                                        &pending_deployment, nullptr);
 
   bool pending_found = false;
@@ -477,6 +504,7 @@ GObjectUniquePtr<OstreeDeployment> OstreeManager::getStagedDeployment() const {
   if (deployments->len > 0) {
     // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     auto *d = static_cast<OstreeDeployment *>(deployments->pdata[0]);
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-cstyle-cast)
     auto *d2 = static_cast<OstreeDeployment *>(g_object_ref(d));
     res = d2;
   }

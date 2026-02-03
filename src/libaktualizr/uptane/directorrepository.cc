@@ -156,7 +156,7 @@ bool DirectorRepository::matchTargetsWithImageTargets(
     const std::shared_ptr<const Uptane::Targets>& image_targets) const {
   // step 10 of https://uptane.github.io/papers/ieee-isto-6100.1.0.0.uptane-standard.html#rfc.section.5.4.4.2
   // TODO(OTA-4800): support delegations. Consider reusing findTargetInDelegationTree(),
-  // but it would need to be moved into a common place to be resued by Primary and Secondary.
+  // but it would need to be moved into a common place to be reused by Primary and Secondary.
   // Currently this is only used by aktualizr-secondary, but according to the
   // Standard, "A Secondary ECU MAY elect to perform this check only on the
   // metadata for the image it will install".

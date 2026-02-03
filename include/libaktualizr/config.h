@@ -82,7 +82,7 @@ struct UptaneConfig {
 #define PACKAGE_MANAGER_NONE "none"
 #define PACKAGE_MANAGER_OSTREE "ostree"
 
-#ifdef BUILD_OSTREE
+#if defined BUILD_OSTREE && !defined DONT_DEFINE_DEFAULT_MANAGER
 #define PACKAGE_MANAGER_DEFAULT PACKAGE_MANAGER_OSTREE
 #else
 #define PACKAGE_MANAGER_DEFAULT PACKAGE_MANAGER_NONE
@@ -151,7 +151,7 @@ struct TelemetryConfig {
   void writeToStream(std::ostream& out_stream) const;
 };
 
-enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked, kFioVB };
+enum class RollbackMode { kBootloaderNone = 0, kUbootGeneric, kUbootMasked, kFioVB, kFioEFI };
 std::ostream& operator<<(std::ostream& os, RollbackMode mode);
 
 struct BootloaderConfig {

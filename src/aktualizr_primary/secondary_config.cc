@@ -6,8 +6,8 @@
 #include <json/json.h>
 
 #include "libaktualizr/logging/logging.h"
-#include "secondary_config.h"
 #include "libaktualizr/utilities/utils.h"
+#include "secondary_config.h"
 
 namespace Primary {
 
@@ -18,7 +18,7 @@ SecondaryConfigParser::Configs SecondaryConfigParser::parse_config_file(const bo
     throw std::invalid_argument("Specified config file doesn't exist: " + config_file.string());
   }
 
-  auto cfg_file_ext = boost::filesystem::extension(config_file);
+  auto cfg_file_ext = config_file.extension().string();
   std::unique_ptr<SecondaryConfigParser> cfg_parser;
 
   if (cfg_file_ext == ".json") {
@@ -84,7 +84,7 @@ SecondaryConfigParser::Configs JsonConfigParser::parse() {
 static std::pair<std::string, uint16_t> getIPAndPort(const std::string& addr) {
   auto del_pos = addr.find_first_of(':');
   if (del_pos == std::string::npos) {
-    throw std::invalid_argument("Incorrect address string, couldn't find port delimeter: " + addr);
+    throw std::invalid_argument("Incorrect address string, couldn't find port delimiter: " + addr);
   }
   std::string ip = addr.substr(0, del_pos);
   uint16_t port = static_cast<uint16_t>(std::stoul(addr.substr(del_pos + 1)));

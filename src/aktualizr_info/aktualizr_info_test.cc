@@ -143,11 +143,11 @@ TEST_F(AktualizrInfoTest, PrintProvisioningAndMetadataNegative) {
 }
 
 /**
- * Verifies an output of miscofigured Secondary ECUs
+ * Verifies an output of misconfigured Secondary ECUs
  *
  * Checks actions:
  *
- * - [x] Print Secondary ECUs no longer accessible (miscofigured: old)
+ * - [x] Print Secondary ECUs no longer accessible (misconfigured: old)
  * - [x] Print Secondary ECUs registered after provisioning (not registered)
  */
 TEST_F(AktualizrInfoTest, PrintSecondaryNotRegisteredOrRemoved) {

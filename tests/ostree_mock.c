@@ -47,7 +47,7 @@ struct OstreeDeploymentInfo {
 
 static struct OstreeDeploymentInfo* get_ostree_deployment_info() {
   // NOTE: Is not tread-safe. This mock is used solely for testing and normally is called from one thread of the
-  // Aktualirz
+  // Aktualizr
   static struct OstreeDeploymentInfo DeploymentInfo;
   static int isDeploymentInfoLoaded = 0;
 
@@ -64,7 +64,7 @@ static struct OstreeDeploymentInfo* get_ostree_deployment_info() {
     return NULL;
   }
 
-  // Allocation of the singletone object in a heap, one instance per a process, a memory will be released during
+  // Allocation of the singleton object in a heap, one instance per a process, a memory will be released during
   // the process teardown, no need in explicit deallocation
   DeploymentInfo.booted_ostree_native_deployment =
       ostree_deployment_new(0, OSTREE_DEPLOYMENT_OS_NAME, DeploymentInfo.deployed.rev, DeploymentInfo.deployed.serial,

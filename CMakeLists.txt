@@ -88,7 +88,9 @@ find_package(sodium REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Git)
 find_package(Asn1c REQUIRED)
-find_package(jsoncpp REQUIRED)
+# find_package(jsoncpp REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JsonCpp REQUIRED IMPORTED_TARGET jsoncpp)
 
 if(NOT AKTUALIZR_VERSION)
     if (EXISTS ${PROJECT_SOURCE_DIR}/VERSION)
@@ -209,6 +211,9 @@ endif()
 ################ QA RULES
 add_custom_target(qa)
 add_custom_target(check-format)
+add_custom_target(clang-tidy)
+add_custom_target(cppcheck)
+add_custom_target(cspell)
 
 add_custom_target(format)
 add_dependencies(qa format)
@@ -226,15 +231,19 @@ add_custom_target(build_tests)
 
 find_program(CLANG_FORMAT NAMES clang-format-11)
 find_program(CLANG_TIDY NAMES clang-tidy-12 clang-tidy-11)
+find_program(CPPCHECK NAMES cppcheck)
+find_program(CSPELL NAMES cspell)
 
 include(AktualizrClangFormat)
 include(AktualizrClangTidy)
+include(AktualizrCppcheck)
+include(AktualizrCspell)
 include(AktualizrSourceFileChecks)
 
 find_program(SHELLCHECK NAMES shellcheck)
 if(SHELLCHECK)
     add_custom_target(shellcheck
-        COMMAND find docs/ scripts/ src/ tests/ -name "*.sh" | xargs ${SHELLCHECK}
+        COMMAND find docs/ scripts/ src/ tests/ -name "*.sh" | xargs ${SHELLCHECK} -x
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         VERBATIM)
 
@@ -253,8 +262,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ############### BUILD RULES
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src/libaktualizr)
-include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third_party/googletest/googletest/include)
-include_directories(SYSTEM ${JSONCPP_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 
 # General packaging configuration
@@ -289,17 +296,19 @@ include(CPackComponent)
 
 
 set (AKTUALIZR_EXTERNAL_LIBS
-    ${Boost_SYSTEM_LIBRARIES}
-    ${Boost_LIBRARIES}
-    jsoncpp_lib
-    CURL::libcurl
-    OpenSSL::SSL
     Threads::Threads
-    sodium::sodium
-    ostree::ostree
-    sqlite3::sqlite3
     LibArchive::LibArchive
     ${GLIB2_LIBRARIES})
+
+set (AKTUALIZR_PUBLIC_LIBS 
+    ${Boost_SYSTEM_LIBRARIES} 
+    ${Boost_LIBRARIES} 
+    PkgConfig::JsonCpp 
+    CURL::libcurl 
+    OpenSSL::SSL 
+    sodium::sodium 
+    sqlite3::sqlite3 
+    ostree::ostree)
 
 if(BUILD_P11)
     list(APPEND AKTUALIZR_EXTERNAL_LIBS libp11::libp11)
@@ -308,6 +317,7 @@ endif(BUILD_P11)
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(hasParent)
     set (AKTUALIZR_EXTERNAL_LIBS ${AKTUALIZR_EXTERNAL_LIBS} PARENT_SCOPE)
+    set (AKTUALIZR_PUBLIC_LIBS ${AKTUALIZR_PUBLIC_LIBS} PARENT_SCOPE)
 endif()
 
 include(AddAktualizrTest)
@@ -325,13 +335,18 @@ set(GOOGLE_TEST_OUTPUT --gtest_output=xml:${CMAKE_BINARY_DIR}/results/)
 
 add_subdirectory("config")
 add_subdirectory("src")
-add_subdirectory("tests" EXCLUDE_FROM_ALL)
 add_subdirectory("docs/doxygen")
+
+if(BUILD_TESTING)
+find_package(GTest REQUIRED)
+add_subdirectory("tests" EXCLUDE_FROM_ALL)
+endif()
 
 # Check if some source files were not added sent to `aktualizr_source_file_checks`
 #
 # Note: does not check `tests` directory which depends too much on conditional
 # compilation
+if(BUILD_TESTING)
 file(GLOB_RECURSE ALL_SOURCE_FILES RELATIVE ${CMAKE_SOURCE_DIR}
     src/*.cc src/*.c src/*.h)
 foreach(FILE ${ALL_SOURCE_FILES})
@@ -340,6 +355,7 @@ foreach(FILE ${ALL_SOURCE_FILES})
         message(FATAL_ERROR "${FILE} not checked")
     endif ()
 endforeach()
+endif(BUILD_TESTING)
 
 # Generate ctags
 set_source_files_properties(tags PROPERTIES GENERATED true)
@@ -354,6 +370,8 @@ install(FILES ${CMAKE_SOURCE_DIR}/cmake-modules/FindOSTree.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrSourceFileChecks.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangFormat.cmake
         ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrClangTidy.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrCppcheck.cmake
+        ${CMAKE_SOURCE_DIR}/cmake-modules/AktualizrCspell.cmake       
         DESTINATION "lib/cmake/aktualizr"
 )
 

@@ -9,6 +9,8 @@ function(aktualizr_source_file_checks)
         endif()
     endforeach()
     aktualizr_clang_format(${ARGN})
+    aktualizr_cppcheck(${ARGN})
+    aktualizr_cspell(${ARGN})
 
     # exclude test files from clang-tidy because false positives in googletest
     # are hard to remove...

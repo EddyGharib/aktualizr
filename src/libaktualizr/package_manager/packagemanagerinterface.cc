@@ -38,7 +38,7 @@ struct DownloadMetaStruct {
   Uptane::Target target;
   const api::FlowControlToken* token;
   FetcherProgressCb progress_cb;
-  // each LogProgressInterval msec log dowload progress for big files
+  // each LogProgressInterval msec log download progress for big files
   std::chrono::time_point<std::chrono::steady_clock> time_lastreport;
 
  private:

@@ -31,7 +31,7 @@ static inline Json::Value treeJson(const boost::property_tree::ptree &tree, int 
   Json::Value output;
 
   struct {
-    // used to collasce same-key children into lists
+    // used to coalesce same-key children into lists
     std::string key;
     Json::Value list = Json::Value(Json::arrayValue);
   } cur;

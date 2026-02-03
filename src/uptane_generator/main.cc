@@ -9,7 +9,7 @@
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/utilities/aktualizr_version.h"
 #include "libaktualizr/utilities/utils.h"
-#include "uptane_repo.h"
+#include "libaktualizr/uptane_repo.h"
 
 namespace po = boost::program_options;
 

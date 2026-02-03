@@ -1,6 +1,7 @@
 #include "libaktualizr/primary/reportqueue.h"
 
 #include <chrono>
+#include <cstddef>
 
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
@@ -31,7 +32,17 @@ ReportQueue::~ReportQueue() {
   thread_.join();
 
   LOG_TRACE << "Flushing report queue";
-  flushQueue();
+  if (is_online_) {
+    flushQueue();
+  } else {
+    LOG_DEBUG << "Connection is down, skipping sending of pending events";
+  }
+}
+
+bool ReportQueue::checkConnectivity(const std::string& server) const {
+  (void)server;
+
+  return true;
 }
 
 void ReportQueue::run() {
@@ -40,8 +51,19 @@ void ReportQueue::run() {
   // succeeds.
   std::unique_lock<std::mutex> lock(m_);
   while (!shutdown_) {
-    flushQueue();
-    cv_.wait_for(lock, std::chrono::seconds(run_pause_s_));
+    is_online_ = checkConnectivity(config.tls.server);
+    if (is_online_) {
+      flushQueue();
+    } else {
+      LOG_DEBUG << "Connection is down, do not sending events";
+    }
+    if (no_pending_events_) {
+      LOG_DEBUG << "ReportQueue: There are no events pending to be sent. Waiting until new events are generated";
+      cv_.wait(lock);
+    } else {
+      LOG_DEBUG << "ReportQueue: There may be events pending. Waiting up to " << run_pause_s_ << " seconds";
+      cv_.wait_for(lock, std::chrono::seconds(run_pause_s_));
+    }
   }
 }
 
@@ -49,6 +71,7 @@ void ReportQueue::enqueue(std::unique_ptr<ReportEvent> event) {
   {
     std::lock_guard<std::mutex> lock(m_);
     storage->saveReportEvent(event->toJson());
+    no_pending_events_ = false;
   }
   cv_.notify_all();
 }
@@ -72,7 +95,9 @@ void ReportQueue::flushQueue() {
     report_array.clear();
   }
 
-  if (!report_array.empty()) {
+  if (report_array.empty()) {
+    no_pending_events_ = true;
+  } else {
     HttpResponse response = http->post(config.tls.server + "/events", report_array);
 
     bool delete_events{response.isOk()};
@@ -84,7 +109,7 @@ void ReportQueue::flushQueue() {
     } else if (response.http_status_code == 413) {
       if (report_array.size() > 1) {
         // if 413 is received to posting of more than one event then try sending less events next time
-        cur_event_number_limit_ = report_array.size() > 2 ? report_array.size() / 2 : 1;
+        cur_event_number_limit_ = static_cast<int>(report_array.size() > 2 ? report_array.size() / 2 : 1);
       } else {
         LOG_WARNING << "Dropping a report event " << report_array[0].get("id", "unknown") << " since the server `"
                     << config.tls.server << "` cannot digest it (413).";
@@ -94,6 +119,9 @@ void ReportQueue::flushQueue() {
       LOG_WARNING << "Failed to post update events: " << response.getStatusStr();
     }
     if (delete_events) {
+      if (report_array.size() < static_cast<size_t>(cur_event_number_limit_)) {
+        no_pending_events_ = true;
+      }
       report_array.clear();
       storage->deleteReportEvents(max_id);
       cur_event_number_limit_ = event_number_limit_;

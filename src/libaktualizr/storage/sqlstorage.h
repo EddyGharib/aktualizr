@@ -80,8 +80,8 @@ class SQLStorage : public SQLStorageBase, public INvStorage {
                             InstalledVersionUpdateMode update_mode) override;
   bool loadInstalledVersions(const std::string& ecu_serial, boost::optional<Uptane::Target>* current_version,
                              boost::optional<Uptane::Target>* pending_version) const override;
-  bool loadInstallationLog(const std::string& ecu_serial, std::vector<Uptane::Target>* log,
-                           bool only_installed) const override;
+  bool loadInstallationLog(const std::string& ecu_serial, std::vector<Uptane::Target>* log, bool only_installed,
+                           bool include_current = true) const override;
   bool hasPendingInstall() override;
   void getPendingEcus(std::vector<std::pair<Uptane::EcuSerial, Hash>>* pendingEcus) override;
   void clearInstalledVersions() override;
@@ -97,7 +97,7 @@ class SQLStorage : public SQLStorageBase, public INvStorage {
   void saveEcuReportCounter(const Uptane::EcuSerial& ecu_serial, int64_t counter) override;
   bool loadEcuReportCounter(std::vector<std::pair<Uptane::EcuSerial, int64_t>>* results) const override;
   void saveReportEvent(const Json::Value& json_value) override;
-  bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit = -1) const override;
+  bool loadReportEvents(Json::Value* report_array, int64_t* id_max, int limit) const override;
   void deleteReportEvents(int64_t id_max) override;
   void clearInstallationResults() override;
 

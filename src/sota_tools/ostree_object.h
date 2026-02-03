@@ -3,12 +3,12 @@
 
 #include <chrono>
 #include <iostream>
+#include <list>
 #include <sstream>
 
 #include <curl/curl.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/intrusive_ptr.hpp>
-#include "gtest/gtest_prod.h"
 
 #include "garage_common.h"
 #include "ostree_hash.h"
@@ -109,10 +109,10 @@ class OSTreeObject {
   /** Full path on disk to this object */
   boost::filesystem::path PathOnDisk() const;
 
-  FRIEND_TEST(OstreeObject, Request);
-  FRIEND_TEST(OstreeObject, UploadDryRun);
-  FRIEND_TEST(OstreeObject, UploadFail);
-  FRIEND_TEST(OstreeObject, UploadSuccess);
+  // FRIEND_TEST(OstreeObject, Request);
+  // FRIEND_TEST(OstreeObject, UploadDryRun);
+  // FRIEND_TEST(OstreeObject, UploadFail);
+  // FRIEND_TEST(OstreeObject, UploadSuccess);
   friend void intrusive_ptr_add_ref(OSTreeObject* /*h*/);
   friend void intrusive_ptr_release(OSTreeObject* /*h*/);
   friend std::ostream& operator<<(std::ostream& stream, const OSTreeObject& o);

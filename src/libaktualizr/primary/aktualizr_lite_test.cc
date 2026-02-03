@@ -6,20 +6,20 @@
 
 #include <boost/process.hpp>
 
-#include "image_repo.h"
 #include "libaktualizr/config.h"
 #include "libaktualizr/http/httpclient.h"
+#include "libaktualizr/image_repo.h"
 #include "libaktualizr/logging/logging.h"
 #include "libaktualizr/package_manager/ostreemanager.h"
-#include "storage/sqlstorage.h"
-#include "test_utils.h"
 #include "libaktualizr/uptane/fetcher.h"
 #include "libaktualizr/uptane/imagerepository.h"
+#include "storage/sqlstorage.h"
+#include "test_utils.h"
 
 class TufRepoMock {
  public:
   TufRepoMock(const boost::filesystem::path& root_dir, std::string expires = "",
-              std::string correlation_id = "corellatio-id")
+              std::string correlation_id = "corelation-id")
       : repo_{root_dir, expires, correlation_id},
         port_{TestUtils::getFreePort()},
         url_{"http://localhost:" + port_},
@@ -282,7 +282,7 @@ std::string AkliteTest::SysRootSrc;
 /*
  * Test that mimics aktualizr-lite
  *
- * It makes use of libaktualizr's components and makes API calls to them in the way as aktualiz-lite
+ * It makes use of libaktualizr's components and makes API calls to them in the way as aktualizr-lite
  * would do during its regular update cycle.
  */
 TEST_F(AkliteTest, ostreeUpdate) {
@@ -292,7 +292,7 @@ TEST_F(AkliteTest, ostreeUpdate) {
     const auto update_result = aklite.update();
     ASSERT_EQ(update_result.result_code.num_code, data::ResultCode::Numeric::kNeedCompletion);
   }
-  // reboot emulation by destroing and creating of a new AkliteMock instance
+  // reboot emulation by destroying and creating of a new AkliteMock instance
   {
     AkliteMock aklite{conf()};
     ASSERT_TRUE(aklite.isTargetCurrent(target_to_install));
@@ -346,9 +346,10 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   testing::internal::CaptureStdout();
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
+  EXPECT_NE(std::string::npos, log_output.find("Signature verification for Image repo Targets metadata failed: "
+                                               "Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
+            log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
 
   // Corrupt stored snapshot metadata and verify that the expected error message is generated
   corruptStoredMetadata(aklite.storage_, Uptane::Role::Snapshot());
@@ -379,9 +380,10 @@ TEST_F(AkliteTest, hashMismatchLogsTest) {
   testing::internal::CaptureStdout();
   aklite.update();
   log_output = testing::internal::GetCapturedStdout();
+  EXPECT_NE(std::string::npos, log_output.find("Signature verification for Image repo Targets metadata failed: "
+                                               "Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
-            log_output.find("Signature verification for Image repo Targets metadata failed: Hash metadata mismatch"));
-  EXPECT_NE(std::string::npos, log_output.find("Image repo Target verification failed: Hash metadata mismatch"));
+            log_output.find("Image repo Target verification failed: Snapshot hash mismatch for targets metadata"));
   EXPECT_NE(std::string::npos,
             log_output.find("Image repo Snapshot verification failed: Snapshot metadata hash verification failed"));
 }
