@@ -15,7 +15,6 @@ cc_library(
     hdrs = [
         "openssl_compat.h",
     ],
-    includes = [".."],
     copts = select({
         ":with_p11": [
             "-Wno-deprecated-declarations",
@@ -23,6 +22,8 @@ cc_library(
         ],
         "//conditions:default": ["-Wno-deprecated-declarations"],
     }),
+    include_prefix = "crypto",
+    visibility = ["//visibility:public"],
     deps = [
         "@jsoncpp",
     ] + select({
@@ -32,10 +33,7 @@ cc_library(
         ],
         "//conditions:default": [],
     }),
-
-    visibility = ["//visibility:public"],
 )
-
 
 # cc_test(
 #     name = "crypto_test",

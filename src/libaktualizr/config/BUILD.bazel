@@ -4,18 +4,17 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-
 cc_library(
     name = "primary_config",
     srcs = [
         "config.cc",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//:pub_includes",
         "//src/libaktualizr:config",
-        "//src/libaktualizr/bootstrap:bootstrap",
+        "//src/libaktualizr/bootstrap",
     ],
-    visibility = ["//visibility:public"],
 )
 
 # cc_test(

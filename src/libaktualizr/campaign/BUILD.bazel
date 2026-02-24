@@ -3,10 +3,10 @@ cc_library(
     srcs = ["campaign.cc"],
     visibility = ["//visibility:public"],
     deps = [
-        "@jsoncpp",
         "@boost.filesystem",
         "@boost.log",
-        ]
+        "@jsoncpp",
+    ],
 )
 
 # cc_test(

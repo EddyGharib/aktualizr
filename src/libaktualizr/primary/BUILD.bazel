@@ -15,29 +15,29 @@ cc_library(
         "secondary_provider_builder.h",
         "sotauptaneclient.h",
     ],
-    includes = [".."],
+    include_prefix = "primary",
+    visibility = ["//visibility:public"],
     deps = [
         "//:pub_includes",
-        "//src/libaktualizr/storage:storage",
-        "//src/libaktualizr/bootstrap:bootstrap",
-        "//src/libaktualizr/uptane:uptane",
+        "//src/libaktualizr/bootstrap",
+        "//src/libaktualizr/storage",
+        "//src/libaktualizr/uptane",
         "@jsoncpp",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "provisioner_test_utils",
     srcs = ["provisioner_test_utils.cc"],
     hdrs = ["provisioner_test_utils.h"],
+    visibility = ["//visibility:public"],
     deps = [
         ":primary",
         "//:pub_includes",
     ],
-    visibility = ["//visibility:public"],
 )
 
-# cc_test(   
+# cc_test(
 #     name = "aktualizr",
 #     srcs = ["aktualizr_test.cc"],
 #     deps = [
@@ -67,7 +67,6 @@ cc_library(
 #     ],
 #     tags = [],
 # )
-
 
 # cc_test(
 #     name = "aktualizr_fullostree_test",

@@ -24,13 +24,12 @@ cc_library(
         "manifest.h",
         "secondary_metadata.h",
     ],
-    deps = [
-        "@jsoncpp",
-        "//:pub_includes",
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//:pub_includes",
+        "@jsoncpp",
+    ],
 )
-
 
 # cc_test(
 #     name = "tuf_test",

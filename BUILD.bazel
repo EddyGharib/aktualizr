@@ -5,10 +5,8 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
-
 filegroup(
     name = "config_dir",
-    srcs = glob(["config/**"]),
-    visibility = ["//src/libaktualizr:__subpackages__"],
+    srcs = glob(["config/sql/**"]),
+    visibility = ["//visibility:public"],
 )
-

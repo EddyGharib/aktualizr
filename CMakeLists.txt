@@ -41,8 +41,8 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
     message(FATAL_ERROR "Aktualizr does not support building in the source tree. Please remove CMakeCache.txt and the CMakeFiles/ directory, then create a subdirectory to build in: mkdir build; cd build; cmake ..")
 endif()
 
-# set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake-modules)
-# configure_file(CTestCustom.cmake CTestCustom.cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake-modules)
+configure_file(CTestCustom.cmake CTestCustom.cmake)
 
 unset(AKTUALIZR_CHECKED_SRCS CACHE)
 

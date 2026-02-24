@@ -5,7 +5,15 @@ genrule(
         "//:config_dir",
     ],
     outs = ["sql_schemas.cc"],
-    cmd = "python3 $(location embed_schemas.py) config/sql $(RULEDIR)/sql_schemas.cc libaktualizr",
+    cmd = """
+set -e
+set -- $(locations //:config_dir)
+first_file_path="$$1"
+
+sql_dir="$${first_file_path%config/sql/*}config/sql"
+
+python3 $(location embed_schemas.py) "$$sql_dir" "$@" libaktualizr
+""",
 )
 
 filegroup(
@@ -19,9 +27,9 @@ cc_library(
     srcs = [
         "fsstorage_read.cc",
         "invstorage.cc",
+        "sql_schemas.cc",
         "sqlstorage.cc",
         "sqlstorage_base.cc",
-        "sql_schemas.cc",
     ],
     hdrs = [
         "fsstorage_read.h",
@@ -29,14 +37,13 @@ cc_library(
         "sqlstorage.h",
         "sqlstorage_base.h",
     ],
-    includes = [".."],
-    deps = [
-        "//src/libaktualizr:config",
-        "//:pub_includes",
-    ],
+    include_prefix = "storage",
     visibility = ["//visibility:public"],
+    deps = [
+        "//:pub_includes",
+        "//src/libaktualizr:config",
+    ],
 )
-
 
 # cc_test(
 #     name = "storage_atomic",

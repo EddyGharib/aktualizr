@@ -8,12 +8,12 @@ cc_library(
     name = "bootloader",
     srcs = ["bootloader.cc"],
     includes = ["."],
-    deps = [
-        "//src/libaktualizr:config",
-        "//:pub_includes",
-        "@jsoncpp"
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//:pub_includes",
+        "//src/libaktualizr:config",
+        "@jsoncpp",
+    ],
 )
 
 # cc_test(

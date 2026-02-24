@@ -2,13 +2,12 @@
 #define P11ENGINE_H_
 
 #include <memory>
-#include <string>
-
-#include <boost/filesystem/path.hpp>
-
-#include "gtest/gtest_prod.h"
 
 #include "libaktualizr/config.h"
+
+#include <openssl/engine.h>
+#include <openssl/err.h>
+
 #include "libaktualizr/logging/logging.h"
 
 class P11ContextWrapper {
@@ -52,6 +51,8 @@ class P11Engine {
   P11Engine &operator=(P11Engine &&) = delete;
 
   virtual ~P11Engine() = default;
+
+  ENGINE *getEngine() { return ssl_engine_; }
   std::string getItemFullId(const std::string &id) const { return uri_prefix_ + id; }
   bool readUptanePublicKey(const std::string &uptane_key_id, std::string *key_out);
   bool readTlsCert(const std::string &id, std::string *cert_out) const;
@@ -61,6 +62,7 @@ class P11Engine {
   const boost::filesystem::path module_path_;
   const std::string pass_;
   const std::string label_;
+  ENGINE *ssl_engine_{nullptr};
   std::string uri_prefix_;
   P11ContextWrapper ctx_;
   P11SlotsWrapper wslots_;
@@ -105,4 +107,4 @@ class P11EngineGuard {
   static int ref_counter;      // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 };
 
-#endif  // P11ENGINE_H_
+#endif

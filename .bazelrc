@@ -1,12 +1,12 @@
-# Add registries
-# common --registry=file://%workspace%/bzl_registry
-# common --registry=https://bcr.bazel.build
-# common --registry=file://%workspace%/out/bazel-central-registry
-common --enable_bzlmod
-common --registry=file:///home/user/cpp_libs/bazel-public-registry
-common --registry=file:///home/user/bazel-central-registry
+common --registry=https://raw.githubusercontent.com/idealworks/bazel-public-registry/master
 common --registry=https://bcr.bazel.build
-common --lockfile_mode=update
+common --registry=file://%workspace%/out/bazel-central-registry
+
+# common --enable_bzlmod
+# common --registry=file:///home/user/cpp_libs/bazel-public-registry
+# common --registry=file:///home/user/bazel-central-registry
+# common --registry=https://bcr.bazel.build
+# common --lockfile_mode=update
 
 # Used to get git describe information
 build --stamp --workspace_status_command=./scripts/get_workspace_status.sh

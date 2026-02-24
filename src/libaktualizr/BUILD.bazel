@@ -2,19 +2,20 @@ cc_library(
     name = "config",
     srcs = [
         "//src/libaktualizr/bootloader:bootloader_config",
-        "//src/libaktualizr/package_manager:package_manager_config",
-        "//src/libaktualizr/telemetry:telemetry_config",
-        "//src/libaktualizr/storage:storage_config",
         "//src/libaktualizr/config:base_config",
+        "//src/libaktualizr/package_manager:package_manager_config",
+        "//src/libaktualizr/storage:storage_config",
+        "//src/libaktualizr/telemetry:telemetry_config",
     ],
     includes = ["."],
+    visibility = ["//visibility:public"],
     deps = [
         "//:pub_includes",
-        "//src/libaktualizr/utilities:utilities",
-        "@jsoncpp"
+        "//src/libaktualizr/utilities",
+        "@jsoncpp",
     ],
-    visibility = ["//visibility:public"],
 )
+
 AKTUALIZR_DEPS = [
     "//src/libaktualizr/bootloader:bootloader",
     "//src/libaktualizr/bootstrap:bootstrap",
@@ -34,24 +35,24 @@ AKTUALIZR_DEPS = [
 
 cc_library(
     name = "aktualizr_lib",
+    visibility = ["//visibility:public"],
     deps = AKTUALIZR_DEPS + [
-        "@jsoncpp",
-        "@curl",
-        "@openssl",
-        "@boost.thread",
-        "@libsodium",
-        "@sqlite3",
         "@boost.filesystem",
         "@boost.log",
-        "@glib//glib:glib",
+        "@boost.thread",
+        "@curl",
+        "@glib//glib",
+        "@jsoncpp",
+        "@libsodium",
+        "@openssl",
+        "@sqlite3",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "aktualizr",
     hdrs = [":pub_includes"],
     include_prefix = "libaktualizr",
-    deps = [":aktualizr_lib"],
     visibility = ["//visibility:public"],
+    deps = [":aktualizr_lib"],
 )

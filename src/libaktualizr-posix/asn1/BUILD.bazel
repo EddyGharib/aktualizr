@@ -46,7 +46,6 @@ ASN1_GENERATED_C = [
     "generated/asn1/AKUrl.c",
     "generated/asn1/AKVersionReqMes.c",
     "generated/asn1/AKVersionRespMes.c",
-
     "generated/asn1/asn_codecs_prim.c",
     "generated/asn1/asn_SEQUENCE_OF.c",
     "generated/asn1/asn_SET_OF.c",
@@ -115,7 +114,6 @@ ASN1_GENERATED_H = [
     "generated/asn1/AKUrl.h",
     "generated/asn1/AKVersionReqMes.h",
     "generated/asn1/AKVersionRespMes.h",
-
     "generated/asn1/asn_application.h",
     "generated/asn1/asn_codecs.h",
     "generated/asn1/asn_codecs_prim.h",
@@ -153,7 +151,7 @@ genrule(
     name = "gen_asn1",
     srcs = ASN1_SOURCES,
     outs = ASN1_GENERATED_C + ASN1_GENERATED_H,
-   cmd = """
+    cmd = """
   set -euo pipefail
 
   ROOT="$$(pwd)"
@@ -175,20 +173,19 @@ genrule(
     mkdir -p "$$(dirname "$$out")"
     cp -f "$$base" "$$out"
   done
-"""
+""",
 )
-
 
 cc_library(
     name = "asn1_lib",
     srcs = ASN1_GENERATED_C,
     hdrs = ASN1_GENERATED_H,
-    includes = ["generated/asn1"],
     copts = [
         "-Wno-error",
         "-w",
     ],
+    includes = ["generated/asn1"],
     deps = [
-        "//src/libaktualizr/utilities:utilities",
+        "//src/libaktualizr/utilities",
     ],
 )
