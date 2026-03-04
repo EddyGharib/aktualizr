@@ -13,6 +13,7 @@ module(
 bazel_dep(name = "boost.filesystem", version = "1.89.0.bcr.1")
 bazel_dep(name = "boost.log", version = "1.89.0.bcr.1")
 bazel_dep(name = "boost.thread", version = "1.89.0.bcr.1")
+bazel_dep(name = "boost.system", version = "1.89.0.bcr.1")
 bazel_dep(name = "jsoncpp", version = "1.9.5")
 bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
 bazel_dep(name = "libarchive", version = "3.8.1")

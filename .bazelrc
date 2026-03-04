@@ -10,3 +10,4 @@ common --registry=file://%workspace%/out/bazel-central-registry
 
 # Used to get git describe information
 build --stamp --workspace_status_command=./scripts/get_workspace_status.sh
+build --@curl//:ssl_lib=openssl

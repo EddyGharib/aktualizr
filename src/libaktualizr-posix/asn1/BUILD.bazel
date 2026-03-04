@@ -186,6 +186,6 @@ cc_library(
     ],
     includes = ["generated/asn1"],
     deps = [
-        "//src/libaktualizr/utilities",
+        "//:pub_includes",
     ],
 )
