@@ -139,6 +139,10 @@ cc_library(
         "//conditions:default": ["-Wno-deprecated-declarations"],
     }),
     includes = ["crypto"],
+    local_defines = [
+        "BUILD_OSTREE",
+        "DONT_DEFINE_DEFAULT_MANAGER",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":config",
