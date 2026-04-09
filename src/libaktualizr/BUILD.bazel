@@ -33,12 +33,12 @@ genrule(
     name = "sql_schemas_target",
     srcs = [
         "storage/embed_schemas.py",
-        "//:config_dir",
+        "//:config_data",
     ],
     outs = ["storage/sql_schemas.cc"],
     cmd = """
 set -e
-set -- $(locations //:config_dir)
+set -- $(locations //:config_data)
 first_file_path="$$1"
 
 sql_dir="$${first_file_path%config/sql/*}config/sql"
@@ -130,7 +130,7 @@ cc_library(
         "utilities/sig_handler.h",
         "utilities/timer.h",
         "utilities/xml2json.h",
-    ],
+    ] + glob(["include/**/*.h"]),
     copts = select({
         ":with_p11": [
             "-Wno-deprecated-declarations",

@@ -6,7 +6,7 @@ cc_library(
 )
 
 filegroup(
-    name = "config_dir",
+    name = "config_data",
     srcs = glob(["config/sql/**"]),
     visibility = ["//visibility:public"],
 )
