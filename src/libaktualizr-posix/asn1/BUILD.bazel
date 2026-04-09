@@ -185,7 +185,4 @@ cc_library(
         "-w",
     ],
     includes = ["generated/asn1"],
-    deps = [
-        "//:pub_includes",
-    ],
 )

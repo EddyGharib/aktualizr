@@ -1,12 +1,177 @@
-cc_library(
-    name = "pub_includes",
-    hdrs = glob(["include/**/*.h"]),
-    includes = ["include"],
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "config_data",
     srcs = glob(["config/sql/**"]),
     visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "with_p11",
+    define_values = {"BUILD_P11": "1"},
+)
+
+genrule(
+    name = "sql_schemas_target",
+    srcs = [
+        "src/libaktualizr/storage/embed_schemas.py",
+        "//:config_data",
+    ],
+    outs = ["src/libaktualizr/storage/sql_schemas.cc"],
+    cmd = """
+set -e
+set -- $(locations //:config_data)
+first_file_path="$$1"
+
+sql_dir="$${first_file_path%config/sql/*}config/sql"
+
+python3 $(location src/libaktualizr/storage/embed_schemas.py) "$$sql_dir" "$@" libaktualizr
+""",
+)
+
+genrule(
+    name = "version",
+    srcs = ["src/libaktualizr/utilities/read_stable_keys.sh"],
+    outs = ["src/libaktualizr/utilities/autogen_version.hpp"],
+    cmd_bash = "./$(location src/libaktualizr/utilities/read_stable_keys.sh) > $@",
+    stamp = 1,
+)
+
+cc_library(
+    name = "config",
+    srcs = [
+        "src/libaktualizr/bootloader/bootloader_config.cc",
+        "src/libaktualizr/config/base_config.cc",
+        "src/libaktualizr/package_manager/packagemanagerconfig.cc",
+        "src/libaktualizr/storage/storage_config.cc",
+        "src/libaktualizr/telemetry/telemetryconfig.cc",
+    ],
+    hdrs = glob(["include/**/*.h"]) + ["src/libaktualizr/utilities/config_utils.h"],
+    includes = [
+        "include",
+        "src/libaktualizr",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.filesystem",
+        "@boost.log",
+        "@boost.program_options",
+        "@boost.property_tree",
+        "@boost.signals2",
+        "@boost.system",
+        "@boost.uuid",
+        "@curl",
+        "@jsoncpp",
+    ],
+)
+
+cc_library(
+    name = "aktualizr",
+    srcs = [
+        "src/libaktualizr/bootloader/bootloader.cc",
+        "src/libaktualizr/bootstrap/bootstrap.cc",
+        "src/libaktualizr/campaign/campaign.cc",
+        "src/libaktualizr/config/config.cc",
+        "src/libaktualizr/crypto/crypto.cc",
+        "src/libaktualizr/crypto/keymanager.cc",
+        "src/libaktualizr/http/httpclient.cc",
+        "src/libaktualizr/logging/default_log_sink.cc",
+        "src/libaktualizr/logging/logging.cc",
+        "src/libaktualizr/logging/logging_config.cc",
+        "src/libaktualizr/package_manager/ostreemanager.cc",
+        "src/libaktualizr/package_manager/packagemanagerfactory.cc",
+        "src/libaktualizr/package_manager/packagemanagerfake.cc",
+        "src/libaktualizr/package_manager/packagemanagerinterface.cc",
+        "src/libaktualizr/primary/aktualizr.cc",
+        "src/libaktualizr/primary/aktualizr_helpers.cc",
+        "src/libaktualizr/primary/provisioner.cc",
+        "src/libaktualizr/primary/reportqueue.cc",
+        "src/libaktualizr/primary/secondary_provider.cc",
+        "src/libaktualizr/primary/sotauptaneclient.cc",
+        "src/libaktualizr/storage/fsstorage_read.cc",
+        "src/libaktualizr/storage/invstorage.cc",
+        "src/libaktualizr/storage/sql_schemas.cc",
+        "src/libaktualizr/storage/sqlstorage.cc",
+        "src/libaktualizr/storage/sqlstorage_base.cc",
+        "src/libaktualizr/uptane/directorrepository.cc",
+        "src/libaktualizr/uptane/fetcher.cc",
+        "src/libaktualizr/uptane/imagerepository.cc",
+        "src/libaktualizr/uptane/iterator.cc",
+        "src/libaktualizr/uptane/manifest.cc",
+        "src/libaktualizr/uptane/metawithkeys.cc",
+        "src/libaktualizr/uptane/role.cc",
+        "src/libaktualizr/uptane/root.cc",
+        "src/libaktualizr/uptane/secondary_metadata.cc",
+        "src/libaktualizr/uptane/tuf.cc",
+        "src/libaktualizr/uptane/uptanerepository.cc",
+        "src/libaktualizr/utilities/aktualizr_version.cc",
+        "src/libaktualizr/utilities/apiqueue.cc",
+        "src/libaktualizr/utilities/dequeue_buffer.cc",
+        "src/libaktualizr/utilities/results.cc",
+        "src/libaktualizr/utilities/sig_handler.cc",
+        "src/libaktualizr/utilities/timer.cc",
+        "src/libaktualizr/utilities/types.cc",
+        "src/libaktualizr/utilities/utils.cc",
+    ] + select({
+        ":with_p11": ["src/libaktualizr/crypto/p11engine.cc"],
+        "//conditions:default": ["src/libaktualizr/crypto/p11engine_dummy.cc"],
+    }),
+    hdrs = glob(["include/**/*.h"]) + [
+        "src/libaktualizr/bootstrap/bootstrap.h",
+        "src/libaktualizr/crypto/openssl_compat.h",
+        "src/libaktualizr/package_manager/packagemanagerfake.h",
+        "src/libaktualizr/primary/aktualizr_helpers.h",
+        "src/libaktualizr/primary/provisioner.h",
+        "src/libaktualizr/primary/secondary_config.h",
+        "src/libaktualizr/primary/secondary_provider_builder.h",
+        "src/libaktualizr/primary/sotauptaneclient.h",
+        "src/libaktualizr/storage/fsstorage_read.h",
+        "src/libaktualizr/storage/sql_utils.h",
+        "src/libaktualizr/storage/sqlstorage.h",
+        "src/libaktualizr/storage/sqlstorage_base.h",
+        "src/libaktualizr/uptane/directorrepository.h",
+        "src/libaktualizr/uptane/iterator.h",
+        "src/libaktualizr/uptane/manifest.h",
+        "src/libaktualizr/uptane/secondary_metadata.h",
+        "src/libaktualizr/utilities/autogen_version.hpp",
+        "src/libaktualizr/utilities/config_utils.h",
+        "src/libaktualizr/utilities/dequeue_buffer.h",
+        "src/libaktualizr/utilities/fault_injection.h",
+        "src/libaktualizr/utilities/sig_handler.h",
+        "src/libaktualizr/utilities/timer.h",
+        "src/libaktualizr/utilities/xml2json.h",
+    ],
+    copts = select({
+        ":with_p11": [
+            "-Wno-deprecated-declarations",
+            "-DPKCS11_ENGINE_PATH=\\\"/usr/lib/x86_64-linux-gnu/engines-3/libpkcs11.so\\\"",
+        ],
+        "//conditions:default": ["-Wno-deprecated-declarations"],
+    }),
+    include_prefix = "libaktualizr",
+    includes = [
+        "include",
+        "src/crypto",
+    ],
+    local_defines = [
+        "BUILD_OSTREE",
+        "DONT_DEFINE_DEFAULT_MANAGER",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":config",
+        "//src/libaktualizr-posix/asn1:asn1_lib",
+        "@boost.filesystem",
+        "@boost.log",
+        "@boost.program_options",
+        "@boost.property_tree",
+        "@boost.signals2",
+        "@boost.thread",
+        "@boost.uuid",
+        "@curl",
+        "@glib//glib",
+        "@jsoncpp",
+        "@libsodium",
+        "@openssl",
+        "@ostree",
+        "@sqlite3",
+    ],
 )
