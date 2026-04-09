@@ -12,8 +12,8 @@
 #include <boost/scoped_array.hpp>
 
 #include "libaktualizr/crypto/crypto.h"
-#include "utilities/config_utils.h"
 #include "libaktualizr/utilities/utils.h"
+#include "utilities/config_utils.h"
 
 P11Engine* P11EngineGuard::instance = nullptr;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 int P11EngineGuard::ref_counter = 0;            // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
@@ -157,7 +157,7 @@ PKCS11_SLOT* P11Engine::findTokenSlot() const {
     LOG_WARNING << "Token label missing. Using 1st initialized token.";
     slot = PKCS11_find_token(ctx_.get(), wslots_.get_slots(), wslots_.get_nslots());
   } else {
-    auto iterslot{wslots_.get_slots()}; //NOLINT(readability-qualified-auto)
+    auto iterslot{wslots_.get_slots()};  // NOLINT(readability-qualified-auto)
     for (unsigned int i = 0; i < nslot; i++, iterslot++) {
       if (iterslot != nullptr && (tok = iterslot->token) != nullptr) {
         if (label_ == tok->label) {

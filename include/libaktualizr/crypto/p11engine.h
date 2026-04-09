@@ -21,7 +21,7 @@ class P11ContextWrapper {
   PKCS11_ctx_st *get() const { return ctx; }
 
  private:
-  PKCS11_ctx_st *ctx;
+  PKCS11_ctx_st *ctx{nullptr};
 };
 
 class P11SlotsWrapper {
@@ -36,9 +36,9 @@ class P11SlotsWrapper {
   unsigned int get_nslots() const { return nslots; }
 
  private:
-  PKCS11_ctx_st *ctx;
-  PKCS11_slot_st *slots_;
-  unsigned int nslots;
+  PKCS11_ctx_st *ctx{nullptr};
+  PKCS11_slot_st *slots_{nullptr};
+  unsigned int nslots{0};
 };
 
 class P11EngineGuard;
@@ -50,13 +50,7 @@ class P11Engine {
   P11Engine &operator=(const P11Engine &) = delete;
   P11Engine &operator=(P11Engine &&) = delete;
 
-  virtual ~P11Engine() {
-    if (ssl_engine_ != nullptr) {
-      ENGINE_finish(ssl_engine_);
-      ENGINE_free(ssl_engine_);
-      ENGINE_cleanup();  // for openssl < 1.1
-    }
-  }
+  virtual ~P11Engine() = default;
 
   ENGINE *getEngine() { return ssl_engine_; }
   std::string getItemFullId(const std::string &id) const { return uri_prefix_ + id; }

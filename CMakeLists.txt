@@ -56,6 +56,8 @@ add_definitions("-D_FILE_OFFSET_BITS=64")
 # 'ENGINE_free' is deprecated [-Werror,-Wdeprecated-declarations]
 add_compile_options("-Wno-deprecated-declarations")
 
+list(PREPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules")
+
 if (CCACHE)
     find_program(CCACHE_PROGRAM ccache)
     if (CCACHE_PROGRAM)

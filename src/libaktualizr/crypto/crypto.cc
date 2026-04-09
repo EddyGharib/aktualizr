@@ -13,10 +13,10 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/scoped_array.hpp>
 
-#include "libaktualizr/types.h"
 #include "libaktualizr/logging/logging.h"
-#include "openssl_compat.h"
+#include "libaktualizr/types.h"
 #include "libaktualizr/utilities/utils.h"
+#include "openssl_compat.h"
 
 PublicKey::PublicKey(const boost::filesystem::path &path) : value_(Utils::readFile(path)) {
   type_ = Crypto::IdentifyRSAKeyType(value_);
@@ -319,7 +319,7 @@ bool Crypto::parseP12(BIO *p12_bio, const std::string &p12_password, std::string
   }
   X509 *ca_cert = nullptr;
   for (int i = 0; i < sk_X509_num(ca_certs.get()); i++) {
-    ca_cert = sk_X509_value(ca_certs.get(), i); // NOLINT(cppcoreguidelines-pro-type-cstyle-cast)
+    ca_cert = sk_X509_value(ca_certs.get(), i);  // NOLINT(cppcoreguidelines-pro-type-cstyle-cast)
     PEM_write_bio_X509(ca_sink.get(), ca_cert);
     PEM_write_bio_X509(cert_sink.get(), ca_cert);
   }
