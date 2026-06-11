@@ -164,7 +164,13 @@ genrule(
     inputs="$$inputs $$ROOT/$$s"
   done
 
-  asn1c -fcompound-names $$inputs
+  asn1c_opts=""
+
+  if [ ! -z "$$ASN1C_SKELETONS" ]; then
+    asn1c_opts="$$asn1c_opts -S$$ASN1C_SKELETONS"
+  fi
+
+  asn1c $$asn1c_opts -fcompound-names $$inputs
   rm -f converter-example.c converter-sample.c || true
 
   # Copy generated files from CWD (we are in outdir)
