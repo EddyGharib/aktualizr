@@ -166,7 +166,7 @@ genrule(
 
   asn1c_opts=""
 
-  if [ ! -z "$$ASN1C_SKELETONS" ]; then
+  if [ -n "$${ASN1C_SKELETONS:-}" ]; then
     asn1c_opts="$$asn1c_opts -S$$ASN1C_SKELETONS"
   fi
 
